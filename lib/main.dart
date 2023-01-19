@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vipassana/Views/splash_screen.dart';
 
-import 'controller/generar_controller.dart';
+import 'controller/general_controller.dart';
 
 void main() {
   runApp(const MyApp());

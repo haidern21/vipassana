@@ -5,8 +5,8 @@ import 'package:neon_circular_timer/neon_circular_timer.dart';
 import 'package:vipassana/Views/meditation_log.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/constants.dart';
-
-import '../controller/generar_controller.dart';
+import '../controller/general_controller.dart';
+import 'help_and_more.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
               builder: (context) => sessionsBottomSheet());
         },
         child: popUpMenuItem(
-          imagePath: 'assets/images/sessons_image.png',
+          imagePath: 'assets/images/sessions_image.png',
           text: 'Sessions',
         ),
       )),
@@ -65,9 +65,12 @@ class _HomePageState extends State<HomePage> {
         ),
       )),
       PopupMenuItem(
-        child: popUpMenuItem(
-          imagePath: 'assets/images/search_image.png',
-          text: 'More',
+        child: GestureDetector(
+          onTap: () => Get.to(() => const HelpAndMore()),
+          child: popUpMenuItem(
+            imagePath: 'assets/images/search_image.png',
+            text: 'More',
+          ),
         ),
       ),
     ];
@@ -147,26 +150,35 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Align(
                   alignment: Alignment.center,
-                  child: Stack(
-                    children: [
-                      NeonCircularTimer(
-                        width: 200,
-                        duration: 6500,
-                        controller: _controller,
-                        strokeWidth: 15,
-                        backgroudColor: Colors.transparent,
-                        isTimerTextShown: true,
-                        neumorphicEffect: true,
-                        neon: 0,
-                        neonColor: innerBorderColor,
-                        innerFillColor: neonColor.withOpacity(.26),
-                        outerStrokeColor: neonColor,
-                      ),
-                      Positioned(
-                          bottom: 30,
-                          left: Get.width * .43,
-                          child: const Center(child: Icon(Icons.refresh)))
-                    ],
+                  child: GestureDetector(
+                    onTap: () {
+                      _controller.restart();
+                    },
+                    child: Stack(
+                      children: [
+                        NeonCircularTimer(
+                          width: 200,
+                          duration: 6500,
+                          controller: _controller,
+                          strokeWidth: 15,
+                          backgroudColor: Colors.transparent,
+                          isTimerTextShown: true,
+                          neumorphicEffect: true,
+                          autoStart: false,
+                          neon: 0,
+                          neonColor: innerBorderColor,
+                          innerFillColor: neonColor.withOpacity(.26),
+                          outerStrokeColor: neonColor,
+                        ),
+                        Positioned(
+                            bottom: 30,
+                            left: Get.width * .43,
+                            child: Image.asset(
+                              'assets/images/loop.png',
+                              height: 20,
+                            ))
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -179,13 +191,16 @@ class _HomePageState extends State<HomePage> {
                   height: 90,
                   width: double.infinity,
                   child: ListView.separated(
-                    itemCount: 10,
+                    itemCount: 12,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return Obx(
                         () => GestureDetector(
                           onTap: () {
                             controller.numberOfMinutesIndex.value = index;
+                            _controller.restart(
+                                duration: ((index + 1) * 5) * 60);
+                            print((((index + 1) * 5) * 60).toString());
                           },
                           child: Container(
                             decoration: BoxDecoration(
