@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vipassana/Widgets/my_text.dart';
+import 'package:vipassana/controller/general_controller.dart';
 import '../constants.dart';
 
 class HelpAndMore extends StatefulWidget {
@@ -11,6 +12,7 @@ class HelpAndMore extends StatefulWidget {
 }
 
 class _HelpAndMoreState extends State<HelpAndMore> {
+  GeneralController controller=Get.find();
   List<HelpTileModel> helpTiles = [
     HelpTileModel(
         imagePath: 'assets/images/feedback.png', text: 'Your feedback counts'),
@@ -170,9 +172,10 @@ class _HelpAndMoreState extends State<HelpAndMore> {
           borderRadius: BorderRadius.circular(20),
         ),
         builder: (context) {
+
           return SingleChildScrollView(
             child: SizedBox(
-              height: Get.height * .5,
+              height: Get.height * .6,
               width: double.infinity,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -313,25 +316,57 @@ class _HelpAndMoreState extends State<HelpAndMore> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: selectedBorderColor)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset('assets/images/google.png'),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          const MyText(
-                            text: 'Sign in with Google',
-                            color: selectedBorderColor,
-                            size: 16,
-                          ),
-                        ],
+                    InkWell(
+                      onTap: () async {
+                        //await controller.checkIfSignedIn();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: selectedBorderColor)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset('assets/images/google.png'),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            const MyText(
+                              text: 'Sign in with Google',
+                              color: selectedBorderColor,
+                              size: 16,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    // InkWell(
+                    //   onTap: () async {
+                    //     await controller.handleSignOut();
+                    //   },
+                    //   child: Container(
+                    //     decoration: BoxDecoration(
+                    //         borderRadius: BorderRadius.circular(20),
+                    //         border: Border.all(color: selectedBorderColor)),
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Image.asset('assets/images/google.png'),
+                    //         const SizedBox(
+                    //           width: 20,
+                    //         ),
+                    //         const MyText(
+                    //           text: 'Sign out with Google',
+                    //           color: selectedBorderColor,
+                    //           size: 16,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

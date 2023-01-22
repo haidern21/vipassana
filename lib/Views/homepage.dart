@@ -169,6 +169,13 @@ class _HomePageState extends State<HomePage> {
                           neonColor: innerBorderColor,
                           innerFillColor: neonColor.withOpacity(.26),
                           outerStrokeColor: neonColor,
+                          onComplete: () async {
+
+                           // controller.numberOfMinutesIndex.value=((controller.numberOfMinutesIndex.value + 1) *5) ;
+                           // await controller.uploadMeditationToServer(userId: DateTime.now().millisecondsSinceEpoch.toString(), meditationTime: controller.numberOfMinutesIndex.value.toString());
+                          // await controller.getAllMeditaions();
+                           // await controller.updateMeditations(docId: '8494655655814581', dateTime: DateTime.now().millisecondsSinceEpoch.toString(), meditationTime: controller.numberOfMinutesIndex.value.toString());
+                          },
                         ),
                         Positioned(
                             bottom: 30,
@@ -199,7 +206,8 @@ class _HomePageState extends State<HomePage> {
                           onTap: () {
                             controller.numberOfMinutesIndex.value = index;
                             _controller.restart(
-                                duration: ((index + 1) * 5) * 60);
+                                // duration: ((index + 1) ) * 60);
+                                 duration: ((index + 1) *5) * 60);
                             print((((index + 1) * 5) * 60).toString());
                           },
                           child: Container(
@@ -221,7 +229,8 @@ class _HomePageState extends State<HomePage> {
                                         color: innerBorderColor, width: 3)),
                                 child: Center(
                                   child: MyText(
-                                    text: ((index + 1) * 5).toString(),
+                                     text: ((index + 1) *5).toString(),
+                                    // text: ((index + 1) ).toString(),
                                     color: black,
                                   ),
                                 ),

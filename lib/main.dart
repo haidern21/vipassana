@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(GeneralController());
+
     return const GetMaterialApp(
         home: SplashScreen());
   }
