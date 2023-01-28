@@ -39,6 +39,8 @@ dependencies:
   get: ^4.6.5
   neon_circular_timer: ^0.0.7
   syncfusion_flutter_calendar: ^20.4.44
+  http:
+  google_sign_in: ^5.4.3
 
 dev_dependencies:
   flutter_test:

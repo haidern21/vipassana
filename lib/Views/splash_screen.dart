@@ -4,6 +4,8 @@ import 'package:vipassana/Views/homepage.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/constants.dart';
 
+import '../controller/general_controller.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -12,8 +14,11 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  GeneralController controller=Get.find();
   @override
   void initState() {
+    //controller.checkIfSignedIn();
+
     moveToNextPage();
     super.initState();
   }

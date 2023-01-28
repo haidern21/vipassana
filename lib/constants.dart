@@ -10,3 +10,4 @@ const Color selectedBorderColor= Color(0xff4BC1F4);
 const Color greyColor= Color(0xffF2F2F2);
 const Color headerGreyColor= Color(0xffE6E6E6);
 const Color dividerColor= Color(0xff707070);
+const String api='https://clientnodeapp.herokuapp.com';
