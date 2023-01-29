@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vipassana/controller/general_controller.dart';
 
 import '../constants.dart';
 import 'my_text.dart';
 
 class GoogleSignInSheet extends StatelessWidget {
-  const GoogleSignInSheet({Key? key}) : super(key: key);
-
+   GoogleSignInSheet({Key? key}) : super(key: key);
+  GeneralController controller =Get.find();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -154,7 +155,11 @@ class GoogleSignInSheet extends StatelessWidget {
               ),
               InkWell(
                 onTap: () async {
-                  //await controller.checkIfSignedIn();
+                  if( controller.isUserLoggedIn.value==false){
+                    await controller.handleSignIn();
+
+                  }
+                 // await controller.checkIfSignedIn();
                 },
                 child: Container(
                   decoration: BoxDecoration(
