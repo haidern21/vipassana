@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:neon_circular_timer/neon_circular_timer.dart';
 import 'package:vipassana/Views/meditation_log.dart';
+import 'package:vipassana/Widgets/google_signin_sheet.dart';
 import 'package:vipassana/Widgets/my_text.dart';
+import 'package:vipassana/Widgets/sound_bottom_sheet.dart';
 import 'package:vipassana/constants.dart';
 import '../controller/general_controller.dart';
 import 'help_and_more.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -32,7 +35,9 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
               ),
               clipBehavior: Clip.antiAliasWithSaveLayer,
-              builder: (context) => sessionsBottomSheet());
+              builder: (context) => Obx(() => controller.isUserLoggedIn.value
+                  ? sessionsBottomSheet()
+                  : const GoogleSignInSheet()));
         },
         child: popUpMenuItem(
           imagePath: 'assets/images/sessions_image.png',
@@ -43,13 +48,18 @@ class _HomePageState extends State<HomePage> {
           child: GestureDetector(
         onTap: () {
           Navigator.pop(context);
-          showModalBottomSheet(
-              context: context,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-              ),
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              builder: (context) => soundsBottomSheet());
+          Get.bottomSheet(Obx(() => controller.isUserLoggedIn.value
+              ? const SoundBottomSheet()
+              : const GoogleSignInSheet()));
+          // showModalBottomSheet(
+          //     context: context,
+          //     shape: const RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+          //     ),
+          //     clipBehavior: Clip.antiAliasWithSaveLayer,
+          //     builder: (context) => Obx(() => controller.isUserLoggedIn.value
+          //         ? const SoundBottomSheet()
+          //         : const GoogleSignInSheet()));
         },
         child: popUpMenuItem(
           imagePath: 'assets/images/sounds_image.png',
@@ -57,11 +67,25 @@ class _HomePageState extends State<HomePage> {
         ),
       )),
       PopupMenuItem(
-          child: GestureDetector(
-        onTap: () => Get.to(() => const MeditationLog()),
-        child: popUpMenuItem(
-          imagePath: 'assets/images/logs_image.png',
-          text: 'Logs',
+          child: Obx(
+        () => GestureDetector(
+          onTap: controller.isUserLoggedIn.value
+              ? () => Get.to(() => const MeditationLog())
+              : () {
+                  Navigator.pop(context);
+                  showModalBottomSheet(
+                      context: context,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(25.0)),
+                      ),
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      builder: (context) => const GoogleSignInSheet());
+                },
+          child: popUpMenuItem(
+            imagePath: 'assets/images/logs_image.png',
+            text: 'Logs',
+          ),
         ),
       )),
       PopupMenuItem(
@@ -170,11 +194,13 @@ class _HomePageState extends State<HomePage> {
                           innerFillColor: neonColor.withOpacity(.26),
                           outerStrokeColor: neonColor,
                           onComplete: () async {
-
-                           // controller.numberOfMinutesIndex.value=((controller.numberOfMinutesIndex.value + 1) *5) ;
-                           // await controller.uploadMeditationToServer(userId: DateTime.now().millisecondsSinceEpoch.toString(), meditationTime: controller.numberOfMinutesIndex.value.toString());
-                          // await controller.getAllMeditaions();
-                           // await controller.updateMeditations(docId: '8494655655814581', dateTime: DateTime.now().millisecondsSinceEpoch.toString(), meditationTime: controller.numberOfMinutesIndex.value.toString());
+                            if (controller.sessionSoundClipIndex.value == 0 &&
+                                controller.pickedFilePath.value.isNotEmpty) {
+                              await controller.audioPlayer.play(DeviceFileSource(
+                                  controller.pickedFilePath.value));
+                            }
+                            await controller.audioPlayer.play(AssetSource(soundPaths[
+                                controller.sessionSoundClipIndex.value]));
                           },
                         ),
                         Positioned(
@@ -207,8 +233,7 @@ class _HomePageState extends State<HomePage> {
                             controller.numberOfMinutesIndex.value = index;
                             _controller.restart(
                                 // duration: ((index + 1) ) * 60);
-                                 duration: ((index + 1) *5) * 60);
-                            print((((index + 1) * 5) * 60).toString());
+                                duration: ((index + 1) * 5)); //*60
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -229,7 +254,7 @@ class _HomePageState extends State<HomePage> {
                                         color: innerBorderColor, width: 3)),
                                 child: Center(
                                   child: MyText(
-                                     text: ((index + 1) *5).toString(),
+                                    text: ((index + 1) * 5).toString(),
                                     // text: ((index + 1) ).toString(),
                                     color: black,
                                   ),
@@ -426,174 +451,6 @@ class _HomePageState extends State<HomePage> {
             color: black,
           )
         ],
-      ),
-    );
-  }
-
-  Widget soundsBottomSheet() {
-    return SingleChildScrollView(
-      child: Container(
-        height: Get.height * .7,
-        width: Get.width,
-        decoration: const BoxDecoration(
-          color: white,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 10),
-                  child: MyText(
-                    text: 'End of session sound clip.',
-                    color: black,
-                    size: 18,
-                    weight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                SizedBox(
-                  height: 40,
-                  child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Obx(
-                          () => GestureDetector(
-                            onTap: () {
-                              controller.sessionSoundClipIndex.value = index;
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                      color: controller.sessionSoundClipIndex
-                                                  .value ==
-                                              index
-                                          ? innerBorderColor
-                                          : black)),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
-                                child: Center(
-                                  child: Obx(
-                                    () => MyText(
-                                      text: 'Bells',
-                                      color: controller.sessionSoundClipIndex
-                                                  .value ==
-                                              index
-                                          ? innerBorderColor
-                                          : selectedBorderColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(width: 10);
-                      },
-                      itemCount: 5),
-                ),
-                const SizedBox(height: 15),
-                const Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 10),
-                  child: MyText(
-                    text: 'Volume',
-                    color: black,
-                    size: 18,
-                    weight: FontWeight.bold,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: SliderTheme(
-                    data: const SliderThemeData(trackHeight: 10),
-                    child: Obx(
-                      () => Slider(
-                          min: 0,
-                          max: 10,
-                          activeColor: selectedBorderColor,
-                          inactiveColor: selectedBorderColor.withOpacity(.26),
-                          value: controller.volume.value,
-                          onChanged: (val) {
-                            controller.volume.value = val;
-                          }),
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 5),
-                  child: MyText(
-                    text: 'Repeat',
-                    color: black,
-                    size: 18,
-                    weight: FontWeight.bold,
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: MyText(
-                    text: 'Time the sound clip should play',
-                    color: black,
-                    size: 15,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: SliderTheme(
-                    data: const SliderThemeData(trackHeight: 10),
-                    child: Obx(
-                      () => Slider(
-                          min: 0,
-                          max: 10,
-                          activeColor: selectedBorderColor,
-                          inactiveColor: selectedBorderColor.withOpacity(.26),
-                          value: controller.repeat.value,
-                          onChanged: (val) {
-                            controller.repeat.value = val;
-                          }),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 15.0),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Container(
-                        width: Get.width * .8,
-                        decoration: BoxDecoration(
-                            color: selectedBorderColor,
-                            borderRadius: BorderRadius.circular(15)),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10.0),
-                          child: Center(
-                            child: MyText(
-                              text: 'Save',
-                              color: white,
-                              size: 18,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }
