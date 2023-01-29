@@ -16,9 +16,10 @@ class GeneralController extends GetxController{
   RxBool sessionLoop= false.obs;
   GoogleSignInAccount? _currentUser;
   RxString pickedFilePath=''.obs;
+  RxString userId=''.obs;
   AudioPlayer audioPlayer = AudioPlayer();
   var meditations=[].obs;
-  RxBool isUserLoggedIn= true.obs;
+  RxBool isUserLoggedIn= false.obs;
 // signUpWithGoogleFromApiCall() async {
 //
 //   var url = Uri.http('${api}/auth/google');
@@ -35,7 +36,7 @@ uploadMeditationToServer({required userId,required meditationTime}) async {
   print(url);
   Map body=
     {
-      "_id":"8494655655814581",
+      "_id":"${userId}",
       "meditations":
       {
         "dateTime": "${DateTime.now().toString()}",
@@ -84,21 +85,27 @@ updateMeditations({required docId,required dateTime,required meditationTime}) as
     ],
   );
   googleSignIn() async {
+     isUserLoggedIn.value=await _googleSignIn.isSignedIn();
+
   _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
         _currentUser = account;
 
     // if (_currentUser != null) {
-    //   _handleGetContact(_currentUser!);
+    //   _googleSignIn.signInSilently();
     // }
   });
-  _googleSignIn.signInSilently();
+     _googleSignIn.signInSilently();
+
 }
 
 
-  Future<void> _handleSignIn() async {
+  Future<void> handleSignIn() async {
     try {
       var a=await _googleSignIn.signIn();
       log(a!.id.toString());
+      userId.value=a.id.toString();
+      if(a.id!=''||a.id.isNotEmpty){
+      isUserLoggedIn.value=true;}
     } catch (error) {
       log('Error occured: $error');
     }
@@ -107,16 +114,26 @@ updateMeditations({required docId,required dateTime,required meditationTime}) as
   Future<void> handleSignOut() => _googleSignIn.disconnect();
   checkIfSignedIn() async {
     await googleSignIn();
-    final GoogleSignInAccount? user = _currentUser;
-    if (user != null) {
-      log('IF RAN');
-      log('USER ${user}');
+    if( isUserLoggedIn.value==false){
+      // await _handleSignIn();
+log('User not signed in ');
     }
     else{
-      log('Else RAN');
+      handleSignIn();
+      log('User signed in ');
 
-      await _handleSignIn();
+
     }
+
+    // if (user != null) {
+    //   log('IF RAN');
+    //   log('USER ${user}');
+    // }
+    //
+    // else{
+    //   log('Else RAN');
+    //
+    // }
   }
  getAllMeditaions() async {
   try {
@@ -131,6 +148,7 @@ updateMeditations({required docId,required dateTime,required meditationTime}) as
   }
  }
  getUserMeditations({required userId}) async {
+    meditations.value=[];
    try {
      var url = Uri.parse(api + '/meditation/$userId');
      var response = await http.get(url);
@@ -147,6 +165,7 @@ updateMeditations({required docId,required dateTime,required meditationTime}) as
  }
  @override
   void onInit() {
+    checkIfSignedIn();
     audioPlayer= AudioPlayer();
     super.onInit();
   }
