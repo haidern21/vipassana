@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
@@ -11,11 +12,13 @@ class GeneralController extends GetxController{
   RxDouble intervalTime=5.0.obs;
   RxDouble leadingTime=5.0.obs;
   RxDouble volume=5.00000.obs;
-  RxDouble repeat=5.00000.obs;
+  RxDouble repeat=1.00000.obs;
   RxBool sessionLoop= false.obs;
   GoogleSignInAccount? _currentUser;
-  String _contactText = '';
+  RxString pickedFilePath=''.obs;
+  AudioPlayer audioPlayer = AudioPlayer();
   var meditations=[].obs;
+  RxBool isUserLoggedIn= true.obs;
 // signUpWithGoogleFromApiCall() async {
 //
 //   var url = Uri.http('${api}/auth/google');
@@ -142,4 +145,9 @@ updateMeditations({required docId,required dateTime,required meditationTime}) as
 
    }
  }
+ @override
+  void onInit() {
+    audioPlayer= AudioPlayer();
+    super.onInit();
+  }
 }
