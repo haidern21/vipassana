@@ -32,15 +32,15 @@ class GeneralController extends GetxController{
 uploadMeditationToServer({required userId,required meditationTime}) async {
   try{
 
-  var url = Uri.parse(api + '/meditation');
+  var url = Uri.parse('$api/meditation');
   print(url);
   Map body=
     {
       "_id":"${userId}",
       "meditations":
       {
-        "dateTime": "${DateTime.now().toString()}",
-        "meditationTime": "${meditationTime} minutes"
+        "dateTime": DateTime.now().toString(),
+        "meditationTime": "$meditationTime minutes"
       }
     };
 print(json.encode(body));
@@ -55,7 +55,7 @@ print(json.encode(body));
 updateMeditations({required docId,required dateTime,required meditationTime}) async {
   try{
 
-    var url = Uri.parse(api + '/meditation/${docId}');
+    var url = Uri.parse('$api/meditation/${docId}');
     print(url);
     Map body=
     {
@@ -123,6 +123,7 @@ log('User not signed in ');
       log('User signed in ');
 
 
+
     }
 
     // if (user != null) {
@@ -149,6 +150,7 @@ log('User not signed in ');
  }
  getUserMeditations({required userId}) async {
     meditations.value=[];
+
    try {
      var url = Uri.parse(api + '/meditation/$userId');
      var response = await http.get(url);
@@ -156,7 +158,6 @@ log('User not signed in ');
      // print('Response body: ${response.body}');
      var jsonDecoded=jsonDecode(response.body);
    meditations.value= jsonDecoded['meditations'];
-   print(meditations);
    }
    catch (e){
      print("Error occured: ${e.toString()}");
