@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
               clipBehavior: Clip.antiAliasWithSaveLayer,
               builder: (context) => Obx(() => controller.isUserLoggedIn.value
                   ? sessionsBottomSheet()
-                  : const GoogleSignInSheet()));
+                  :  GoogleSignInSheet()));
         },
         child: popUpMenuItem(
           imagePath: 'assets/images/sessions_image.png',
@@ -48,18 +48,18 @@ class _HomePageState extends State<HomePage> {
           child: GestureDetector(
         onTap: () {
           Navigator.pop(context);
-          Get.bottomSheet(Obx(() => controller.isUserLoggedIn.value
-              ? const SoundBottomSheet()
-              : const GoogleSignInSheet()));
-          // showModalBottomSheet(
-          //     context: context,
-          //     shape: const RoundedRectangleBorder(
-          //       borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-          //     ),
-          //     clipBehavior: Clip.antiAliasWithSaveLayer,
-          //     builder: (context) => Obx(() => controller.isUserLoggedIn.value
-          //         ? const SoundBottomSheet()
-          //         : const GoogleSignInSheet()));
+          // Get.bottomSheet(Obx(() => controller.isUserLoggedIn.value
+          //     ? const SoundBottomSheet()
+          //     : const GoogleSignInSheet()));
+          showModalBottomSheet(
+              context: context,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+              ),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              builder: (context) => Obx(() => controller.isUserLoggedIn.value
+                  ? const SoundBottomSheet()
+                  :  GoogleSignInSheet()));
         },
         child: popUpMenuItem(
           imagePath: 'assets/images/sounds_image.png',
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                             BorderRadius.vertical(top: Radius.circular(25.0)),
                       ),
                       clipBehavior: Clip.antiAliasWithSaveLayer,
-                      builder: (context) => const GoogleSignInSheet());
+                      builder: (context) =>  GoogleSignInSheet());
                 },
           child: popUpMenuItem(
             imagePath: 'assets/images/logs_image.png',
@@ -190,6 +190,9 @@ class _HomePageState extends State<HomePage> {
                           neumorphicEffect: true,
                           autoStart: false,
                           neon: 0,
+                          onStart: (){
+                            print('STARTED');
+                          },
                           neonColor: innerBorderColor,
                           innerFillColor: neonColor.withOpacity(.26),
                           outerStrokeColor: neonColor,
