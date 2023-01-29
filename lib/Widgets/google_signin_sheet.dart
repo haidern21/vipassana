@@ -156,8 +156,8 @@ class GoogleSignInSheet extends StatelessWidget {
               InkWell(
                 onTap: () async {
                   if( controller.isUserLoggedIn.value==false){
-                    await controller.handleSignIn();
 
+                    await controller.handleSignIn();
                   }
                  // await controller.checkIfSignedIn();
                 },
