@@ -21,6 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _controller = CountDownController();
   final GeneralController controller = Get.find();
+  var meditationDuration=''.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -197,6 +198,25 @@ class _HomePageState extends State<HomePage> {
                           innerFillColor: neonColor.withOpacity(.26),
                           outerStrokeColor: neonColor,
                           onComplete: () async {
+                            if(controller.isUserLoggedIn.value==true) {
+                              var a = await controller.checkIfUserExistsInDb(
+                                  userId: controller.userId.value);
+                              if (a == 404) {
+                                await controller.uploadMeditationToServer(
+                                    userId: controller.userId.value,
+                                    meditationTime: '${meditationDuration
+                                        .value}');
+                                print('a=404');
+                              }
+                              else {
+                                await controller.updateMeditations(
+                                  docId: controller.userId.value,
+                                  meditationTime: '${meditationDuration
+                                      .value}',);
+
+                                print('a=200');
+                              }
+
                             if (controller.sessionSoundClipIndex.value == 0 &&
                                 controller.pickedFilePath.value.isNotEmpty) {
                               await controller.audioPlayer.play(DeviceFileSource(
@@ -204,7 +224,8 @@ class _HomePageState extends State<HomePage> {
                             }
                             await controller.audioPlayer.play(AssetSource(soundPaths[
                                 controller.sessionSoundClipIndex.value]));
-                          },
+                          }
+                          }
                         ),
                         Positioned(
                             bottom: 30,
@@ -233,10 +254,11 @@ class _HomePageState extends State<HomePage> {
                       return Obx(
                         () => GestureDetector(
                           onTap: () {
+                            meditationDuration.value=((index + 1) * 5).toString();
                             controller.numberOfMinutesIndex.value = index;
                             _controller.restart(
                                 // duration: ((index + 1) ) * 60);
-                                duration: ((index + 1) * 5)); //*60
+                                duration: ((index + 1) * 5)*60); //*60
                           },
                           child: Container(
                             decoration: BoxDecoration(

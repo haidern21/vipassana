@@ -52,7 +52,7 @@ print(json.encode(body));
     print("ERROR OCCURED : ${e.toString()}");
   }
 }
-updateMeditations({required docId,required dateTime,required meditationTime}) async {
+updateMeditations({required docId,required meditationTime}) async {
   try{
 
     var url = Uri.parse('$api/meditation/${docId}');
@@ -98,7 +98,20 @@ updateMeditations({required docId,required dateTime,required meditationTime}) as
 
 }
 
+checkIfUserExistsInDb({required userId}) async {
+  var response;
+    try{
+  var url = Uri.parse(api + '/meditation/$userId');
+   response = await http.get(url);
 
+
+}
+  catch (e){
+  print("Error occured: ${e.toString()}");
+
+  }
+    return response.statusCode;
+}
   Future<void> handleSignIn() async {
     try {
       var a=await _googleSignIn.signIn();
