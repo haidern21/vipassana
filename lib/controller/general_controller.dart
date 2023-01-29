@@ -31,15 +31,15 @@ class GeneralController extends GetxController{
 uploadMeditationToServer({required userId,required meditationTime}) async {
   try{
 
-  var url = Uri.parse(api + '/meditation');
+  var url = Uri.parse('$api/meditation');
   print(url);
   Map body=
     {
       "_id":"8494655655814581",
       "meditations":
       {
-        "dateTime": "${DateTime.now().toString()}",
-        "meditationTime": "${meditationTime} minutes"
+        "dateTime": DateTime.now().toString(),
+        "meditationTime": "$meditationTime minutes"
       }
     };
 print(json.encode(body));
@@ -54,7 +54,7 @@ print(json.encode(body));
 updateMeditations({required docId,required dateTime,required meditationTime}) async {
   try{
 
-    var url = Uri.parse(api + '/meditation/${docId}');
+    var url = Uri.parse('$api/meditation/${docId}');
     print(url);
     Map body=
     {
@@ -95,7 +95,7 @@ updateMeditations({required docId,required dateTime,required meditationTime}) as
 }
 
 
-  Future<void> _handleSignIn() async {
+  Future<void> handleSignIn() async {
     try {
       var a=await _googleSignIn.signIn();
       log(a!.id.toString());
@@ -115,7 +115,7 @@ updateMeditations({required docId,required dateTime,required meditationTime}) as
     else{
       log('Else RAN');
 
-      await _handleSignIn();
+      await handleSignIn();
     }
   }
  getAllMeditaions() async {
@@ -131,6 +131,7 @@ updateMeditations({required docId,required dateTime,required meditationTime}) as
   }
  }
  getUserMeditations({required userId}) async {
+    meditations.clear();
    try {
      var url = Uri.parse(api + '/meditation/$userId');
      var response = await http.get(url);
@@ -138,7 +139,6 @@ updateMeditations({required docId,required dateTime,required meditationTime}) as
      // print('Response body: ${response.body}');
      var jsonDecoded=jsonDecode(response.body);
    meditations.value= jsonDecoded['meditations'];
-   print(meditations);
    }
    catch (e){
      print("Error occured: ${e.toString()}");
