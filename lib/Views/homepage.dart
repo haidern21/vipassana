@@ -26,26 +26,26 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     List<PopupMenuItem> items = [
       PopupMenuItem(
-          child: GestureDetector(
-        onTap: () {
-          Navigator.pop(context);
-          showModalBottomSheet(
-              context: context,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-              ),
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              builder: (context) => Obx(() => controller.isUserLoggedIn.value
-                  ? sessionsBottomSheet()
-                  :  GoogleSignInSheet()));
-        },
+          child: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              showModalBottomSheet(
+                  context: context,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+                  ),
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  builder: (context) => Obx(() => controller.isUserLoggedIn.value
+                      ? sessionsBottomSheet()
+                      :  GoogleSignInSheet()));
+            },
         child: popUpMenuItem(
           imagePath: 'assets/images/sessions_image.png',
           text: 'Sessions',
         ),
       )),
       PopupMenuItem(
-          child: GestureDetector(
+          child: InkWell(
         onTap: () {
           Navigator.pop(context);
           // Get.bottomSheet(Obx(() => controller.isUserLoggedIn.value
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
       )),
       PopupMenuItem(
           child: Obx(
-        () => GestureDetector(
+        () => InkWell(
           onTap: controller.isUserLoggedIn.value
               ? () => Get.to(() => const MeditationLog())
               : () {
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
         ),
       )),
       PopupMenuItem(
-        child: GestureDetector(
+        child: InkWell(
           onTap: () => Get.to(() => const HelpAndMore()),
           child: popUpMenuItem(
             imagePath: 'assets/images/search_image.png',
