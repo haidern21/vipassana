@@ -73,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+
                       InkWell(
                         onTap:() async {
                         await controller.handleSignIn();
@@ -101,6 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               )
                             ],
                           ),
+
                         ),
                       ),
                       GestureDetector(
