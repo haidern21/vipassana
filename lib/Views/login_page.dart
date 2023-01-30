@@ -73,28 +73,36 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Container(
-                        height: 60,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: white,
-                            border: Border.all(color: black, width: 0.5),
-                            borderRadius: BorderRadius.circular(40)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset('assets/images/google.png'),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            const MyText(
-                              text: 'Sign in with Google',
-                              color: black,
-                              size: 18,
-                              weight: FontWeight.w500,
-                            )
-                          ],
+
+                      InkWell(
+                        onTap:() async {
+                        await controller.handleSignIn();
+                        Get.offAll(()=>HomePage());
+                         },
+                        child: Container(
+                          height: 60,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: white,
+                              border: Border.all(color: black, width: 0.5),
+                              borderRadius: BorderRadius.circular(40)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/images/google.png'),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              const MyText(
+                                text: 'Sign in with Google',
+                                color: black,
+                                size: 18,
+                                weight: FontWeight.w500,
+                              )
+                            ],
+                          ),
+
                         ),
                       ),
                       GestureDetector(

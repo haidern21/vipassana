@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
@@ -120,6 +121,7 @@ checkIfUserExistsInDb({required userId}) async {
       if(a.id!=''||a.id.isNotEmpty){
       isUserLoggedIn.value=true;}
     } catch (error) {
+      Get.snackbar('Error', 'Some error occurred while signing in, please try again later !!!',snackPosition: SnackPosition.BOTTOM,colorText: Colors.red);
       log('Error occured: $error');
     }
   }

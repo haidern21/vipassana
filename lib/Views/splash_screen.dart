@@ -22,14 +22,21 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    //controller.checkIfSignedIn();
+
+    controller.checkIfSignedIn();
+
     moveToNextPage();
     super.initState();
   }
 
   moveToNextPage() {
     Future.delayed(
-        const Duration(seconds: 5), () => Get.offAll(() => const LoginScreen()));
+
+        const Duration(seconds: 3), () {
+      controller.isUserLoggedIn.value==false?
+          Get.offAll(() => const LoginScreen()):Get.offAll(() => const HomePage());
+    });
+
   }
 
   @override
