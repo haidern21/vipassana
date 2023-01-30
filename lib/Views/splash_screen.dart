@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vipassana/Views/homepage.dart';
+import 'package:vipassana/Views/login_page.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/constants.dart';
 
@@ -14,18 +17,19 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  GeneralController controller=Get.find();
+  GeneralController controller = Get.find();
+  String quote = (quotes..shuffle()).first;
+
   @override
   void initState() {
     //controller.checkIfSignedIn();
-
     moveToNextPage();
     super.initState();
   }
 
   moveToNextPage() {
     Future.delayed(
-        const Duration(seconds: 0), () => Get.to(() => const HomePage()));
+        const Duration(seconds: 5), () => Get.offAll(() => const LoginScreen()));
   }
 
   @override
@@ -45,16 +49,15 @@ class _SplashScreenState extends State<SplashScreen> {
             alignment: Alignment.center,
             child: Image.asset('assets/images/meditation_image.png'),
           ),
-          const Align(
+          Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.only(bottom: 60.0),
+              padding: const EdgeInsets.symmetric(vertical: 60.0,horizontal: 15),
               child: MyText(
-                text:
-                    'Self observation is the first \n step in inner unfolding',
-                maxLines: 2,
+                text: quote.toUpperCase(),
+                maxLines: 5,
                 color: white,
-                weight: FontWeight.w400,
+                weight: FontWeight.w600,
                 size: 23,
                 textAlign: TextAlign.center,
               ),

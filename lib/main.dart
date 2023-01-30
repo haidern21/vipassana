@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
     Get.put(GeneralController());
 
     return const GetMaterialApp(
-
         home: SplashScreen());
   }
 }

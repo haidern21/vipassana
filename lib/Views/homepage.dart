@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,75 +23,80 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _controller = CountDownController();
   final GeneralController controller = Get.find();
-  var meditationDuration=''.obs;
+  var meditationDuration = ''.obs;
 
   @override
   Widget build(BuildContext context) {
-    List<PopupMenuItem> items = [
+    List<PopupMenuItem<int>> items = [
       PopupMenuItem(
+          value: 0,
           child: GestureDetector(
-        onTap: () {
-          Navigator.pop(context);
-          showModalBottomSheet(
-              context: context,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-              ),
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              builder: (context) => Obx(() => controller.isUserLoggedIn.value
-                  ? sessionsBottomSheet()
-                  :  GoogleSignInSheet()));
-        },
-        child: popUpMenuItem(
-          imagePath: 'assets/images/sessions_image.png',
-          text: 'Sessions',
-        ),
-      )),
+            onTap: () {
+              Navigator.pop(context);
+              showModalBottomSheet(
+                  context: context,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(25.0)),
+                  ),
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  builder: (context) => Obx(() =>
+                      controller.isUserLoggedIn.value
+                          ? sessionsBottomSheet()
+                          : GoogleSignInSheet()));
+            },
+            child: popUpMenuItem(
+              imagePath: 'assets/images/sessions_image.png',
+              text: 'Sessions',
+            ),
+          )),
       PopupMenuItem(
+          value: 1,
           child: GestureDetector(
-        onTap: () {
-          Navigator.pop(context);
-          // Get.bottomSheet(Obx(() => controller.isUserLoggedIn.value
-          //     ? const SoundBottomSheet()
-          //     : const GoogleSignInSheet()));
-          showModalBottomSheet(
-              context: context,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-              ),
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              builder: (context) => Obx(() => controller.isUserLoggedIn.value
-                  ? const SoundBottomSheet()
-                  :  GoogleSignInSheet()));
-        },
-        child: popUpMenuItem(
-          imagePath: 'assets/images/sounds_image.png',
-          text: 'Sounds',
-        ),
-      )),
+            onTap: () {
+              Navigator.pop(context);
+              showModalBottomSheet(
+                  context: context,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(25.0)),
+                  ),
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  builder: (context) => Obx(() =>
+                      controller.isUserLoggedIn.value
+                          ? const SoundBottomSheet()
+                          : GoogleSignInSheet()));
+            },
+            child: popUpMenuItem(
+              imagePath: 'assets/images/sounds_image.png',
+              text: 'Sounds',
+            ),
+          )),
       PopupMenuItem(
+          value: 2,
           child: Obx(
-        () => GestureDetector(
-          onTap: controller.isUserLoggedIn.value
-              ? () => Get.to(() => const MeditationLog())
-              : () {
-                  Navigator.pop(context);
-                  showModalBottomSheet(
-                      context: context,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(25.0)),
-                      ),
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      builder: (context) =>  GoogleSignInSheet());
-                },
-          child: popUpMenuItem(
-            imagePath: 'assets/images/logs_image.png',
-            text: 'Logs',
-          ),
-        ),
-      )),
+            () => GestureDetector(
+              onTap: controller.isUserLoggedIn.value
+                  ? () => Get.to(() => const MeditationLog())
+                  : () {
+                      Navigator.pop(context);
+                      showModalBottomSheet(
+                          context: context,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(25.0)),
+                          ),
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          builder: (context) => GoogleSignInSheet());
+                    },
+              child: popUpMenuItem(
+                imagePath: 'assets/images/logs_image.png',
+                text: 'Logs',
+              ),
+            ),
+          )),
       PopupMenuItem(
+        value: 3,
         child: GestureDetector(
           onTap: () => Get.to(() => const HelpAndMore()),
           child: popUpMenuItem(
@@ -114,135 +121,194 @@ class _HomePageState extends State<HomePage> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                Column(
                   children: [
-                    PopupMenuButton(
-                      child: const SizedBox(
-                        child: Icon(
-                          Icons.more_vert,
-                          color: white,
-                          size: 30,
-                        ),
-                      ),
-                      itemBuilder: (context) {
-                        return List.generate(items.length, (index) {
-                          return items[index];
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Obx(
-                    () => controller.leadingTime.value == 5.0
-                        ? const MyText(
-                            text: 'Leading Time: 5: 00"',
-                            color: white,
-                            size: 17,
-                          )
-                        : MyText(
-                            text:
-                                'Leading Time: ${controller.leadingTime.value.toString().substring(0, 1)}:${controller.leadingTime.value.toString().substring(2, 4)}"',
-                            color: white,
-                            size: 17,
-                          ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Obx(
-                    () => controller.intervalTime.value == 5.0
-                        ? const MyText(
-                            text: 'Interval: 5: 00"',
-                            color: white,
-                            size: 17,
-                          )
-                        : MyText(
-                            text:
-                                'Interval: ${controller.intervalTime.value.toString().substring(0, 1)}:${controller.intervalTime.value.toString().substring(2, 4)}"',
-                            color: white,
-                            size: 17,
-                          ),
-                  ),
-                ),
-                SizedBox(
-                  height: Get.height * .15,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: GestureDetector(
-                    onTap: () {
-                      _controller.restart();
-                    },
-                    child: Stack(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        NeonCircularTimer(
-                          width: 200,
-                          duration: 6500,
-                          controller: _controller,
-                          strokeWidth: 15,
-                          backgroudColor: Colors.transparent,
-                          isTimerTextShown: true,
-                          neumorphicEffect: true,
-                          autoStart: false,
-                          neon: 0,
-                          onStart: (){
-                            print('STARTED');
-                          },
-                          neonColor: innerBorderColor,
-                          innerFillColor: neonColor.withOpacity(.26),
-                          outerStrokeColor: neonColor,
-                          onComplete: () async {
-                            if(controller.isUserLoggedIn.value==true) {
-                              var a = await controller.checkIfUserExistsInDb(
-                                  userId: controller.userId.value);
-                              if (a == 404) {
-                                await controller.uploadMeditationToServer(
-                                    userId: controller.userId.value,
-                                    meditationTime: '${meditationDuration
-                                        .value}');
-                                print('a=404');
-                              }
-                              else {
-                                await controller.updateMeditations(
-                                  docId: controller.userId.value,
-                                  meditationTime: '${meditationDuration
-                                      .value}',);
-
-                                print('a=200');
-                              }
-
-                            if (controller.sessionSoundClipIndex.value == 0 &&
-                                controller.pickedFilePath.value.isNotEmpty) {
-                              await controller.audioPlayer.play(DeviceFileSource(
-                                  controller.pickedFilePath.value));
+                        PopupMenuButton(
+                          onSelected: (val) {
+                            if (val == 0) {
+                              showModalBottomSheet(
+                                  context: context,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(25.0)),
+                                  ),
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  builder: (context) => Obx(() =>
+                                      controller.isUserLoggedIn.value
+                                          ? sessionsBottomSheet()
+                                          : GoogleSignInSheet()));
+                              log('index 0');
                             }
-                            await controller.audioPlayer.play(AssetSource(soundPaths[
-                                controller.sessionSoundClipIndex.value]));
-                          }
-                          }
+                            if (val == 1) {
+                              showModalBottomSheet(
+                                  context: context,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(25.0)),
+                                  ),
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  builder: (context) => Obx(() =>
+                                      controller.isUserLoggedIn.value
+                                          ? const SoundBottomSheet()
+                                          : GoogleSignInSheet()));
+                              log('index 1');
+                            }
+                            if (val == 2) {
+                              log('index 2');
+                              controller.isUserLoggedIn.value
+                                  ? Get.to(() => const MeditationLog())
+                                  : showModalBottomSheet(
+                                      context: context,
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(25.0)),
+                                      ),
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      builder: (context) =>
+                                          GoogleSignInSheet());
+                            }
+                            if (val == 3) {
+                              log('index 3');
+                              Get.to(() => const HelpAndMore());
+                            }
+                          },
+                          child: const SizedBox(
+                            child: Icon(
+                              Icons.more_vert,
+                              color: white,
+                              size: 30,
+                            ),
+                          ),
+                          itemBuilder: (context) {
+                            return List.generate(items.length, (index) {
+                              return items[index];
+                            });
+                          },
                         ),
-                        Positioned(
-                            bottom: 30,
-                            left: Get.width * .43,
-                            child: Image.asset(
-                              'assets/images/loop.png',
-                              height: 20,
-                            ))
                       ],
                     ),
-                  ),
-                ),
-                SizedBox(
-                  child: Image.asset('assets/images/bg_visual_effects.png'),
-                ),
-                const SizedBox(
-                  height: 10,
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Obx(
+                        () => controller.leadingTime.value == 5.0
+                            ? const MyText(
+                                text: 'Leading Time: 5: 00"',
+                                color: white,
+                                size: 17,
+                              )
+                            : MyText(
+                                text:
+                                    'Leading Time: ${controller.leadingTime.value.toString().substring(0, 1)}:${controller.leadingTime.value.toString().substring(2, 4)}"',
+                                color: white,
+                                size: 17,
+                              ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Obx(
+                        () => controller.intervalTime.value == 5.0
+                            ? const MyText(
+                                text: 'Interval: 5: 00"',
+                                color: white,
+                                size: 17,
+                              )
+                            : MyText(
+                                text:
+                                    'Interval: ${controller.intervalTime.value.toString().substring(0, 1)}:${controller.intervalTime.value.toString().substring(2, 4)}"',
+                                color: white,
+                                size: 17,
+                              ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: Get.height * .15,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: GestureDetector(
+                        onTap: () {
+                          _controller.restart();
+                        },
+                        child: Stack(
+                          children: [
+                            NeonCircularTimer(
+                                width: 200,
+                                duration: 6500,
+                                controller: _controller,
+                                strokeWidth: 15,
+                                backgroudColor: Colors.transparent,
+                                isTimerTextShown: true,
+                                neumorphicEffect: true,
+                                autoStart: false,
+                                neon: 0,
+                                onStart: () {
+                                  print('STARTED');
+                                },
+                                neonColor: innerBorderColor,
+                                innerFillColor: neonColor.withOpacity(.26),
+                                outerStrokeColor: neonColor,
+                                onComplete: () async {
+                                  if (controller.isUserLoggedIn.value == true) {
+                                    var a =
+                                        await controller.checkIfUserExistsInDb(
+                                            userId: controller.userId.value);
+                                    if (a == 404) {
+                                      await controller.uploadMeditationToServer(
+                                          userId: controller.userId.value,
+                                          meditationTime:
+                                              meditationDuration.value);
+                                      print('a=404');
+                                    } else {
+                                      await controller.updateMeditations(
+                                        docId: controller.userId.value,
+                                        meditationTime:
+                                            meditationDuration.value,
+                                      );
+
+                                      print('a=200');
+                                    }
+
+                                    if (controller
+                                                .sessionSoundClipIndex.value ==
+                                            0 &&
+                                        controller
+                                            .pickedFilePath.value.isNotEmpty) {
+                                      await controller.audioPlayer.play(
+                                          DeviceFileSource(
+                                              controller.pickedFilePath.value));
+                                    }
+                                    await controller.audioPlayer.play(
+                                        AssetSource(soundPaths[controller
+                                            .sessionSoundClipIndex.value]));
+                                  }
+                                }),
+                            Positioned.fill(
+                                bottom: 30,
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Image.asset(
+                                    'assets/images/loop.png',
+                                    height: 20,
+                                  ),
+                                ))
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      child: Image.asset('assets/images/bg_visual_effects.png'),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 90,
@@ -254,11 +320,12 @@ class _HomePageState extends State<HomePage> {
                       return Obx(
                         () => GestureDetector(
                           onTap: () {
-                            meditationDuration.value=((index + 1) * 5).toString();
+                            meditationDuration.value =
+                                ((index + 1) * 5).toString();
                             controller.numberOfMinutesIndex.value = index;
                             _controller.restart(
                                 // duration: ((index + 1) ) * 60);
-                                duration: ((index + 1) * 5)*60); //*60
+                                duration: ((index + 1) * 5) * 60); //*60
                           },
                           child: Container(
                             decoration: BoxDecoration(
