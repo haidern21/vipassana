@@ -31,3 +31,14 @@ List<String> soundPaths = [
   'bells/bell.ogg',
   'bells/bicycle.mp3',
 ];
+List<String> quotes=[
+  'Self observation is the first step in inner unfolding',
+  'There is no fear for one whose mind is not filled with desires',
+  'A disciplined mind brings happiness',
+  'Doubt everything, Find your own light',
+  'There is no path to happiness, happiness is the path',
+  'If you truly love yourself, you could never hurt another',
+  'You will not be punished for your anger; you will be punished by your anger',
+  'If your compassion does not include yourself, it is incomplete',
+  'pain is certain, suffering is optional',
+];

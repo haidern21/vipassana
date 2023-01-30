@@ -164,7 +164,7 @@ class _MeditationLogState extends State<MeditationLog> {
 
     List dateInMed = [];
     showLoader.value = true;
-    await controller.getUserMeditations(userId: '8494655655814581');
+    await controller.getUserMeditations(userId: controller.userId.value);
     showLoader.value = false;
     for (var elements in controller.meditations) {
       if (DateTime.parse(elements['dateTime']).day == DateTime.now().day &&
@@ -205,7 +205,7 @@ class _MeditationLogState extends State<MeditationLog> {
                     List dateInMed = [];
                     showLoader.value = true;
                     await controller.getUserMeditations(
-                        userId: '8494655655814581');
+                        userId: controller.userId.value);
                     showLoader.value = false;
                     for (var elements in controller.meditations) {
                       if (DateTime.parse(elements['dateTime']).day ==
