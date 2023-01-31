@@ -8,6 +8,7 @@ import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/Widgets/sound_bottom_sheet.dart';
 import 'package:vipassana/constants.dart';
 import '../controller/general_controller.dart';
+import '../local_notifications.dart';
 import 'help_and_more.dart';
 import 'package:audioplayers/audioplayers.dart';
 
@@ -22,7 +23,14 @@ class _HomePageState extends State<HomePage> {
   final _controller = CountDownController();
   final GeneralController controller = Get.find();
   var meditationDuration = ''.obs;
-  AudioPlayer audioPlayer= AudioPlayer();
+  AudioPlayer audioPlayer = AudioPlayer();
+  LocalNotifications localNotifications = LocalNotifications();
+
+  @override
+  void initState() {
+    localNotifications.initializeNotifications();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -241,9 +249,7 @@ class _HomePageState extends State<HomePage> {
                                 innerFillColor: neonColor.withOpacity(.26),
                                 outerStrokeColor: neonColor,
                                 onComplete: () async {
-                                  await audioPlayer.play(
-                                      AssetSource(soundPaths[controller
-                                          .sessionSoundClipIndex.value]));
+                                  await playSoundWithInterval();
                                   if (controller.isUserLoggedIn.value == true) {
                                     var a =
                                         await controller.checkIfUserExistsInDb(
@@ -273,9 +279,6 @@ class _HomePageState extends State<HomePage> {
                                           DeviceFileSource(
                                               controller.pickedFilePath.value));
                                     }
-                                   // for(int i =0; i< controller.repeat.toInt();i++){
-
-                                   // }
                                   }
                                 }),
                             Positioned.fill(
@@ -308,10 +311,13 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (context, index) {
                       return Obx(
                         () => GestureDetector(
-                          onTap: () {
+                          onTap: () async {
+                            controller.totalTimer.value = ((index + 1) * 5)*60;
                             meditationDuration.value =
                                 ((index + 1) * 5).toString();
                             controller.numberOfMinutesIndex.value = index;
+                            // await localNotifications
+                            //     .showNotification(controller.totalTimer.value);
                             _controller.restart(
                                 // duration: ((index + 1) ) * 60);
                                 duration: ((index + 1) * 5) *60); //*60
@@ -586,5 +592,17 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+  playSoundWithInterval()async{
+    if(controller.intervalTime.toInt()==0){
+      return ;
+    }else{
+      await controller.audioPlayer.play(AssetSource(soundPaths[
+      controller.sessionSoundClipIndex.value]),volume: 5,);
+      setState(() {
+        controller.intervalTime.value--;
+      });
+    }
+
   }
 }
