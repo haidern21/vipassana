@@ -249,7 +249,12 @@ class _HomePageState extends State<HomePage> {
                                 innerFillColor: neonColor.withOpacity(.26),
                                 outerStrokeColor: neonColor,
                                 onComplete: () async {
-                                  await playSoundWithInterval();
+                                  // await playSoundWithInterval();
+
+                                  if(controller.sessionSoundClipIndex.value!=-1){
+                                    await controller.audioPlayer.play(AssetSource(soundPaths[
+                                    controller.sessionSoundClipIndex.value]),volume: 5,);
+                                  }
                                   if (controller.isUserLoggedIn.value == true) {
                                     var a =
                                         await controller.checkIfUserExistsInDb(
