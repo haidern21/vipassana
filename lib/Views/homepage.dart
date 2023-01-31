@@ -1,15 +1,14 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:neon_circular_timer/neon_circular_timer.dart';
 import 'package:vipassana/Views/meditation_log.dart';
-import 'package:vipassana/Widgets/google_signin_sheet.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/Widgets/sound_bottom_sheet.dart';
 import 'package:vipassana/constants.dart';
 import '../controller/general_controller.dart';
+import '../local_notifications.dart';
 import 'help_and_more.dart';
 import 'package:audioplayers/audioplayers.dart';
 
@@ -24,6 +23,14 @@ class _HomePageState extends State<HomePage> {
   final _controller = CountDownController();
   final GeneralController controller = Get.find();
   var meditationDuration = ''.obs;
+  AudioPlayer audioPlayer = AudioPlayer();
+  LocalNotifications localNotifications = LocalNotifications();
+
+  @override
+  void initState() {
+    localNotifications.initializeNotifications();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +47,11 @@ class _HomePageState extends State<HomePage> {
                         BorderRadius.vertical(top: Radius.circular(25.0)),
                   ),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                  builder: (context) => Obx(() =>
-                      controller.isUserLoggedIn.value
-                          ? sessionsBottomSheet()
-                          : GoogleSignInSheet()));
+                  builder: (context) => sessionsBottomSheet());
+              // builder: (context) => Obx(() =>
+              //     controller.isUserLoggedIn.value
+              //         ? sessionsBottomSheet()
+              //         : GoogleSignInSheet()));
             },
             child: popUpMenuItem(
               imagePath: 'assets/images/sessions_image.png',
@@ -62,10 +70,11 @@ class _HomePageState extends State<HomePage> {
                         BorderRadius.vertical(top: Radius.circular(25.0)),
                   ),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                  builder: (context) => Obx(() =>
-                      controller.isUserLoggedIn.value
-                          ? const SoundBottomSheet()
-                          : GoogleSignInSheet()));
+                  builder: (context) => const SoundBottomSheet());
+              // builder: (context) => Obx(() =>
+              //     controller.isUserLoggedIn.value
+              //         ? const SoundBottomSheet()
+              //         : GoogleSignInSheet()));
             },
             child: popUpMenuItem(
               imagePath: 'assets/images/sounds_image.png',
@@ -73,28 +82,28 @@ class _HomePageState extends State<HomePage> {
             ),
           )),
       PopupMenuItem(
-          value: 2,
-          child: Obx(
-            () => GestureDetector(
-              onTap: controller.isUserLoggedIn.value
-                  ? () => Get.to(() => const MeditationLog())
-                  : () {
-                      Navigator.pop(context);
-                      showModalBottomSheet(
-                          context: context,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(25.0)),
-                          ),
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          builder: (context) => GoogleSignInSheet());
-                    },
-              child: popUpMenuItem(
-                imagePath: 'assets/images/logs_image.png',
-                text: 'Logs',
-              ),
-            ),
-          )),
+        value: 2,
+        child: GestureDetector(
+          // onTap: controller.isUserLoggedIn.value
+          //     ? () => Get.to(() => const MeditationLog())
+          //     : () {
+          //         Navigator.pop(context);
+          //         showModalBottomSheet(
+          //             context: context,
+          //             shape: const RoundedRectangleBorder(
+          //               borderRadius: BorderRadius.vertical(
+          //                   top: Radius.circular(25.0)),
+          //             ),
+          //             clipBehavior: Clip.antiAliasWithSaveLayer,
+          //             builder: (context) => GoogleSignInSheet());
+          //       },
+          onTap: () => Get.to(() => const MeditationLog()),
+          child: popUpMenuItem(
+            imagePath: 'assets/images/logs_image.png',
+            text: 'Logs',
+          ),
+        ),
+      ),
       PopupMenuItem(
         value: 3,
         child: GestureDetector(
@@ -139,10 +148,7 @@ class _HomePageState extends State<HomePage> {
                                         top: Radius.circular(25.0)),
                                   ),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  builder: (context) => Obx(() =>
-                                      controller.isUserLoggedIn.value
-                                          ? sessionsBottomSheet()
-                                          : GoogleSignInSheet()));
+                                  builder: (context) => sessionsBottomSheet());
                               log('index 0');
                             }
                             if (val == 1) {
@@ -153,25 +159,13 @@ class _HomePageState extends State<HomePage> {
                                         top: Radius.circular(25.0)),
                                   ),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  builder: (context) => Obx(() =>
-                                      controller.isUserLoggedIn.value
-                                          ? const SoundBottomSheet()
-                                          : GoogleSignInSheet()));
+                                  builder: (context) =>
+                                      const SoundBottomSheet());
                               log('index 1');
                             }
                             if (val == 2) {
                               log('index 2');
-                              controller.isUserLoggedIn.value
-                                  ? Get.to(() => const MeditationLog())
-                                  : showModalBottomSheet(
-                                      context: context,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(25.0)),
-                                      ),
-                                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      builder: (context) =>
-                                          GoogleSignInSheet());
+                              Get.to(() => const MeditationLog());
                             }
                             if (val == 3) {
                               log('index 3');
@@ -255,6 +249,7 @@ class _HomePageState extends State<HomePage> {
                                 innerFillColor: neonColor.withOpacity(.26),
                                 outerStrokeColor: neonColor,
                                 onComplete: () async {
+                                  await playSoundWithInterval();
                                   if (controller.isUserLoggedIn.value == true) {
                                     var a =
                                         await controller.checkIfUserExistsInDb(
@@ -284,9 +279,6 @@ class _HomePageState extends State<HomePage> {
                                           DeviceFileSource(
                                               controller.pickedFilePath.value));
                                     }
-                                    await controller.audioPlayer.play(
-                                        AssetSource(soundPaths[controller
-                                            .sessionSoundClipIndex.value]));
                                   }
                                 }),
                             Positioned.fill(
@@ -319,13 +311,16 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (context, index) {
                       return Obx(
                         () => GestureDetector(
-                          onTap: () {
+                          onTap: () async {
+                            controller.totalTimer.value = ((index + 1) * 5)*60;
                             meditationDuration.value =
                                 ((index + 1) * 5).toString();
                             controller.numberOfMinutesIndex.value = index;
+                            // await localNotifications
+                            //     .showNotification(controller.totalTimer.value);
                             _controller.restart(
                                 // duration: ((index + 1) ) * 60);
-                                duration: ((index + 1) * 5) * 60); //*60
+                                duration: ((index + 1) * 5) *60); //*60
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -406,15 +401,41 @@ class _HomePageState extends State<HomePage> {
                 child: SliderTheme(
                   data: const SliderThemeData(trackHeight: 10),
                   child: Obx(
-                    () => Slider(
-                        min: 0,
-                        max: 10,
-                        activeColor: selectedBorderColor,
-                        inactiveColor: selectedBorderColor.withOpacity(.26),
-                        value: controller.leadingTime.value,
-                        onChanged: (val) {
-                          controller.leadingTime.value = val;
-                        }),
+                    () => controller.isUserLoggedIn.value
+                        ? Slider(
+                            min: 0,
+                            max: 10,
+                            activeColor: selectedBorderColor,
+                            inactiveColor: selectedBorderColor.withOpacity(.26),
+                            value: controller.leadingTime.value,
+                            onChanged: (val) {
+                              controller.leadingTime.value = val;
+                            })
+                        : Row(
+                            children: [
+                              Expanded(
+                                flex: 5,
+                                child: Slider(
+                                    min: 0,
+                                    max: 10,
+                                    activeColor: const Color(0xff9f9f9f),
+                                    inactiveColor:
+                                        Color(0xff9f9f9f).withOpacity(.26),
+                                    value: 0,
+                                    onChanged: (val) {
+                                      controller.leadingTime.value = val;
+                                    }),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: SizedBox(
+                                    height: 40,
+                                    width: 40,
+                                    child: Image.asset(
+                                        'assets/images/gree_lock.png')),
+                              ),
+                            ],
+                          ),
                   ),
                 ),
               ),
@@ -479,15 +500,41 @@ class _HomePageState extends State<HomePage> {
                 child: SliderTheme(
                   data: const SliderThemeData(trackHeight: 10),
                   child: Obx(
-                    () => Slider(
-                        min: 0,
-                        max: 10,
-                        activeColor: selectedBorderColor,
-                        inactiveColor: selectedBorderColor.withOpacity(.26),
-                        value: controller.intervalTime.value,
-                        onChanged: (val) {
-                          controller.intervalTime.value = val;
-                        }),
+                    () => controller.isUserLoggedIn.value
+                        ? Slider(
+                            min: 0,
+                            max: 10,
+                            activeColor: selectedBorderColor,
+                            inactiveColor: selectedBorderColor.withOpacity(.26),
+                            value: controller.intervalTime.value,
+                            onChanged: (val) {
+                              controller.intervalTime.value = val;
+                            })
+                        : Row(
+                            children: [
+                              Expanded(
+                                flex: 5,
+                                child: Slider(
+                                    min: 0,
+                                    max: 10,
+                                    activeColor: const Color(0xff9f9f9f),
+                                    inactiveColor:
+                                        Color(0xff9f9f9f).withOpacity(.26),
+                                    value: 0,
+                                    onChanged: (val) {
+                                      controller.leadingTime.value = val;
+                                    }),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: SizedBox(
+                                    height: 40,
+                                    width: 40,
+                                    child: Image.asset(
+                                        'assets/images/gree_lock.png')),
+                              ),
+                            ],
+                          ),
                   ),
                 ),
               ),
@@ -545,5 +592,17 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+  playSoundWithInterval()async{
+    if(controller.intervalTime.toInt()==0){
+      return ;
+    }else{
+      await controller.audioPlayer.play(AssetSource(soundPaths[
+      controller.sessionSoundClipIndex.value]),volume: 5,);
+      setState(() {
+        controller.intervalTime.value--;
+      });
+    }
+
   }
 }

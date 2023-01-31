@@ -6,6 +6,7 @@ import 'package:vipassana/Views/homepage.dart';
 import 'package:vipassana/Views/login_page.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/constants.dart';
+import 'package:vipassana/shared_pref.dart';
 
 import '../controller/general_controller.dart';
 
@@ -19,19 +20,23 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   GeneralController controller = Get.find();
   String quote = (quotes..shuffle()).first;
+  bool showLogin = false;
+  SharedPrefs sharedPrefs = SharedPrefs();
 
   @override
   void initState() {
     controller.checkIfSignedIn();
+
     moveToNextPage();
     super.initState();
   }
 
-  moveToNextPage() {
-    Future.delayed(
-        const Duration(seconds: 3), () {
-      controller.isUserLoggedIn.value==false?
-          Get.offAll(() => const LoginScreen()):Get.offAll(() => const HomePage());
+  moveToNextPage() async {
+    showLogin = await sharedPrefs.getData() ?? true;
+    Future.delayed(const Duration(seconds: 3), () {
+      showLogin == true
+          ? Get.offAll(() => const LoginScreen())
+          : Get.offAll(() => const HomePage());
     });
   }
 
@@ -55,7 +60,8 @@ class _SplashScreenState extends State<SplashScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 60.0,horizontal: 15),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 60.0, horizontal: 15),
               child: MyText(
                 text: quote.toUpperCase(),
                 maxLines: 5,

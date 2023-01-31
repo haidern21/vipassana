@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:vipassana/Views/homepage.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/constants.dart';
+import 'package:vipassana/local_notifications.dart';
+import 'package:vipassana/shared_pref.dart';
 import '../controller/general_controller.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,9 +17,11 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   GeneralController controller = Get.find();
   String quote = (quotes..shuffle()).first;
+  SharedPrefs sharedPrefs= SharedPrefs();
 
   @override
   void initState() {
+    sharedPrefs.saveData();
     super.initState();
   }
 
@@ -73,10 +77,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+
                       InkWell(
                         onTap:() async {
                         await controller.handleSignIn();
-                        Get.offAll(()=>HomePage());
+                        Get.offAll(()=>const HomePage());
                          },
                         child: Container(
                           height: 60,
@@ -101,6 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               )
                             ],
                           ),
+
                         ),
                       ),
                       GestureDetector(
