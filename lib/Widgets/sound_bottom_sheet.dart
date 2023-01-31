@@ -17,7 +17,6 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
   final GeneralController controller = Get.find();
   String file = '';
 
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -54,14 +53,20 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                         if (index == 0) {
                           return Obx(
                             () => GestureDetector(
-                              onTap: () async {
-                                controller.sessionSoundClipIndex.value = index;
-                                var temp = await openFile();
-                                setState(() {
-                                  file= temp;
-                                });
-                                controller.pickedFilePath.value=file;
-                              },
+                              onTap: controller.isUserLoggedIn.value
+                                  ? () async {
+                                      controller.sessionSoundClipIndex.value =
+                                          index;
+                                      var temp = await openFile();
+                                      setState(() {
+                                        file = temp;
+                                      });
+                                      controller.pickedFilePath.value = file;
+                                    }
+                                  : () {
+                                      Get.snackbar('Please login',
+                                          'Login First to use this feature');
+                                    },
                               child: Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
@@ -76,14 +81,37 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                                       horizontal: 20, vertical: 10),
                                   child: Center(
                                     child: Obx(
-                                      () => MyText(
-                                        text: 'Add you own sound',
-                                        color: controller.sessionSoundClipIndex
-                                                    .value ==
-                                                index
-                                            ? innerBorderColor
-                                            : selectedBorderColor,
-                                      ),
+                                      () => controller.isUserLoggedIn.value
+                                          ? MyText(
+                                              text: 'Add you own sound',
+                                              color: controller
+                                                          .sessionSoundClipIndex
+                                                          .value ==
+                                                      index
+                                                  ? innerBorderColor
+                                                  : selectedBorderColor,
+                                            )
+                                          : Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                MyText(
+                                                  text: 'Add you own sound',
+                                                  color: controller
+                                                              .sessionSoundClipIndex
+                                                              .value ==
+                                                          index
+                                                      ? innerBorderColor
+                                                      : selectedBorderColor,
+                                                ),
+                                                SizedBox(
+                                                    height: 40,
+                                                    width: 40,
+                                                    child: Image.asset(
+                                                        'assets/images/gree_lock.png')),
+                                              ],
+                                            ),
                                     ),
                                   ),
                                 ),
@@ -152,7 +180,7 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                           inactiveColor: selectedBorderColor.withOpacity(.26),
                           value: controller.volume.value,
                           onChanged: (val) {
-                            controller.audioPlayer.setVolume(val/10);
+                            controller.audioPlayer.setVolume(val / 10);
                             controller.volume.value = val;
                           }),
                     ),
@@ -229,7 +257,7 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
     );
   }
 
- Future<String> openFile() async {
+  Future<String> openFile() async {
     final result = await FilePicker.platform.pickFiles(type: FileType.audio);
     if (result == null) return '';
     setState(() {
