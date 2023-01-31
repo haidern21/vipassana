@@ -16,6 +16,8 @@ class SoundBottomSheet extends StatefulWidget {
 class _SoundBottomSheetState extends State<SoundBottomSheet> {
   final GeneralController controller = Get.find();
   String file = '';
+  String volume = '';
+  String interval = '';
 
   @override
   Widget build(BuildContext context) {
@@ -176,12 +178,17 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                       () => Slider(
                           min: 0,
                           max: 10,
+                          divisions: 10,
+                          label: volume,
                           activeColor: selectedBorderColor,
                           inactiveColor: selectedBorderColor.withOpacity(.26),
                           value: controller.volume.value,
                           onChanged: (val) {
                             controller.audioPlayer.setVolume(val / 10);
                             controller.volume.value = val;
+                            setState(() {
+                              volume=val.toInt().toString();
+                            });
                           }),
                     ),
                   ),
@@ -212,11 +219,15 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                           min: 0,
                           max: 3,
                           divisions: 3,
+                          label: interval,
                           activeColor: selectedBorderColor,
                           inactiveColor: selectedBorderColor.withOpacity(.26),
                           value: controller.repeat.value,
                           onChanged: (val) {
                             controller.repeat.value = val;
+                            setState(() {
+                              interval=val.toInt().toString();
+                            });
                           }),
                     ),
                   ),

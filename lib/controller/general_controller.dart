@@ -19,6 +19,7 @@ class GeneralController extends GetxController{
   RxString pickedFilePath=''.obs;
   RxString userId=''.obs;
   AudioPlayer audioPlayer = AudioPlayer();
+  RxInt totalTimer=0.obs;
   var meditations=[].obs;
   RxBool isUserLoggedIn= false.obs;
 // signUpWithGoogleFromApiCall() async {
@@ -183,6 +184,7 @@ log('User not signed in ');
   void onInit() {
     checkIfSignedIn();
     audioPlayer= AudioPlayer();
+    audioPlayer.setVolume(0.5);
     super.onInit();
   }
 }

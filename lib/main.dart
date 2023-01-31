@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vipassana/Views/splash_screen.dart';
-
+import 'package:timezone/data/latest.dart' as tz;
 import 'controller/general_controller.dart';
 
-void main() {
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  tz.initializeTimeZones();
   runApp(const MyApp());
 }
 
@@ -15,7 +17,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(GeneralController());
 
-    return const GetMaterialApp(
-        home: SplashScreen());
+    return const GetMaterialApp(home: SplashScreen());
   }
 }
