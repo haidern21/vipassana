@@ -250,7 +250,7 @@ class _HomePageState extends State<HomePage> {
                                 outerStrokeColor: neonColor,
                                 onComplete: () async {
                                   // await playSoundWithInterval();
-
+                                  int repeatInterval= controller.repeat.value.toInt();
                                   if (controller.sessionSoundClipIndex.value !=
                                       -1) {
                                     await controller.audioPlayer.play(
@@ -262,12 +262,22 @@ class _HomePageState extends State<HomePage> {
                                       print(controller.repeat.value
                                           .toInt()
                                           .toString());
-                                      controller.repeat.value.toInt() - 1;
-                                      while (controller.repeat.value != 0) {
+                                      repeatInterval--;
+                                      // while (controller.repeat.value != 0) {
+                                      //   await controller.audioPlayer.play(
+                                      //     AssetSource(soundPaths[controller
+                                      //         .sessionSoundClipIndex.value]),
+                                      //   );
+                                      // }
+                                      // http://www.vipassanameditationtimer.losthut.com/app_db_connect/json_send_feedback.php
+                                      if(repeatInterval>0){
                                         await controller.audioPlayer.play(
                                           AssetSource(soundPaths[controller
                                               .sessionSoundClipIndex.value]),
                                         );
+                                      }
+                                      else{
+                                       return ;
                                       }
                                     });
                                   }
