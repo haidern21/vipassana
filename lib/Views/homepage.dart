@@ -353,7 +353,7 @@ class _HomePageState extends State<HomePage> {
                                 .showNotification(controller.totalTimer.value);
                             _controller.restart(
                                 // duration: ((index + 1) ) * 60);
-                                duration: ((index + 1) * 5)); //*60
+                                duration: ((index + 1) * 5)*60); //*60
                           },
                           child: Container(
                             decoration: BoxDecoration(

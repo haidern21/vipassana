@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vipassana/Views/feedback.dart';
+import 'package:vipassana/Views/join_mailing_list.dart';
+import 'package:vipassana/Views/privacy_policy.dart';
 import 'package:vipassana/Widgets/google_signin_sheet.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/controller/general_controller.dart';
@@ -21,8 +23,6 @@ class _HelpAndMoreState extends State<HelpAndMore> {
     HelpTileModel(
         imagePath: 'assets/images/feedback.png', text: 'Your feedback counts'),
     HelpTileModel(imagePath: 'assets/images/star.png', text: 'Rate the app'),
-    HelpTileModel(
-        imagePath: 'assets/images/introduction.png', text: 'App Introduction'),
     HelpTileModel(imagePath: 'assets/images/support.png', text: 'Support'),
     HelpTileModel(
         imagePath: 'assets/images/share.png', text: 'Share with friends'),
@@ -50,9 +50,6 @@ class _HelpAndMoreState extends State<HelpAndMore> {
 
       /// index 1
       () => rateTheApp(),
-
-      /// index 2
-      () => appIntroduction(),
 
       /// index 3
       () => support(),
@@ -162,8 +159,6 @@ class _HelpAndMoreState extends State<HelpAndMore> {
         'https://play.google.com/store/apps/details?id=com.losthut.android.apps.simplemeditationtimer');
   }
 
-  void appIntroduction() {}
-
   void support() {}
 
   void shareWithFriends() async {
@@ -171,15 +166,16 @@ class _HelpAndMoreState extends State<HelpAndMore> {
         'https://play.google.com/store/apps/details?id=com.losthut.android.apps.simplemeditationtimer');
   }
 
-  void joinMailingList() {}
+  void joinMailingList() {
+    Get.to(() => const JoinMailingList());
+  }
 
   void facebookPage() async {
     await _launchURL('https://www.facebook.com/vipassanameditationtimer');
   }
 
   void learnMoreAboutUs() async {
-    _launchURL(
-        'http://www.vipassanameditationtimer.losthut.com/?utm_source=app&utm_medium=direct&utm_term=app_v2&utm_campaign=in_app_link_EN');
+    _launchURL('https://vpassana.com/about-us/');
   }
 
   void advanceFeature() {
@@ -194,19 +190,20 @@ class _HelpAndMoreState extends State<HelpAndMore> {
   }
 
   void faqs() async {
-    await _launchURL('http://www.vipassanameditationtimer.losthut.com/#faqs');
+    await _launchURL('https://vpassana.com/faq/');
   }
 
   void blog() async {
-    await _launchURL('http://www.vipassana.losthut.com/');
+    await _launchURL('https://vpassana.com/blog/');
   }
 
-  void privacyAnTermOfService() {}
+  void privacyAnTermOfService() {
+    Get.to(()=> const PrivacyPolicy());
+  }
 
   _launchURL(String url) async {
     final uri = Uri.parse(url);
     await launchUrl(uri);
-
   }
 }
 
