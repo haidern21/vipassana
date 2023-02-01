@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:vipassana/Views/feedback.dart';
+import 'package:vipassana/Widgets/google_signin_sheet.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/controller/general_controller.dart';
 import '../constants.dart';
+import 'package:share_plus/share_plus.dart';
 
 class HelpAndMore extends StatefulWidget {
   const HelpAndMore({Key? key}) : super(key: key);
@@ -12,7 +16,7 @@ class HelpAndMore extends StatefulWidget {
 }
 
 class _HelpAndMoreState extends State<HelpAndMore> {
-  GeneralController controller=Get.find();
+  GeneralController controller = Get.find();
   List<HelpTileModel> helpTiles = [
     HelpTileModel(
         imagePath: 'assets/images/feedback.png', text: 'Your feedback counts'),
@@ -125,7 +129,7 @@ class _HelpAndMoreState extends State<HelpAndMore> {
       {required String imagePath,
       required String text,
       required GestureTapCallback onTap}) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
@@ -149,21 +153,34 @@ class _HelpAndMoreState extends State<HelpAndMore> {
     );
   }
 
-  void yourFeedBack() {}
+  void yourFeedBack() {
+    Get.to(() => const FeedbackScreen());
+  }
 
-  void rateTheApp() {}
+  void rateTheApp() async {
+    await _launchURL(
+        'https://play.google.com/store/apps/details?id=com.losthut.android.apps.simplemeditationtimer');
+  }
 
   void appIntroduction() {}
 
   void support() {}
 
-  void shareWithFriends() {}
+  void shareWithFriends() async {
+    Share.share(
+        'https://play.google.com/store/apps/details?id=com.losthut.android.apps.simplemeditationtimer');
+  }
 
   void joinMailingList() {}
 
-  void facebookPage() {}
+  void facebookPage() async {
+    await _launchURL('https://www.facebook.com/vipassanameditationtimer');
+  }
 
-  void learnMoreAboutUs() {}
+  void learnMoreAboutUs() async {
+    _launchURL(
+        'http://www.vipassanameditationtimer.losthut.com/?utm_source=app&utm_medium=direct&utm_term=app_v2&utm_campaign=in_app_link_EN');
+  }
 
   void advanceFeature() {
     showModalBottomSheet(
@@ -172,214 +189,25 @@ class _HelpAndMoreState extends State<HelpAndMore> {
           borderRadius: BorderRadius.circular(20),
         ),
         builder: (context) {
-
-          return SingleChildScrollView(
-            child: SizedBox(
-              height: Get.height * .6,
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    const MyText(
-                      text: 'Locked Advance Features',
-                      color: black,
-                      size: 18,
-                      weight: FontWeight.bold,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 10,
-                            width: 10,
-                            decoration: const BoxDecoration(
-                                color: Color(0xff69BFEE),
-                                shape: BoxShape.circle),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          const MyText(
-                            text: 'Your own sound clip',
-                            color: black,
-                          )
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 10,
-                            width: 10,
-                            decoration: const BoxDecoration(
-                                color: Color(0xff69BFEE),
-                                shape: BoxShape.circle),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          const MyText(
-                            text: 'Leading preparation time',
-                            color: black,
-                          )
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 10,
-                            width: 10,
-                            decoration: const BoxDecoration(
-                                color: Color(0xff69BFEE),
-                                shape: BoxShape.circle),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          const MyText(
-                            text: 'Interval Time',
-                            color: black,
-                          )
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 10,
-                            width: 10,
-                            decoration: const BoxDecoration(
-                                color: Color(0xff69BFEE),
-                                shape: BoxShape.circle),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          const MyText(
-                            text: 'Meditation Log',
-                            color: black,
-                          )
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const MyText(
-                      text: 'Unlock all features for free',
-                      color: black,
-                      size: 18,
-                      weight: FontWeight.bold,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const MyText(
-                      text:
-                          'Sign-in with Google to unlock features. In respect of privacy and security, the App does not collect login data, Google takes care of the process',
-                      color: black,
-                      size: 14,
-                      weight: FontWeight.normal,
-                      textAlign: TextAlign.justify,
-                      maxLines: 5,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        //await controller.checkIfSignedIn();
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color: selectedBorderColor)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset('assets/images/google.png'),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            const MyText(
-                              text: 'Sign in with Google',
-                              color: selectedBorderColor,
-                              size: 16,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // InkWell(
-                    //   onTap: () async {
-                    //     await controller.handleSignOut();
-                    //   },
-                    //   child: Container(
-                    //     decoration: BoxDecoration(
-                    //         borderRadius: BorderRadius.circular(20),
-                    //         border: Border.all(color: selectedBorderColor)),
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         Image.asset('assets/images/google.png'),
-                    //         const SizedBox(
-                    //           width: 20,
-                    //         ),
-                    //         const MyText(
-                    //           text: 'Sign out with Google',
-                    //           color: selectedBorderColor,
-                    //           size: 16,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                  ],
-                ),
-              ),
-            ),
-          );
+          return GoogleSignInSheet();
         });
   }
 
-  void faqs() {}
+  void faqs() async {
+    await _launchURL('http://www.vipassanameditationtimer.losthut.com/#faqs');
+  }
 
-  void blog() {}
+  void blog() async {
+    await _launchURL('http://www.vipassana.losthut.com/');
+  }
 
   void privacyAnTermOfService() {}
+
+  _launchURL(String url) async {
+    final uri = Uri.parse(url);
+    await launchUrl(uri);
+
+  }
 }
 
 class HelpTileModel {

@@ -251,9 +251,25 @@ class _HomePageState extends State<HomePage> {
                                 onComplete: () async {
                                   // await playSoundWithInterval();
 
-                                  if(controller.sessionSoundClipIndex.value!=-1){
-                                    await controller.audioPlayer.play(AssetSource(soundPaths[
-                                    controller.sessionSoundClipIndex.value]),volume: 5,);
+                                  if (controller.sessionSoundClipIndex.value !=
+                                      -1) {
+                                    await controller.audioPlayer.play(
+                                      AssetSource(soundPaths[controller
+                                          .sessionSoundClipIndex.value]),
+                                    );
+                                    controller.audioPlayer.onPlayerComplete
+                                        .listen((event) async {
+                                      print(controller.repeat.value
+                                          .toInt()
+                                          .toString());
+                                      controller.repeat.value.toInt() - 1;
+                                      while (controller.repeat.value != 0) {
+                                        await controller.audioPlayer.play(
+                                          AssetSource(soundPaths[controller
+                                              .sessionSoundClipIndex.value]),
+                                        );
+                                      }
+                                    });
                                   }
                                   if (controller.isUserLoggedIn.value == true) {
                                     var a =
@@ -317,15 +333,17 @@ class _HomePageState extends State<HomePage> {
                       return Obx(
                         () => GestureDetector(
                           onTap: () async {
-                            controller.totalTimer.value = ((index + 1) * 5)*60;
+                            controller.totalTimer.value =
+                                ((index + 1) * 5) * 60;
                             meditationDuration.value =
                                 ((index + 1) * 5).toString();
                             controller.numberOfMinutesIndex.value = index;
-                            // await localNotifications
-                            //     .showNotification(controller.totalTimer.value);
+                            localNotifications.initializeNotifications();
+                            await localNotifications
+                                .showNotification(controller.totalTimer.value);
                             _controller.restart(
                                 // duration: ((index + 1) ) * 60);
-                                duration: ((index + 1) * 5) *60); //*60
+                                duration: ((index + 1) * 5)); //*60
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -598,16 +616,18 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  playSoundWithInterval()async{
-    if(controller.intervalTime.toInt()==0){
-      return ;
-    }else{
-      await controller.audioPlayer.play(AssetSource(soundPaths[
-      controller.sessionSoundClipIndex.value]),volume: 5,);
+
+  playSoundWithInterval() async {
+    if (controller.intervalTime.toInt() == 0) {
+      return;
+    } else {
+      await controller.audioPlayer.play(
+        AssetSource(soundPaths[controller.sessionSoundClipIndex.value]),
+        volume: 5,
+      );
       setState(() {
         controller.intervalTime.value--;
       });
     }
-
   }
 }
