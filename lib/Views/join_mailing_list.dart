@@ -3,63 +3,80 @@ import 'package:get/get.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/constants.dart';
 
-class FeedbackScreen extends StatefulWidget {
-  const FeedbackScreen({Key? key}) : super(key: key);
+class JoinMailingList extends StatefulWidget {
+  const JoinMailingList({Key? key}) : super(key: key);
 
   @override
-  State<FeedbackScreen> createState() => _FeedbackScreenState();
+  State<JoinMailingList> createState() => _JoinMailingListState();
 }
 
-class _FeedbackScreenState extends State<FeedbackScreen> {
+class _JoinMailingListState extends State<JoinMailingList> {
   var email = TextEditingController();
-  var feedback = TextEditingController();
+  var name = TextEditingController();
   var key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Form(
-          key: key,
-          child: SafeArea(
+        child: SafeArea(
+          child: Form(
+            key: key,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
                   const MyText(
-                    text: 'Your Feedback Counts',
+                    text:
+                        'The mailing list is free to join and will provide you with a way to keep informed about \n\n • Progress about the app \n • Community related announcements \n • Vipassana Meditation news',
+                    size: 16,
+                    weight: FontWeight.w400,
                     color: black,
-                    size: 20,
-                    weight: FontWeight.w500,
+                    maxLines: 10,
+                    textAlign: TextAlign.justify,
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 20,
+                  ),
+                  const MyText(
+                    text: 'Your Name',
+                    size: 16,
+                    color: black,
+                    weight: FontWeight.bold,
+                    textAlign: TextAlign.justify,
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                   TextFormField(
-                    maxLines: 6,
+                    maxLines: 1,
+                    controller: name,
                     validator: (val) {
-                      if (val!.isEmpty) {
-                        return 'Enter feedback';
+                      if (val!.isEmpty ) {
+                        return 'Enter valid name';
                       }
                     },
-                    controller: feedback,
                     decoration: InputDecoration(
-                        hintText: 'Enter feedback',
+                        hintText: 'mail@mail.com',
                         contentPadding: const EdgeInsets.all(8),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
                         )),
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 20,
                   ),
                   const MyText(
                     text: 'Your Email',
+                    size: 16,
                     color: black,
-                    size: 20,
-                    weight: FontWeight.w500,
+                    weight: FontWeight.bold,
+                    textAlign: TextAlign.justify,
                   ),
                   const SizedBox(
                     height: 10,
@@ -82,7 +99,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         )),
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 80,
                   ),
                   GestureDetector(
                     onTap: () {
