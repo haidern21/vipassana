@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:vipassana/constants.dart';
+import 'package:vipassana/shared_pref.dart';
 class GeneralController extends GetxController{
   RxInt numberOfMinutesIndex=(-1).obs;
   RxInt sessionSoundClipIndex=(-1).obs;
@@ -30,6 +31,7 @@ class GeneralController extends GetxController{
 //   print('Response body: ${response.body}');
 //
 // }
+  SharedPrefs sharedPrefs= SharedPrefs();
 
 uploadMeditationToServer({required userId,required meditationTime}) async {
   try{
@@ -185,6 +187,17 @@ log('User not signed in ');
     checkIfSignedIn();
     audioPlayer= AudioPlayer();
     audioPlayer.setVolume(0.5);
+    getInitialData();
     super.onInit();
+  }
+  getInitialData()async{
+    int? sessionValue= await sharedPrefs.getSaveSessionSoundClipIndex();
+    int? rept= await sharedPrefs.getIntervalValue();
+    if(sessionValue!=null){
+      sessionSoundClipIndex.value=sessionValue;
+    }
+    if(rept!=null){
+      repeat.value=rept.toDouble();
+    }
   }
 }
