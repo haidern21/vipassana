@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vipassana/shared_pref.dart';
 
 import '../constants.dart';
 import '../controller/general_controller.dart';
@@ -18,6 +19,7 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
   String file = '';
   String volume = '';
   String interval = '';
+  SharedPrefs sharedPrefs = SharedPrefs();
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,8 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                                   ? () async {
                                       controller.sessionSoundClipIndex.value =
                                           index;
+                                      sharedPrefs
+                                          .saveSessionSoundClipIndex(index);
                                       var temp = await openFile();
                                       setState(() {
                                         file = temp;
@@ -125,6 +129,7 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                           () => GestureDetector(
                             onTap: () async {
                               controller.sessionSoundClipIndex.value = index;
+                              sharedPrefs.saveSessionSoundClipIndex(index);
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -187,7 +192,7 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                             controller.audioPlayer.setVolume(val / 10);
                             controller.volume.value = val;
                             setState(() {
-                              volume=val.toInt().toString();
+                              volume = val.toInt().toString();
                             });
                           }),
                     ),
@@ -225,8 +230,10 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                           value: controller.repeat.value,
                           onChanged: (val) {
                             controller.repeat.value = val;
+                            sharedPrefs.saveInterValueValue(
+                                controller.repeat.value.toInt());
                             setState(() {
-                              interval=val.toInt().toString();
+                              interval = val.toInt().toString();
                             });
                           }),
                     ),

@@ -5,11 +5,12 @@ class LocalNotifications {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   final AndroidInitializationSettings androidInitializationSettings =
-      const AndroidInitializationSettings('ic_launcher');
+      const AndroidInitializationSettings('@mipmap/ic_launcher');
 
   void initializeNotifications() async {
     InitializationSettings initializationSettings =
         InitializationSettings(android: androidInitializationSettings);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
   NotificationDetails notificationDetails = const NotificationDetails(
