@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vipassana/Views/feedback.dart';
 import 'package:vipassana/Views/join_mailing_list.dart';
@@ -9,6 +10,8 @@ import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/controller/general_controller.dart';
 import '../constants.dart';
 import 'package:share_plus/share_plus.dart';
+
+import 'in_app_purchase.dart';
 
 class HelpAndMore extends StatefulWidget {
   const HelpAndMore({Key? key}) : super(key: key);
@@ -159,7 +162,17 @@ class _HelpAndMoreState extends State<HelpAndMore> {
         'https://play.google.com/store/apps/details?id=com.losthut.android.apps.simplemeditationtimer');
   }
 
-  void support() {}
+  void support() {
+    showCupertinoModalBottomSheet(
+        expand: false,
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context) =>
+            Container(
+                height: Get.height * .3,
+                child: inApp())
+    );
+  }
 
   void shareWithFriends() async {
     Share.share(

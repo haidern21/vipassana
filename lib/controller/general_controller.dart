@@ -32,7 +32,48 @@ class GeneralController extends GetxController{
 //
 // }
   SharedPrefs sharedPrefs= SharedPrefs();
+  uploadMailingToServer({required email,required name}) async {
+    try{
 
+      var url = Uri.parse('$api/mailing');
+      print(url);
+      Map body=
+
+      {
+        "email": email,
+        "name": name
+
+      };
+      print(json.encode(body));
+      var response = await http.post(url,headers: {"Content-Type": "application/json"},body: json.encode(body));
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    }
+    catch (e){
+      print("ERROR OCCURED : ${e.toString()}");
+    }
+  }
+  uploadFeedbackToServer({required email,required feedback}) async {
+    try{
+
+      var url = Uri.parse('$api/feedback');
+      print(url);
+      Map body=
+
+        {
+          "email": email,
+          "comment": feedback
+
+      };
+      print(json.encode(body));
+      var response = await http.post(url,headers: {"Content-Type": "application/json"},body: json.encode(body));
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    }
+    catch (e){
+      print("ERROR OCCURED : ${e.toString()}");
+    }
+  }
 uploadMeditationToServer({required userId,required meditationTime}) async {
   try{
 

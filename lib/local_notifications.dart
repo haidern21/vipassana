@@ -25,7 +25,7 @@ class LocalNotifications {
         0,
         'Meditation completed',
         'Your meditation is completed',
-        tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
+        tz.TZDateTime.now(tz.local).add( Duration(seconds: seconds)),
         notificationDetails,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
