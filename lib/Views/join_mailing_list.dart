@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/constants.dart';
+import 'package:vipassana/controller/general_controller.dart';
 
 class JoinMailingList extends StatefulWidget {
   const JoinMailingList({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class _JoinMailingListState extends State<JoinMailingList> {
   var email = TextEditingController();
   var name = TextEditingController();
   var key = GlobalKey<FormState>();
-
+  GeneralController controller=Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +63,7 @@ class _JoinMailingListState extends State<JoinMailingList> {
                       }
                     },
                     decoration: InputDecoration(
-                        hintText: 'mail@mail.com',
+                        hintText: 'John Doe',
                         contentPadding: const EdgeInsets.all(8),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
@@ -102,8 +103,9 @@ class _JoinMailingListState extends State<JoinMailingList> {
                     height: 80,
                   ),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       if (key.currentState!.validate()) {
+                        await controller.uploadMailingToServer(email: email.text, name: name.text);
                         Future.delayed(
                             const Duration(seconds: 1), () => Get.back());
                       } else {

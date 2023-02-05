@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/constants.dart';
+import 'package:vipassana/controller/general_controller.dart';
 
 class FeedbackScreen extends StatefulWidget {
   const FeedbackScreen({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   var email = TextEditingController();
   var feedback = TextEditingController();
   var key = GlobalKey<FormState>();
-
+GeneralController controller=Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,8 +86,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                     height: 50,
                   ),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       if (key.currentState!.validate()) {
+                        await controller.uploadFeedbackToServer(email: email.text, feedback: feedback.text);
                         Future.delayed(
                             const Duration(seconds: 1), () => Get.back());
                       } else {
