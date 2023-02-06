@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:vipassana/Views/feedback.dart';
 import 'package:vipassana/Views/join_mailing_list.dart';
 import 'package:vipassana/Views/privacy_policy.dart';
+import 'package:vipassana/Views/support.dart';
 import 'package:vipassana/Widgets/google_signin_sheet.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/controller/general_controller.dart';
@@ -163,15 +164,16 @@ class _HelpAndMoreState extends State<HelpAndMore> {
   }
 
   void support() {
-    showCupertinoModalBottomSheet(
-        expand: false,
-        context: context,
-        backgroundColor: Colors.transparent,
-        builder: (context) =>
-            Container(
-                height: Get.height * .3,
-                child: inApp())
-    );
+    Get.to(()=> const Support());
+    // showCupertinoModalBottomSheet(
+    //     expand: false,
+    //     context: context,
+    //     backgroundColor: Colors.transparent,
+    //     builder: (context) =>
+    //         Container(
+    //             height: Get.height * .3,
+    //             child: inApp())
+    // );
   }
 
   void shareWithFriends() async {

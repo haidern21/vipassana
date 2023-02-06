@@ -228,7 +228,7 @@ class _HomePageState extends State<HomePage> {
                       alignment: Alignment.center,
                       child: GestureDetector(
                         onTap: () {
-                          _controller.restart();
+                          // _controller.restart();
                         },
                         child: Stack(
                           children: [
@@ -250,7 +250,8 @@ class _HomePageState extends State<HomePage> {
                                 outerStrokeColor: neonColor,
                                 onComplete: () async {
                                   // await playSoundWithInterval();
-                                  int repeatInterval= controller.repeat.value.toInt();
+                                  int repeatInterval =
+                                      controller.repeat.value.toInt();
                                   if (controller.sessionSoundClipIndex.value !=
                                       -1) {
                                     await controller.audioPlayer.play(
@@ -270,14 +271,13 @@ class _HomePageState extends State<HomePage> {
                                       //   );
                                       // }
                                       // http://www.vipassanameditationtimer.losthut.com/app_db_connect/json_send_feedback.php
-                                      if(repeatInterval>0){
+                                      if (repeatInterval > 0) {
                                         await controller.audioPlayer.play(
                                           AssetSource(soundPaths[controller
                                               .sessionSoundClipIndex.value]),
                                         );
-                                      }
-                                      else{
-                                       return ;
+                                      } else {
+                                        return;
                                       }
                                     });
                                   }
@@ -312,15 +312,17 @@ class _HomePageState extends State<HomePage> {
                                     }
                                   }
                                 }),
-                            Positioned.fill(
-                                bottom: 30,
-                                child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Image.asset(
-                                    'assets/images/loop.png',
-                                    height: 20,
-                                  ),
-                                ))
+                            Obx(() => controller.sessionLoop.value == true
+                                ? Positioned.fill(
+                                    bottom: 30,
+                                    child: Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Image.asset(
+                                        'assets/images/loop.png',
+                                        height: 20,
+                                      ),
+                                    ))
+                                : const SizedBox())
                           ],
                         ),
                       ),
@@ -353,7 +355,7 @@ class _HomePageState extends State<HomePage> {
                                 .showNotification(controller.totalTimer.value);
                             _controller.restart(
                                 // duration: ((index + 1) ) * 60);
-                                duration: ((index + 1) * 5)*60); //*60
+                                duration: ((index + 1) * 5) * 60); //*60
                           },
                           child: Container(
                             decoration: BoxDecoration(
