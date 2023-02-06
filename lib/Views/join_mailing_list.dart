@@ -11,11 +11,12 @@ class JoinMailingList extends StatefulWidget {
   State<JoinMailingList> createState() => _JoinMailingListState();
 }
 
+var email = TextEditingController();
+var name = TextEditingController();
+var key = GlobalKey<FormState>();
+GeneralController controller = Get.find();
+
 class _JoinMailingListState extends State<JoinMailingList> {
-  var email = TextEditingController();
-  var name = TextEditingController();
-  var key = GlobalKey<FormState>();
-  GeneralController controller=Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +25,8 @@ class _JoinMailingListState extends State<JoinMailingList> {
           child: Form(
             key: key,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -58,7 +60,7 @@ class _JoinMailingListState extends State<JoinMailingList> {
                     maxLines: 1,
                     controller: name,
                     validator: (val) {
-                      if (val!.isEmpty ) {
+                      if (val!.isEmpty) {
                         return 'Enter valid name';
                       }
                     },
@@ -105,7 +107,8 @@ class _JoinMailingListState extends State<JoinMailingList> {
                   GestureDetector(
                     onTap: () async {
                       if (key.currentState!.validate()) {
-                        await controller.uploadMailingToServer(email: email.text, name: name.text);
+                        await controller.uploadMailingToServer(
+                            email: email.text, name: name.text);
                         Future.delayed(
                             const Duration(seconds: 1), () => Get.back());
                       } else {
