@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:get/get.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/constants.dart';
@@ -15,7 +16,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   var email = TextEditingController();
   var feedback = TextEditingController();
   var key = GlobalKey<FormState>();
-GeneralController controller=Get.find();
+  GeneralController controller = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +26,8 @@ GeneralController controller=Get.find();
           key: key,
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -88,7 +91,15 @@ GeneralController controller=Get.find();
                   GestureDetector(
                     onTap: () async {
                       if (key.currentState!.validate()) {
-                        await controller.uploadFeedbackToServer(email: email.text, feedback: feedback.text);
+                        await controller.uploadFeedbackToServer(
+                            email: email.text, feedback: feedback.text);
+                        final Email sendEmail = Email(
+                          body:
+                              'Hey admin here is the feedback given by ${email.text}\n Feedback: ${feedback.text}',
+                          subject: 'subject of email',
+                          recipients: ['contact@vpassana.com'],
+                        );
+                        await FlutterEmailSender.send(sendEmail);
                         Future.delayed(
                             const Duration(seconds: 1), () => Get.back());
                       } else {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:get/get.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/constants.dart';
@@ -109,6 +110,13 @@ class _JoinMailingListState extends State<JoinMailingList> {
                       if (key.currentState!.validate()) {
                         await controller.uploadMailingToServer(
                             email: email.text, name: name.text);
+                        final Email sendEmail = Email(
+                          body:
+                              'Hey, admin add me to the mailing list.\n My name is : ${name.text} and my email is: ${email.text}',
+                          subject: 'Add to mailing list',
+                          recipients: ["contact@vpassana.com"],
+                        );
+                        await FlutterEmailSender.send(sendEmail);
                         Future.delayed(
                             const Duration(seconds: 1), () => Get.back());
                       } else {
