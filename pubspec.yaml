@@ -51,6 +51,7 @@ dependencies:
   in_app_purchase:
   modal_bottom_sheet:
   flutter_email_sender: ^5.2.0
+  flutter_svg: ^1.1.6
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +79,7 @@ flutter:
   assets:
     - assets/images/
     - assets/bells/
+    - assets/svg_assets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
