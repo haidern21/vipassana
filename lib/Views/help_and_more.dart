@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -25,23 +26,23 @@ class _HelpAndMoreState extends State<HelpAndMore> {
   GeneralController controller = Get.find();
   List<HelpTileModel> helpTiles = [
     HelpTileModel(
-        imagePath: 'assets/images/feedback.png', text: 'Your feedback counts'),
-    HelpTileModel(imagePath: 'assets/images/star.png', text: 'Rate the app'),
-    HelpTileModel(imagePath: 'assets/images/support.png', text: 'Support'),
+        imagePath: 'assets/svg_assets/feedback.svg', text: 'Your feedback counts'),
+    HelpTileModel(imagePath: 'assets/svg_assets/icons8-star.svg', text: 'Rate the app'),
+    HelpTileModel(imagePath: 'assets/svg_assets/support.svg', text: 'Support'),
     HelpTileModel(
-        imagePath: 'assets/images/share.png', text: 'Share with friends'),
+        imagePath: 'assets/svg_assets/Icon feather-share-2.svg', text: 'Share with friends'),
     HelpTileModel(
-        imagePath: 'assets/images/mail.png', text: 'Join the mailing list'),
+        imagePath: 'assets/svg_assets/Icon feather-mail.svg', text: 'Join the mailing list'),
     HelpTileModel(
-        imagePath: 'assets/images/facebook.png', text: 'Facebook page'),
+        imagePath: 'assets/svg_assets/Icon feather-facebook.svg', text: 'Facebook page'),
     HelpTileModel(
-        imagePath: 'assets/images/learn_more.png', text: 'Learn more about us'),
+        imagePath: 'assets/svg_assets/learn more.svg', text: 'Learn more about us'),
     HelpTileModel(
-        imagePath: 'assets/images/lock.png', text: 'Advance Features'),
-    HelpTileModel(imagePath: 'assets/images/faq.png', text: 'FAQs'),
-    HelpTileModel(imagePath: 'assets/images/logs_image.png', text: 'Blog'),
+        imagePath: 'assets/svg_assets/Icon feather-lock.svg', text: 'Advance Features'),
+    HelpTileModel(imagePath: 'assets/svg_assets/faq.svg', text: 'FAQs'),
+    HelpTileModel(imagePath: 'assets/svg_assets/icons8-regular-document.svg', text: 'Blog'),
     HelpTileModel(
-        imagePath: 'assets/images/privacy.png',
+        imagePath: 'assets/svg_assets/privacy.svg',
         text: 'Privacy and Terms of service'),
   ];
   List<GestureTapCallback> onTaps = [];
@@ -136,8 +137,9 @@ class _HelpAndMoreState extends State<HelpAndMore> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
         child: Row(
           children: [
-            Image.asset(
+            SvgPicture.asset(
               imagePath,
+              color: black,
             ),
             const SizedBox(
               width: 20,
@@ -165,15 +167,6 @@ class _HelpAndMoreState extends State<HelpAndMore> {
 
   void support() {
     Get.to(()=> const Support());
-    // showCupertinoModalBottomSheet(
-    //     expand: false,
-    //     context: context,
-    //     backgroundColor: Colors.transparent,
-    //     builder: (context) =>
-    //         Container(
-    //             height: Get.height * .3,
-    //             child: inApp())
-    // );
   }
 
   void shareWithFriends() async {
