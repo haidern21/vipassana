@@ -216,6 +216,7 @@ log('User not signed in ');
      // print('Response status: ${response.statusCode}');
      // print('Response body: ${response.body}');
      var jsonDecoded=jsonDecode(response.body);
+     print('Response body: ${jsonDecoded}');
    meditations.value= jsonDecoded['meditations'];
    }
    catch (e){

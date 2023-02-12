@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   moveToNextPage() async {
     showLogin = await sharedPrefs.getData() ?? true;
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       showLogin == true
           ? Get.offAll(() => const LoginScreen())
           : Get.offAll(() => const HomePage());

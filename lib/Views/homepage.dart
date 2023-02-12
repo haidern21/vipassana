@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   var meditationDuration = ''.obs;
   AudioPlayer audioPlayer = AudioPlayer();
   LocalNotifications localNotifications = LocalNotifications();
-
+var timeTillComplete=0;
   @override
   void initState() {
     localNotifications.initializeNotifications();
@@ -233,63 +233,76 @@ class _HomePageState extends State<HomePage> {
                                 innerFillColor: neonColor.withOpacity(.26),
                                 outerStrokeColor: neonColor,
                                 onComplete: () async {
-                                  log('STARTED');
-                                  // await playSoundWithInterval();
-                                  int repeatInterval =
-                                      controller.repeat.value.toInt();
-                                  if (controller.sessionSoundClipIndex.value !=
-                                      -1) {
-                                    await controller.audioPlayer.play(
-                                      AssetSource(soundPaths[controller
-                                          .sessionSoundClipIndex.value]),
-                                    );
-                                    controller.audioPlayer.onPlayerComplete
-                                        .listen((event) async {
-                                      print(controller.repeat.value
-                                          .toInt()
-                                          .toString());
-                                      repeatInterval--;
-                                      if (repeatInterval > 0) {
-                                        await controller.audioPlayer.play(
-                                          AssetSource(soundPaths[controller
-                                              .sessionSoundClipIndex.value]),
-                                        );
-                                      } else {
-                                        return;
-                                      }
-                                    });
-                                  }
-                                  if (controller.isUserLoggedIn.value == true) {
-                                    var a =
-                                        await controller.checkIfUserExistsInDb(
-                                            userId: controller.userId.value);
-                                    if (a == 404) {
-                                      await controller.uploadMeditationToServer(
-                                          userId: controller.userId.value,
-                                          meditationTime:
-                                              meditationDuration.value);
-                                      print('a=404');
-                                    } else {
-                                      await controller.updateMeditations(
-                                        docId: controller.userId.value,
-                                        meditationTime:
-                                            meditationDuration.value,
-                                      );
-
-                                      print('a=200');
-                                    }
-
-                                    if (controller
-                                                .sessionSoundClipIndex.value ==
-                                            0 &&
-                                        controller
-                                            .pickedFilePath.value.isNotEmpty) {
+                                  log(timeTillComplete.toString());
+                                  log( _controller.getTimeInSeconds().toString());
+                                  if (timeTillComplete ==
+                                      _controller.getTimeInSeconds()
+                                          ) {
+                                    log(_controller.getTimeInSeconds()
+                                        .toString());
+                                    // await playSoundWithInterval();
+                                    int repeatInterval =
+                                    controller.repeat.value.toInt();
+                                    if (controller.sessionSoundClipIndex
+                                        .value !=
+                                        -1) {
                                       await controller.audioPlayer.play(
-                                          DeviceFileSource(
-                                              controller.pickedFilePath.value));
+                                        AssetSource(soundPaths[controller
+                                            .sessionSoundClipIndex.value]),
+                                      );
+                                      controller.audioPlayer.onPlayerComplete
+                                          .listen((event) async {
+                                        print(controller.repeat.value
+                                            .toInt()
+                                            .toString());
+                                        repeatInterval--;
+                                        if (repeatInterval > 0) {
+                                          await controller.audioPlayer.play(
+                                            AssetSource(soundPaths[controller
+                                                .sessionSoundClipIndex.value]),
+                                          );
+                                        } else {
+                                          return;
+                                        }
+                                      });
+                                    }
+                                    if (controller.isUserLoggedIn.value ==
+                                        true) {
+                                      var a =
+                                      await controller.checkIfUserExistsInDb(
+                                          userId: controller.userId.value);
+                                      if (a == 404) {
+                                        await controller
+                                            .uploadMeditationToServer(
+                                            userId: controller.userId.value,
+                                            meditationTime:
+                                            meditationDuration.value);
+                                        print('a=404');
+                                      } else {
+                                        await controller.updateMeditations(
+                                          docId: controller.userId.value,
+                                          meditationTime:
+                                          meditationDuration.value,
+                                        );
+
+                                        print('a=200');
+                                      }
+
+                                      if (controller
+                                          .sessionSoundClipIndex.value ==
+                                          0 &&
+                                          controller
+                                              .pickedFilePath.value
+                                              .isNotEmpty) {
+                                        await controller.audioPlayer.play(
+                                            DeviceFileSource(
+                                                controller.pickedFilePath
+                                                    .value));
+                                      }
                                     }
                                   }
-                                }),
+                                }
+                                ),
                             Obx(() => controller.sessionLoop.value == true
                                 ? Positioned.fill(
                                     bottom: 30,
@@ -323,12 +336,14 @@ class _HomePageState extends State<HomePage> {
                       return Obx(
                         () => GestureDetector(
                           onTap: () async {
-                            await controller.audioPlayer.play(
-                              AssetSource(soundPaths[controller
-                                  .sessionSoundClipIndex.value]),
-                            );
+                            // await controller.audioPlayer.play(
+                            //   AssetSource(soundPaths[controller
+                            //       .sessionSoundClipIndex.value]),
+                            // );
                             controller.totalTimer.value =
                                 ((index + 1) * 5) * 60;
+                            timeTillComplete =
+                                ((index + 1) * 5) *60;
                             meditationDuration.value =
                                 ((index + 1) * 5).toString();
                             controller.numberOfMinutesIndex.value = index;
