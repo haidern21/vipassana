@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vipassana/Views/BlankScreen.dart';
 import 'package:vipassana/Views/splash_screen.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'controller/general_controller.dart';
@@ -17,6 +18,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(GeneralController());
 
-    return const GetMaterialApp(home: SplashScreen());
+    return const GetMaterialApp(home: BlankScreen());
   }
 }

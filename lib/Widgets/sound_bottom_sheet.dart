@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -129,6 +130,10 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                           () => GestureDetector(
                             onTap: () async {
                               controller.sessionSoundClipIndex.value = index;
+                              await controller.audioPlayer.play(
+                                AssetSource(soundPaths[controller
+                                    .sessionSoundClipIndex.value]),
+                              );
                               sharedPrefs.saveSessionSoundClipIndex(index);
                             },
                             child: Container(
