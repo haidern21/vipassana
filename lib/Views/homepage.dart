@@ -348,6 +348,7 @@ var timeTillComplete=0;
                                 ((index + 1) * 5).toString();
                             controller.numberOfMinutesIndex.value = index;
                             localNotifications.initializeNotifications();
+                            print("SHOW NOTIFICATION called");
                             await localNotifications
                                 .showNotification(controller.totalTimer.value);
                             _controller.restart(
