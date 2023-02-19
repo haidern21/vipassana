@@ -112,9 +112,9 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 30),
             Column(
               children: [
+                const SizedBox(height: 30,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -313,7 +313,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 8.0),
+              padding: const EdgeInsets.only(left: 8.0,bottom: 25),
               child: SizedBox(
                 height: 90,
                 width: double.infinity,
@@ -391,239 +391,238 @@ class _HomePageState extends State<HomePage> {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 10),
-                child: MyText(
-                  text: 'Leading Time',
-                  color: black,
-                  size: 18,
-                  weight: FontWeight.bold,
-                ),
-              ),
-              const MyText(
-                text:
-                    'An interval to dedicate to mindful prestration,\nMETTA or other rituals preceding the meditation\nsession',
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 10, bottom: 10),
+              child: MyText(
+                text: 'Leading Time',
                 color: black,
-                size: 14,
-                maxLines: 3,
+                size: 18,
+                weight: FontWeight.bold,
               ),
-              const SizedBox(height: 15),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: SliderTheme(
-                  data: const SliderThemeData(trackHeight: 10),
-                  child: Obx(
-                    () => controller.isUserLoggedIn.value
-                        ? Slider(
-                            min: 0,
-                            max: 10,
-                            activeColor: selectedBorderColor,
-                            inactiveColor: selectedBorderColor.withOpacity(.26),
-                            value: controller.leadingTime.value,
-                            onChanged: (val) {
-                              controller.leadingTime.value = val;
-                            })
-                        : GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.vertical(top: Radius.circular(25.0)),
-                                  ),
-                                  builder: (context) {
-                                    return GoogleSignInSheet();
-                                  });
-                            },
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 5,
-                                  child: Slider(
-                                      min: 0,
-                                      max: 10,
-                                      activeColor: const Color(0xff9f9f9f),
-                                      inactiveColor: const Color(0xff9f9f9f)
-                                          .withOpacity(.26),
-                                      value: 0,
-                                      onChanged: (val) {
-                                        showModalBottomSheet(
-                                            context: context,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius:
-                                              BorderRadius.vertical(top: Radius.circular(25.0)),
-                                            ),
-                                            builder: (context) {
-                                              return GoogleSignInSheet();
-                                            });
-                                      }),
+            ),
+            const MyText(
+              text:
+                  'An interval to dedicate to mindful prestration,\nMETTA or other rituals preceding the meditation\nsession',
+              color: black,
+              size: 14,
+              maxLines: 3,
+            ),
+            const SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: SliderTheme(
+                data: const SliderThemeData(trackHeight: 10),
+                child: Obx(
+                  () => controller.isUserLoggedIn.value
+                      ? Slider(
+                          min: 0,
+                          max: 10,
+                          activeColor: selectedBorderColor,
+                          inactiveColor: selectedBorderColor.withOpacity(.26),
+                          value: controller.leadingTime.value,
+                          onChanged: (val) {
+                            controller.leadingTime.value = val;
+                          })
+                      : GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.vertical(top: Radius.circular(25.0)),
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: SizedBox(
-                                      height: 40,
-                                      width: 40,
-                                      child: Image.asset(
-                                          'assets/images/gree_lock.png')),
-                                ),
-                              ],
-                            ),
+                                builder: (context) {
+                                  return GoogleSignInSheet();
+                                });
+                          },
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 5,
+                                child: Slider(
+                                    min: 0,
+                                    max: 10,
+                                    activeColor: const Color(0xff9f9f9f),
+                                    inactiveColor: const Color(0xff9f9f9f)
+                                        .withOpacity(.26),
+                                    value: 0,
+                                    onChanged: (val) {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius:
+                                            BorderRadius.vertical(top: Radius.circular(25.0)),
+                                          ),
+                                          builder: (context) {
+                                            return GoogleSignInSheet();
+                                          });
+                                    }),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: SizedBox(
+                                    height: 40,
+                                    width: 40,
+                                    child: Image.asset(
+                                        'assets/images/gree_lock.png')),
+                              ),
+                            ],
                           ),
+                        ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 13.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const MyText(
+                    text: 'Session Loop',
+                    color: black,
+                    weight: FontWeight.bold,
+                    size: 20,
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 13.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const MyText(
-                      text: 'Session Loop',
-                      color: black,
-                      weight: FontWeight.bold,
-                      size: 20,
+                  SizedBox(
+                    height: 20,
+                    width: 40,
+                    child: Obx(
+                      () => CupertinoSwitch(
+                          trackColor:controller.sessionLoop.value? selectedBorderColor:dividerColor.withOpacity(0.4),
+                          thumbColor: white,
+                          activeColor: selectedBorderColor,
+                          value: controller.sessionLoop.value,
+                          onChanged: (val) {
+                            controller.sessionLoop.value = val;
+                          }),
                     ),
-                    SizedBox(
-                      height: 20,
-                      width: 40,
-                      child: Obx(
-                        () => CupertinoSwitch(
-                            trackColor: selectedBorderColor,
-                            thumbColor: white,
-                            activeColor: selectedBorderColor,
-                            value: controller.sessionLoop.value,
-                            onChanged: (val) {
-                              controller.sessionLoop.value = val;
-                            }),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 15,
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            const MyText(
+              text:
+                  'Repeat twice to allow for Walking and Setting consecutive practices',
+              maxLines: 2,
+              color: black,
+              size: 16,
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 20, bottom: 10),
+              child: MyText(
+                text: 'Interval Time',
+                color: black,
+                weight: FontWeight.bold,
+                size: 20,
               ),
-              const MyText(
-                text:
-                    'Repeat twice to allow for Walking and Setting consecutive practices',
-                maxLines: 2,
+            ),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 15),
+              child: MyText(
+                text: 'Break between walking and sitting sessions.',
+                maxLines: 1,
                 color: black,
                 size: 16,
               ),
-              const Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 10),
-                child: MyText(
-                  text: 'Interval Time',
-                  color: black,
-                  weight: FontWeight.bold,
-                  size: 20,
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 15),
-                child: MyText(
-                  text: 'Break between walking and sitting sessions.',
-                  maxLines: 1,
-                  color: black,
-                  size: 16,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 12.0),
-                child: SliderTheme(
-                  data: const SliderThemeData(trackHeight: 10),
-                  child: Obx(
-                    () => controller.isUserLoggedIn.value
-                        ? Slider(
-                            min: 0,
-                            max: 10,
-                            activeColor: selectedBorderColor,
-                            inactiveColor: selectedBorderColor.withOpacity(.26),
-                            value: controller.intervalTime.value,
-                            onChanged: (val) {
-                              controller.intervalTime.value = val;
-                            })
-                        : GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.vertical(top: Radius.circular(25.0)),
-                                  ),
-                                  builder: (context) {
-                                    return GoogleSignInSheet();
-                                  });
-                            },
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 5,
-                                  child: Slider(
-                                      min: 0,
-                                      max: 10,
-                                      activeColor: const Color(0xff9f9f9f),
-                                      inactiveColor: const Color(0xff9f9f9f)
-                                          .withOpacity(.26),
-                                      value: 0,
-                                      onChanged: (val) {
-                                        showModalBottomSheet(
-                                            context: context,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius:
-                                              BorderRadius.vertical(top: Radius.circular(25.0)),
-                                            ),
-                                            builder: (context) {
-                                              return GoogleSignInSheet();
-                                            });
-                                      }),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12.0),
+              child: SliderTheme(
+                data: const SliderThemeData(trackHeight: 10),
+                child: Obx(
+                  () => controller.isUserLoggedIn.value
+                      ? Slider(
+                          min: 0,
+                          max: 10,
+                          activeColor: selectedBorderColor,
+                          inactiveColor: selectedBorderColor.withOpacity(.26),
+                          value: controller.intervalTime.value,
+                          onChanged: (val) {
+                            controller.intervalTime.value = val;
+                          })
+                      : GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.vertical(top: Radius.circular(25.0)),
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: SizedBox(
-                                      height: 40,
-                                      width: 40,
-                                      child: Image.asset(
-                                          'assets/images/gree_lock.png')),
-                                ),
-                              ],
-                            ),
+                                builder: (context) {
+                                  return GoogleSignInSheet();
+                                });
+                          },
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 5,
+                                child: Slider(
+                                    min: 0,
+                                    max: 10,
+                                    activeColor: const Color(0xff9f9f9f),
+                                    inactiveColor: const Color(0xff9f9f9f)
+                                        .withOpacity(.26),
+                                    value: 0,
+                                    onChanged: (val) {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius:
+                                            BorderRadius.vertical(top: Radius.circular(25.0)),
+                                          ),
+                                          builder: (context) {
+                                            return GoogleSignInSheet();
+                                          });
+                                    }),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: SizedBox(
+                                    height: 40,
+                                    width: 40,
+                                    child: Image.asset(
+                                        'assets/images/gree_lock.png')),
+                              ),
+                            ],
                           ),
-                  ),
+                        ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15.0),
-                child: GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      width: Get.width * .8,
-                      decoration: BoxDecoration(
-                          color: selectedBorderColor,
-                          borderRadius: BorderRadius.circular(15)),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.0),
-                        child: Center(
-                          child: MyText(
-                            text: 'Save',
-                            color: white,
-                            size: 18,
-                          ),
+            ),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15.0),
+              child: GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    width: Get.width * .8,
+                    decoration: BoxDecoration(
+                        color: selectedBorderColor,
+                        borderRadius: BorderRadius.circular(15)),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
+                      child: Center(
+                        child: MyText(
+                          text: 'Save',
+                          color: white,
+                          size: 18,
                         ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
