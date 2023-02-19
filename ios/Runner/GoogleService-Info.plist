@@ -3,12 +3,34 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>373766077119-8puntccjnp3fuigdre7agdrnevh8jnha.apps.googleusercontent.com</string>
+	<string>235449122260-1hku5m3falmhk1hs6r2kg1oi5ai7v908.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.373766077119-8puntccjnp3fuigdre7agdrnevh8jnha</string>
+	<string>com.googleusercontent.apps.235449122260-1hku5m3falmhk1hs6r2kg1oi5ai7v908</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>235449122260-u7nch4q1lsf06m160an4bh0iuufloutc.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDtAj5clh1aByGGX_qNG6DsrS2KAUjMxkU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>235449122260</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.losthut.android.apps.simplemeditationtimer</string>
+	<key>PROJECT_ID</key>
+	<string>vipassana-968b0</string>
+	<key>STORAGE_BUCKET</key>
+	<string>vipassana-968b0.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:235449122260:ios:24ddaa8be0f495bca9ea41</string>
 </dict>
 </plist>

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -80,45 +80,51 @@ class GeneralController extends GetxController{
 
       var url = Uri.parse('$api/meditation');
       print(url);
-      Map body=
-      {
-        "_id":"${userId}",
-        "meditations":
+      if(FirebaseAuth.instance.currentUser!=null){
+        Map body=
         {
-          "dateTime": DateTime.now().toString(),
-          "meditationTime": "$meditationTime minutes"
-        }
-      };
-      print(json.encode(body));
-      var response = await http.post(url,headers: {"Content-Type": "application/json"},body: json.encode(body));
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+          "_id":FirebaseAuth.instance.currentUser!.uid.toString(),
+          "meditations":
+          {
+            "dateTime": DateTime.now().toString(),
+            "meditationTime": "$meditationTime minutes"
+          }
+        };
+        print(json.encode(body));
+        var response = await http.post(url,headers: {"Content-Type": "application/json"},body: json.encode(body));
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+
     }
     catch (e){
       print("ERROR OCCURED : ${e.toString()}");
     }
   }
   updateMeditations({required docId,required meditationTime}) async {
-    try{
-
-      var url = Uri.parse('$api/meditation/${docId}');
-      print(url);
-      Map body=
-      {
-        "_id":"${docId}",
-        "meditations":
+    if (FirebaseAuth.instance.currentUser!.uid != null) {
+      try {
+        var url = Uri.parse('$api/meditation/${docId}');
+        print(url);
+        Map body =
         {
-          "dateTime": "${DateTime.now().toString()}",
-          "meditationTime": "${meditationTime} minutes"
-        }
-      };
-      print(json.encode(body));
-      var response = await http.post(url,headers: {"Content-Type": "application/json"},body: json.encode(body));
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-    }
-    catch (e){
-      print("ERROR OCCURED : ${e.toString()}");
+          "_id": "${docId}",
+          "meditations":
+          {
+            "dateTime": "${DateTime.now().toString()}",
+            "meditationTime": "${meditationTime} minutes"
+          }
+        };
+        print(json.encode(body));
+        var response = await http.post(
+            url, headers: {"Content-Type": "application/json"},
+            body: json.encode(body));
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+      catch (e) {
+        print("ERROR OCCURED : ${e.toString()}");
+      }
     }
   }
 
@@ -140,41 +146,43 @@ class GeneralController extends GetxController{
       //'https://www.googleapis.com/auth/contacts.readonly',
     ],
   );
-  googleSignIn() async {
-    if(Platform.isAndroid) {
-      isUserLoggedIn.value = await _googleSignIn.isSignedIn();
-      _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
-        _currentUser = account;
-
-        // if (_currentUser != null) {
-        //   _googleSignIn.signInSilently();
-        // }
-      });
-      _googleSignIn.signInSilently();
-    }
-    else{
-      isUserLoggedIn.value = await _googleSignInIos.isSignedIn();
-      _googleSignInIos.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
-        _currentUser = account;
-
-
-
-        // if (_currentUser != null) {
-        //   _googleSignIn.signInSilently();
-        // }
-      });
-      _googleSignInIos.signInSilently();
-    }
-
-
-  }
+  // googleSignIn() async {
+  //   if(Platform.isAndroid) {
+  //     isUserLoggedIn.value = await _googleSignIn.isSignedIn();
+  //     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+  //       _currentUser = account;
+  //
+  //       // if (_currentUser != null) {
+  //       //   _googleSignIn.signInSilently();
+  //       // }
+  //     });
+  //     _googleSignIn.signInSilently();
+  //   }
+  //   else{
+  //     isUserLoggedIn.value = await _googleSignInIos.isSignedIn();
+  //     _googleSignInIos.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+  //       _currentUser = account;
+  //
+  //
+  //
+  //       // if (_currentUser != null) {
+  //       //   _googleSignIn.signInSilently();
+  //       // }
+  //     });
+  //     _googleSignInIos.signInSilently();
+  //   }
+  //
+  //
+  // }
 
   checkIfUserExistsInDb({required userId}) async {
     var response;
     try{
-      var url = Uri.parse(api + '/meditation/$userId');
-      response = await http.get(url);
-
+      if(FirebaseAuth.instance.currentUser!=null) {
+        var uid= FirebaseAuth.instance.currentUser!.uid.toString();
+        var url = Uri.parse(api + '/meditation/$uid');
+        response = await http.get(url);
+      }
 
     }
     catch (e){
@@ -184,18 +192,19 @@ class GeneralController extends GetxController{
     return response.statusCode;
   }
   Future<void> handleSignIn() async {
-    var a ;
     try {
-      if(Platform.isAndroid) {
-        a=await _googleSignIn.signIn();
-      }
-      else{
-        a=await _googleSignInIos.signIn();
-      }
-      log(a!.id.toString());
-      userId.value=a.id.toString();
-      if(a.id!=''||a.id.isNotEmpty){
-        isUserLoggedIn.value=true;}
+        GoogleSignInAccount? googleSignIn;
+        googleSignIn = await GoogleSignIn().signIn();
+        GoogleSignInAuthentication googleSignInAuthentication;
+        googleSignInAuthentication = await googleSignIn!.authentication;
+        OAuthCredential credential = GoogleAuthProvider.credential(
+            accessToken: googleSignInAuthentication.accessToken,
+            idToken: googleSignInAuthentication.idToken);
+        UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+        if(FirebaseAuth.instance.currentUser!=null){
+          isUserLoggedIn.value=true;
+        }
     } catch (error) {
       Get.snackbar('Error', 'Some error occurred while signing in, please try again later !!!',snackPosition: SnackPosition.BOTTOM,colorText: Colors.red);
       log('Error occured: $error');
@@ -212,30 +221,30 @@ class GeneralController extends GetxController{
     }
 
   }
-  checkIfSignedIn() async {
-    await googleSignIn();
-    if( isUserLoggedIn.value==false){
-      // await _handleSignIn();
-      log('User not signed in ');
-    }
-    else{
-      handleSignIn();
-      log('User signed in ');
-
-
-
-    }
-
-    // if (user != null) {
-    //   log('IF RAN');
-    //   log('USER ${user}');
-    // }
-    //
-    // else{
-    //   log('Else RAN');
-    //
-    // }
-  }
+  // checkIfSignedIn() async {
+  //   // await googleSignIn();
+  //   if( isUserLoggedIn.value==false){
+  //     // await _handleSignIn();
+  //     log('User not signed in ');
+  //   }
+  //   else{
+  //     handleSignIn();
+  //     log('User signed in ');
+  //
+  //
+  //
+  //   }
+  //
+  //   // if (user != null) {
+  //   //   log('IF RAN');
+  //   //   log('USER ${user}');
+  //   // }
+  //   //
+  //   // else{
+  //   //   log('Else RAN');
+  //   //
+  //   // }
+  // }
   getAllMeditaions() async {
     try {
       var url = Uri.parse(api + '/meditation');
@@ -252,13 +261,15 @@ class GeneralController extends GetxController{
     meditations.value=[];
 
     try {
-      var url = Uri.parse(api + '/meditation/$userId');
-      var response = await http.get(url);
-      // print('Response status: ${response.statusCode}');
-      // print('Response body: ${response.body}');
-      var jsonDecoded=jsonDecode(response.body);
-      print('Response body: ${jsonDecoded}');
-      meditations.value= jsonDecoded['meditations'];
+      if(FirebaseAuth.instance.currentUser!=null) {
+        var url = Uri.parse('$api/meditation/${FirebaseAuth.instance.currentUser!.uid.toString()}');
+        var response = await http.get(url);
+        // print('Response status: ${response.statusCode}');
+        // print('Response body: ${response.body}');
+        var jsonDecoded = jsonDecode(response.body);
+        print('Response body: ${jsonDecoded}');
+        meditations.value = jsonDecoded['meditations'];
+      }
     }
     catch (e){
       print("Error occured: ${e.toString()}");
@@ -267,7 +278,9 @@ class GeneralController extends GetxController{
   }
   @override
   void onInit() {
-    checkIfSignedIn();
+    if(FirebaseAuth.instance.currentUser!=null){
+      isUserLoggedIn.value=true;
+    }
     audioPlayer= AudioPlayer();
     audioPlayer.setVolume(0.5);
     getInitialData();

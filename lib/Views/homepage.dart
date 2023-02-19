@@ -328,8 +328,8 @@ class _HomePageState extends State<HomePage> {
                           //   AssetSource(soundPaths[controller
                           //       .sessionSoundClipIndex.value]),
                           // );
-                          controller.totalTimer.value = ((index + 1) * 5) * 60;
-                          timeTillComplete = ((index + 1) * 5) * 60;
+                          controller.totalTimer.value = ((index + 1) * 5) ;//60
+                          timeTillComplete = ((index + 1) * 5) ;//60
                           meditationDuration.value = ((index + 1) * 5).toString();
                           controller.numberOfMinutesIndex.value = index;
                           localNotifications.initializeNotifications();
@@ -338,7 +338,7 @@ class _HomePageState extends State<HomePage> {
                               .showNotification(controller.totalTimer.value);
                           _controller.restart(
                               // duration: ((index + 1) ) * 60);
-                              duration: ((index + 1) * 5) * 60); //*60
+                              duration: ((index + 1) * 5)); //*60
                         },
                         child: Container(
                           decoration: BoxDecoration(
