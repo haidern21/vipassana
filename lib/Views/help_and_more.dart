@@ -189,8 +189,9 @@ class _HelpAndMoreState extends State<HelpAndMore> {
   void advanceFeature() {
     showModalBottomSheet(
         context: context,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+        shape: const RoundedRectangleBorder(
+          borderRadius:
+          BorderRadius.vertical(top: Radius.circular(25.0)),
         ),
         builder: (context) {
           return GoogleSignInSheet();

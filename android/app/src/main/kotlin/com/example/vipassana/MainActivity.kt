@@ -1,4 +1,4 @@
-package com.example.vipassana
+package com.losthut.android.apps.simplemeditationtimer
 
 import io.flutter.embedding.android.FlutterActivity
 
