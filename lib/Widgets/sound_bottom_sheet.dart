@@ -2,6 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vipassana/Widgets/google_signin_sheet.dart';
 import 'package:vipassana/shared_pref.dart';
 
 import '../constants.dart';
@@ -71,8 +72,14 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                                       controller.pickedFilePath.value = file;
                                     }
                                   : () {
-                                      Get.snackbar('Please login',
-                                          'Login First to use this feature');
+                                showModalBottomSheet(
+                                    context: context,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.vertical(top: Radius.circular(25.0)),
+                                    ),
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    builder: (context) => GoogleSignInSheet());
                                     },
                               child: Container(
                                 decoration: BoxDecoration(
