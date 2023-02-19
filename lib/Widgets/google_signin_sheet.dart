@@ -12,7 +12,7 @@ class GoogleSignInSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Get.height * .6,
+      height: Get.height * .45,
       width: double.infinity,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
