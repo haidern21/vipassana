@@ -25,7 +25,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    controller.checkIfSignedIn();
 
     moveToNextPage();
     super.initState();
