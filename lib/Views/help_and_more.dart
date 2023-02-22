@@ -94,13 +94,21 @@ class _HelpAndMoreState extends State<HelpAndMore> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(20.0),
-              child: MyText(
-                text: 'Help and More',
-                color: black,
-                size: 18,
-                weight: FontWeight.w500,
+             Padding(
+              padding:const EdgeInsets.symmetric(vertical: 20.0,horizontal: 15),
+              child: Row(
+                children: [
+                  GestureDetector(
+                      onTap:()=> Get.back(),
+                      child: const Icon(Icons.arrow_back_ios_new,color: black,size:18)),
+                  const SizedBox(width: 20,),
+                  const MyText(
+                    text: 'Help and More',
+                    color: black,
+                    size: 18,
+                    weight: FontWeight.w500,
+                  ),
+                ],
               ),
             ),
             Expanded(
