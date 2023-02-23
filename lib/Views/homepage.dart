@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:neon_circular_timer/neon_circular_timer.dart';
@@ -175,16 +176,16 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.all(8),
                     child: Obx(
                       () => controller.leadingTime.value == 5.0
-                          ? const MyText(
+                          ? MyText(
                               text: 'Leading Time: 5: 00"',
                               color: white,
-                              size: 17,
+                              size: 18.sp,
                             )
                           : MyText(
                               text:
                                   'Leading Time: ${controller.leadingTime.value.toString().substring(0, 1)}:${controller.leadingTime.value.toString().substring(2, 4)}"',
                               color: white,
-                              size: 17,
+                              size: 18.sp,
                             ),
                     ),
                   ),
@@ -192,16 +193,16 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.all(8),
                     child: Obx(
                       () => controller.intervalTime.value == 5.0
-                          ? const MyText(
+                          ?  MyText(
                               text: 'Interval: 5: 00"',
                               color: white,
-                              size: 17,
+                              size: 18.sp,
                             )
                           : MyText(
                               text:
                                   'Interval: ${controller.intervalTime.value.toString().substring(0, 1)}:${controller.intervalTime.value.toString().substring(2, 4)}"',
                               color: white,
-                              size: 17,
+                              size: 18.sp,
                             ),
                     ),
                   ),
@@ -223,6 +224,9 @@ class _HomePageState extends State<HomePage> {
                               strokeWidth: 15,
                               backgroudColor: Colors.transparent,
                               isTimerTextShown: true,
+                              textStyle: TextStyle(
+                                  fontSize: 35.sp
+                              ),
                               neumorphicEffect: true,
                               autoStart: false,
                               neon: 0,
@@ -364,6 +368,7 @@ class _HomePageState extends State<HomePage> {
                                     text: ((index + 1) * 5).toString(),
                                     // text: ((index + 1) ).toString(),
                                     color: black,
+                                    size: 18.sp,
                                   ),
                                 ),
                               ),
@@ -398,20 +403,20 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 10),
+               Padding(
+                padding:const EdgeInsets.only(top: 10, bottom: 10),
                 child: MyText(
                   text: 'Leading Time',
                   color: black,
-                  size: 18,
+                  size: 18.sp,
                   weight: FontWeight.bold,
                 ),
               ),
-              const MyText(
+               MyText(
                 text:
                     'An interval to dedicate to mindful prestration,\nMETTA or other rituals preceding the meditation\nsession',
                 color: black,
-                size: 14,
+                size: 16.sp,
                 maxLines: 3,
               ),
               const SizedBox(height: 15),
@@ -484,11 +489,11 @@ class _HomePageState extends State<HomePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const MyText(
+                     MyText(
                       text: 'Session Loop',
                       color: black,
                       weight: FontWeight.bold,
-                      size: 20,
+                      size: 18.sp,
                     ),
                     SizedBox(
                       height: 20,
@@ -510,29 +515,29 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 15,
               ),
-              const MyText(
+               MyText(
                 text:
                     'Repeat twice to allow for Walking and Setting consecutive practices',
                 maxLines: 2,
                 color: black,
-                size: 16,
+                size: 16.sp,
               ),
-              const Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 10),
+               Padding(
+                padding: const EdgeInsets.only(top: 20, bottom: 10),
                 child: MyText(
                   text: 'Interval Time',
                   color: black,
                   weight: FontWeight.bold,
-                  size: 20,
+                  size: 18.sp,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 15),
+               Padding(
+                padding: const EdgeInsets.only(bottom: 15),
                 child: MyText(
                   text: 'Break between walking and sitting sessions.',
                   maxLines: 1,
                   color: black,
-                  size: 16,
+                  size: 16.sp,
                 ),
               ),
               Padding(
@@ -611,13 +616,13 @@ class _HomePageState extends State<HomePage> {
                       decoration: BoxDecoration(
                           color: selectedBorderColor,
                           borderRadius: BorderRadius.circular(15)),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                      child:  Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Center(
                           child: MyText(
                             text: 'Save',
                             color: white,
-                            size: 18,
+                            size: 18.sp,
                           ),
                         ),
                       ),
@@ -636,7 +641,7 @@ class _HomePageState extends State<HomePage> {
       {required String imagePath, required String text, required bool isSvg}) {
     return SizedBox(
       height: 30,
-      width: 100,
+      width: 150,
       child: Row(
         children: [
           isSvg == false
@@ -657,6 +662,7 @@ class _HomePageState extends State<HomePage> {
           ),
           MyText(
             text: text,
+            size: 18.sp,
             color: black,
           )
         ],

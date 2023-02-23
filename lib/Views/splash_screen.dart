@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vipassana/Views/homepage.dart';
 import 'package:vipassana/Views/login_page.dart';
@@ -66,7 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 maxLines: 5,
                 color: white,
                 weight: FontWeight.w600,
-                size: 23,
+                size: 23.sp,
                 textAlign: TextAlign.center,
               ),
             ),

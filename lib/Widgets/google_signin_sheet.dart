@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:vipassana/controller/general_controller.dart';
@@ -24,10 +25,10 @@ class GoogleSignInSheet extends StatelessWidget {
               const SizedBox(
                 height: 40,
               ),
-              const MyText(
+               MyText(
                 text: 'Locked Advance Features',
                 color: black,
-                size: 18,
+                size: 18.sp,
                 weight: FontWeight.bold,
               ),
               const SizedBox(
@@ -48,9 +49,10 @@ class GoogleSignInSheet extends StatelessWidget {
                     const SizedBox(
                       width: 20,
                     ),
-                    const MyText(
+                     MyText(
                       text: 'Your own sound clip',
                       color: black,
+                      size: 16.sp,
                     )
                   ],
                 ),
@@ -73,9 +75,10 @@ class GoogleSignInSheet extends StatelessWidget {
                     const SizedBox(
                       width: 20,
                     ),
-                    const MyText(
+                     MyText(
                       text: 'Leading preparation time',
                       color: black,
+                       size: 16.sp,
                     )
                   ],
                 ),
@@ -98,9 +101,10 @@ class GoogleSignInSheet extends StatelessWidget {
                     const SizedBox(
                       width: 20,
                     ),
-                    const MyText(
+                     MyText(
                       text: 'Interval Time',
                       color: black,
+                       size: 16.sp,
                     )
                   ],
                 ),
@@ -123,9 +127,10 @@ class GoogleSignInSheet extends StatelessWidget {
                     const SizedBox(
                       width: 20,
                     ),
-                    const MyText(
+                     MyText(
                       text: 'Meditation Log',
                       color: black,
+                       size: 16.sp,
                     )
                   ],
                 ),
@@ -133,20 +138,20 @@ class GoogleSignInSheet extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const MyText(
+               MyText(
                 text: 'Unlock all features for free',
                 color: black,
-                size: 18,
+                size: 18.sp,
                 weight: FontWeight.bold,
               ),
               const SizedBox(
                 height: 10,
               ),
-              const MyText(
+               MyText(
                 text:
                 'Sign-in with Google to unlock features. In respect of privacy and security, the App does not collect login data, Google takes care of the process',
                 color: black,
-                size: 14,
+                size: 16.sp,
                 weight: FontWeight.normal,
                 textAlign: TextAlign.justify,
                 maxLines: 5,
@@ -173,10 +178,10 @@ class GoogleSignInSheet extends StatelessWidget {
                         const SizedBox(
                           width: 20,
                         ),
-                        const MyText(
+                         MyText(
                           text: 'Sign in with Google',
                           color: selectedBorderColor,
-                          size: 16,
+                          size: 16.sp,
                         ),
                       ],
                     ),

@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vipassana/Widgets/google_signin_sheet.dart';
 import 'package:vipassana/shared_pref.dart';
@@ -38,12 +39,12 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 10),
+               Padding(
+                padding: const EdgeInsets.only(top: 20, bottom: 10),
                 child: MyText(
                   text: 'End of session sound clip.',
                   color: black,
-                  size: 18,
+                  size: 18.sp,
                   weight: FontWeight.bold,
                 ),
               ),
@@ -51,7 +52,7 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                 height: 10,
               ),
               SizedBox(
-                height: 40,
+                height: 50,
                 child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
@@ -103,6 +104,7 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                                                     index
                                                 ? innerBorderColor
                                                 : selectedBorderColor,
+                                      size: 16.sp,
                                           )
                                         : Row(
                                             mainAxisAlignment:
@@ -117,6 +119,7 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                                                         index
                                                     ? innerBorderColor
                                                     : selectedBorderColor,
+                                                size: 16.sp,
                                               ),
                                               SizedBox(
                                                   height: 40,
@@ -163,6 +166,7 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                                             index
                                         ? innerBorderColor
                                         : selectedBorderColor,
+                                    size: 16.sp,
                                   ),
                                 ),
                               ),
@@ -177,12 +181,12 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                     itemCount: sounds.length),
               ),
               const SizedBox(height: 15),
-              const Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 10),
+               Padding(
+                padding: const EdgeInsets.only(top: 20, bottom: 10),
                 child: MyText(
                   text: 'Volume',
                   color: black,
-                  size: 18,
+                  size: 18.sp,
                   weight: FontWeight.bold,
                 ),
               ),
@@ -209,21 +213,21 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 5),
+               Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 5),
                 child: MyText(
                   text: 'Repeat',
                   color: black,
-                  size: 18,
+                  size: 18.sp,
                   weight: FontWeight.bold,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 10),
+               Padding(
+                padding: const EdgeInsets.only(bottom: 10),
                 child: MyText(
                   text: 'Time the sound clip should play',
                   color: black,
-                  size: 15,
+                  size: 15.sp,
                 ),
               ),
               Padding(
@@ -262,13 +266,13 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                       decoration: BoxDecoration(
                           color: selectedBorderColor,
                           borderRadius: BorderRadius.circular(15)),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                      child:  Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Center(
                           child: MyText(
                             text: 'Save',
                             color: white,
-                            size: 18,
+                            size: 18.sp,
                           ),
                         ),
                       ),
