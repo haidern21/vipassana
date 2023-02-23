@@ -101,369 +101,368 @@ class _HomePageState extends State<HomePage> {
       ),
     ];
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: Get.height,
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              gradientColor1,
-              gradientColor2,
-            ],
-          )),
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: PopupMenuButton(
-                            onSelected: (val) {
-                              if (val == 0) {
-                                showModalBottomSheet(
-                                    context: context,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(25.0)),
-                                    ),
-                                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    builder: (context) => sessionsBottomSheet());
-                                log('index 0');
-                              }
-                              if (val == 1) {
-                                showModalBottomSheet(
-                                    context: context,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(25.0)),
-                                    ),
-                                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    builder: (context) =>
-                                        const SoundBottomSheet());
-                                log('index 1');
-                              }
-                              if (val == 2) {
-                                log('index 2');
-                                Get.to(() => const MeditationLog());
-                              }
-                              if (val == 3) {
-                                log('index 3');
-                                Get.to(() => const HelpAndMore());
-                              }
-                            },
-                            child: const SizedBox(
-                              child: Icon(
-                                Icons.more_vert,
-                                color: white,
-                                size: 30,
-                              ),
+      body: Container(
+        height: Get.height,
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            gradientColor1,
+            gradientColor2,
+          ],
+        )),
+        child: Stack(
+          children: [
+            Positioned(
+              bottom: Get.height*.05,
+              child: SizedBox(
+                // height: Get.height*.3,
+                // width: Get.width,
+                child: Image.asset('assets/images/bg_visual_effects.png'),
+              ),
+            ),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: PopupMenuButton(
+                          onSelected: (val) {
+                            if (val == 0) {
+                              showModalBottomSheet(
+                                  context: context,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(25.0)),
+                                  ),
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  builder: (context) => sessionsBottomSheet());
+                              log('index 0');
+                            }
+                            if (val == 1) {
+                              showModalBottomSheet(
+                                  context: context,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(25.0)),
+                                  ),
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  builder: (context) =>
+                                      const SoundBottomSheet());
+                              log('index 1');
+                            }
+                            if (val == 2) {
+                              log('index 2');
+                              Get.to(() => const MeditationLog());
+                            }
+                            if (val == 3) {
+                              log('index 3');
+                              Get.to(() => const HelpAndMore());
+                            }
+                          },
+                          child: const SizedBox(
+                            child: Icon(
+                              Icons.more_vert,
+                              color: white,
+                              size: 30,
                             ),
-                            itemBuilder: (context) {
-                              return List.generate(items.length, (index) {
-                                return items[index];
-                              });
-                            },
                           ),
+                          itemBuilder: (context) {
+                            return List.generate(items.length, (index) {
+                              return items[index];
+                            });
+                          },
                         ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Obx(
-                        () => controller.leadingTime.value == 5.0
-                            ? MyText(
-                                text: 'Leading Time: 5: 00"',
-                                color: white,
-                                size: 18.sp,
-                              )
-                            : MyText(
-                                text:
-                                    'Leading Time: ${controller.leadingTime.value.toString().substring(0, 1)}:${controller.leadingTime.value.toString().substring(2, 4)}"',
-                                color: white,
-                                size: 18.sp,
-                              ),
                       ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Obx(
+                      () => controller.leadingTime.value == 5.0
+                          ? MyText(
+                              text: 'Leading Time: 5: 00"',
+                              color: white,
+                              size: 18.sp,
+                            )
+                          : MyText(
+                              text:
+                                  'Leading Time: ${controller.leadingTime.value.toString().substring(0, 1)}:${controller.leadingTime.value.toString().substring(2, 4)}"',
+                              color: white,
+                              size: 18.sp,
+                            ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Obx(
-                        () => controller.intervalTime.value == 5.0
-                            ? MyText(
-                                text: 'Interval: 5: 00"',
-                                color: white,
-                                size: 18.sp,
-                              )
-                            : MyText(
-                                text:
-                                    'Interval: ${controller.intervalTime.value.toString().substring(0, 1)}:${controller.intervalTime.value.toString().substring(2, 4)}"',
-                                color: white,
-                                size: 18.sp,
-                              ),
-                      ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Obx(
+                      () => controller.intervalTime.value == 5.0
+                          ? MyText(
+                              text: 'Interval: 5: 00"',
+                              color: white,
+                              size: 18.sp,
+                            )
+                          : MyText(
+                              text:
+                                  'Interval: ${controller.intervalTime.value.toString().substring(0, 1)}:${controller.intervalTime.value.toString().substring(2, 4)}"',
+                              color: white,
+                              size: 18.sp,
+                            ),
                     ),
-                    SizedBox(
-                      height: Get.height * .15,
-                    ),
-                    SizedBox(
-                      height: Get.height*.65,
-                      child: CircleList(
-                        origin: const Offset(0,0),
-                        // behavior: HitTestBehavior.opaque,
-                        centerWidget: NeonCircularTimer(
-                            width: 200,
-                            duration: 6500,
-                            controller: _controller,
-                            strokeWidth: 15,
-                            backgroudColor: Colors.transparent,
-                            isTimerTextShown: true,
-                            textStyle: TextStyle(fontSize: 35.sp),
-                            neumorphicEffect: true,
-                            autoStart: false,
-                            neon: 0,
-                            onStart: () {},
-                            neonColor: innerBorderColor,
-                            innerFillColor: neonColor.withOpacity(.26),
-                            outerStrokeColor: neonColor,
-                            onComplete: () async {
-                              log(timeTillComplete.toString());
+                  ),
+                  SizedBox(
+                    height: Get.height * .15,
+                  ),
+                  SizedBox(
+                    height: Get.height*.65,
+                    child: CircleList(
+                      origin: const Offset(0,0),
+                      // behavior: HitTestBehavior.opaque,
+                      centerWidget: NeonCircularTimer(
+                          width: 200,
+                          duration: 6500,
+                          controller: _controller,
+                          strokeWidth: 15,
+                          backgroudColor: Colors.transparent,
+                          isTimerTextShown: true,
+                          textStyle: TextStyle(fontSize: 35.sp),
+                          neumorphicEffect: true,
+                          autoStart: false,
+                          neon: 0,
+                          onStart: () {},
+                          neonColor: innerBorderColor,
+                          innerFillColor: neonColor.withOpacity(.26),
+                          outerStrokeColor: neonColor,
+                          onComplete: () async {
+                            log(timeTillComplete.toString());
+                            log(_controller.getTimeInSeconds().toString());
+                            if (timeTillComplete ==
+                                _controller.getTimeInSeconds()) {
                               log(_controller.getTimeInSeconds().toString());
-                              if (timeTillComplete ==
-                                  _controller.getTimeInSeconds()) {
-                                log(_controller.getTimeInSeconds().toString());
-                                // await playSoundWithInterval();
-                                int repeatInterval =
-                                    controller.repeat.value.toInt();
-                                if (controller.sessionSoundClipIndex.value != -1) {
-                                  await controller.audioPlayer.play(
-                                    AssetSource(soundPaths[
-                                        controller.sessionSoundClipIndex.value]),
-                                  );
-                                  controller.audioPlayer.onPlayerComplete
-                                      .listen((event) async {
-                                    print(
-                                        controller.repeat.value.toInt().toString());
-                                    repeatInterval--;
-                                    if (repeatInterval > 0) {
-                                      await controller.audioPlayer.play(
-                                        AssetSource(soundPaths[controller
-                                            .sessionSoundClipIndex.value]),
-                                      );
-                                    } else {
-                                      return;
-                                    }
-                                  });
-                                }
-                                if (controller.isUserLoggedIn.value == true) {
-                                  var a = await controller.checkIfUserExistsInDb(
-                                      userId: controller.userId.value);
-                                  if (a == 404) {
-                                    await controller.uploadMeditationToServer(
-                                        userId: controller.userId.value,
-                                        meditationTime: meditationDuration.value);
-                                    print('a=404');
-                                  } else {
-                                    await controller.updateMeditations(
-                                      docId: controller.userId.value,
-                                      meditationTime: meditationDuration.value,
-                                    );
-
-                                    print('a=200');
-                                  }
-
-                                  if (controller.sessionSoundClipIndex.value == 0 &&
-                                      controller.pickedFilePath.value.isNotEmpty) {
+                              // await playSoundWithInterval();
+                              int repeatInterval =
+                                  controller.repeat.value.toInt();
+                              if (controller.sessionSoundClipIndex.value != -1) {
+                                await controller.audioPlayer.play(
+                                  AssetSource(soundPaths[
+                                      controller.sessionSoundClipIndex.value]),
+                                );
+                                controller.audioPlayer.onPlayerComplete
+                                    .listen((event) async {
+                                  print(
+                                      controller.repeat.value.toInt().toString());
+                                  repeatInterval--;
+                                  if (repeatInterval > 0) {
                                     await controller.audioPlayer.play(
-                                        DeviceFileSource(
-                                            controller.pickedFilePath.value));
+                                      AssetSource(soundPaths[controller
+                                          .sessionSoundClipIndex.value]),
+                                    );
+                                  } else {
+                                    return;
                                   }
+                                });
+                              }
+                              if (controller.isUserLoggedIn.value == true) {
+                                var a = await controller.checkIfUserExistsInDb(
+                                    userId: controller.userId.value);
+                                if (a == 404) {
+                                  await controller.uploadMeditationToServer(
+                                      userId: controller.userId.value,
+                                      meditationTime: meditationDuration.value);
+                                  print('a=404');
+                                } else {
+                                  await controller.updateMeditations(
+                                    docId: controller.userId.value,
+                                    meditationTime: meditationDuration.value,
+                                  );
+
+                                  print('a=200');
+                                }
+
+                                if (controller.sessionSoundClipIndex.value == 0 &&
+                                    controller.pickedFilePath.value.isNotEmpty) {
+                                  await controller.audioPlayer.play(
+                                      DeviceFileSource(
+                                          controller.pickedFilePath.value));
                                 }
                               }
-                            }),
-                        children: List.generate(
-                            12,
-                            (index) => Obx(
-                                  () => GestureDetector(
-                                    onTap: () async {
-                                      // await controller.audioPlayer.play(
-                                      //   AssetSource(soundPaths[controller
-                                      //       .sessionSoundClipIndex.value]),
-                                      // );
-                                      controller.totalTimer.value =
-                                          ((index + 1) * 5) * 60; //60
-                                      timeTillComplete =
-                                          ((index + 1) * 5) * 60; //60
-                                      meditationDuration.value =
-                                          ((index + 1) * 5).toString();
-                                      controller.numberOfMinutesIndex.value = index;
-                                      localNotifications.initializeNotifications();
-                                      print("SHOW NOTIFICATION called");
-                                      await localNotifications.showNotification(
-                                          controller.totalTimer.value);
-                                      _controller.restart(
-                                          // duration: ((index + 1) ) * 60);
-                                          duration: ((index + 1) * 5) * 60); //*60
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: controller
-                                                      .numberOfMinutesIndex.value ==
-                                                  index
-                                              ? selectedBorderColor
-                                              : Colors.transparent,
-                                          shape: BoxShape.circle),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          height: 65,
-                                          width: 65,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: white,
-                                              border: Border.all(
-                                                  color: innerBorderColor,
-                                                  width: 3)),
-                                          child: Center(
-                                            child: MyText(
-                                              text: ((index + 1) * 5).toString(),
-                                              // text: ((index + 1) ).toString(),
-                                              color: black,
-                                              size: 18.sp,
-                                            ),
+                            }
+                          }),
+                      children: List.generate(
+                          12,
+                          (index) => Obx(
+                                () => GestureDetector(
+                                  onTap: () async {
+                                    // await controller.audioPlayer.play(
+                                    //   AssetSource(soundPaths[controller
+                                    //       .sessionSoundClipIndex.value]),
+                                    // );
+                                    controller.totalTimer.value =
+                                        ((index + 1) * 5) * 60; //60
+                                    timeTillComplete =
+                                        ((index + 1) * 5) * 60; //60
+                                    meditationDuration.value =
+                                        ((index + 1) * 5).toString();
+                                    controller.numberOfMinutesIndex.value = index;
+                                    localNotifications.initializeNotifications();
+                                    print("SHOW NOTIFICATION called");
+                                    await localNotifications.showNotification(
+                                        controller.totalTimer.value);
+                                    _controller.restart(
+                                        // duration: ((index + 1) ) * 60);
+                                        duration: ((index + 1) * 5) * 60); //*60
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: controller
+                                                    .numberOfMinutesIndex.value ==
+                                                index
+                                            ? selectedBorderColor
+                                            : Colors.transparent,
+                                        shape: BoxShape.circle),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 65,
+                                        width: 65,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: white,
+                                            border: Border.all(
+                                                color: innerBorderColor,
+                                                width: 3)),
+                                        child: Center(
+                                          child: MyText(
+                                            text: ((index + 1) * 5).toString(),
+                                            // text: ((index + 1) ).toString(),
+                                            color: black,
+                                            size: 18.sp,
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                )),
-                      ),
+                                ),
+                              )),
                     ),
+                  ),
 
-                    // Align(
-                    //   alignment: Alignment.center,
-                    //   child: GestureDetector(
-                    //     onTap: () {
-                    //       // _controller.restart();
-                    //     },
-                    //     child: Stack(
-                    //       children: [
-                    //         NeonCircularTimer(
-                    //             width: 200,
-                    //             duration: 6500,
-                    //             controller: _controller,
-                    //             strokeWidth: 15,
-                    //             backgroudColor: Colors.transparent,
-                    //             isTimerTextShown: true,
-                    //             textStyle: TextStyle(
-                    //                 fontSize: 35.sp
-                    //             ),
-                    //             neumorphicEffect: true,
-                    //             autoStart: false,
-                    //             neon: 0,
-                    //             onStart: () {},
-                    //             neonColor: innerBorderColor,
-                    //             innerFillColor: neonColor.withOpacity(.26),
-                    //             outerStrokeColor: neonColor,
-                    //             onComplete: () async {
-                    //               log(timeTillComplete.toString());
-                    //               log(_controller.getTimeInSeconds().toString());
-                    //               if (timeTillComplete ==
-                    //                   _controller.getTimeInSeconds()) {
-                    //                 log(_controller.getTimeInSeconds().toString());
-                    //                 // await playSoundWithInterval();
-                    //                 int repeatInterval =
-                    //                     controller.repeat.value.toInt();
-                    //                 if (controller.sessionSoundClipIndex.value !=
-                    //                     -1) {
-                    //                   await controller.audioPlayer.play(
-                    //                     AssetSource(soundPaths[controller
-                    //                         .sessionSoundClipIndex.value]),
-                    //                   );
-                    //                   controller.audioPlayer.onPlayerComplete
-                    //                       .listen((event) async {
-                    //                     print(controller.repeat.value
-                    //                         .toInt()
-                    //                         .toString());
-                    //                     repeatInterval--;
-                    //                     if (repeatInterval > 0) {
-                    //                       await controller.audioPlayer.play(
-                    //                         AssetSource(soundPaths[controller
-                    //                             .sessionSoundClipIndex.value]),
-                    //                       );
-                    //                     } else {
-                    //                       return;
-                    //                     }
-                    //                   });
-                    //                 }
-                    //                 if (controller.isUserLoggedIn.value == true) {
-                    //                   var a =
-                    //                       await controller.checkIfUserExistsInDb(
-                    //                           userId: controller.userId.value);
-                    //                   if (a == 404) {
-                    //                     await controller.uploadMeditationToServer(
-                    //                         userId: controller.userId.value,
-                    //                         meditationTime:
-                    //                             meditationDuration.value);
-                    //                     print('a=404');
-                    //                   } else {
-                    //                     await controller.updateMeditations(
-                    //                       docId: controller.userId.value,
-                    //                       meditationTime: meditationDuration.value,
-                    //                     );
-                    //
-                    //                     print('a=200');
-                    //                   }
-                    //
-                    //                   if (controller.sessionSoundClipIndex.value ==
-                    //                           0 &&
-                    //                       controller
-                    //                           .pickedFilePath.value.isNotEmpty) {
-                    //                     await controller.audioPlayer.play(
-                    //                         DeviceFileSource(
-                    //                             controller.pickedFilePath.value));
-                    //                   }
-                    //                 }
-                    //               }
-                    //             }),
-                    //         Obx(() => controller.sessionLoop.value == true
-                    //             ? Positioned.fill(
-                    //                 bottom: 30,
-                    //                 child: Align(
-                    //                   alignment: Alignment.bottomCenter,
-                    //                   child: Image.asset(
-                    //                     'assets/images/loop.png',
-                    //                     height: 20,
-                    //                   ),
-                    //                 ))
-                    //             : const SizedBox())
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
-                  ],
-                ),
+                  // Align(
+                  //   alignment: Alignment.center,
+                  //   child: GestureDetector(
+                  //     onTap: () {
+                  //       // _controller.restart();
+                  //     },
+                  //     child: Stack(
+                  //       children: [
+                  //         NeonCircularTimer(
+                  //             width: 200,
+                  //             duration: 6500,
+                  //             controller: _controller,
+                  //             strokeWidth: 15,
+                  //             backgroudColor: Colors.transparent,
+                  //             isTimerTextShown: true,
+                  //             textStyle: TextStyle(
+                  //                 fontSize: 35.sp
+                  //             ),
+                  //             neumorphicEffect: true,
+                  //             autoStart: false,
+                  //             neon: 0,
+                  //             onStart: () {},
+                  //             neonColor: innerBorderColor,
+                  //             innerFillColor: neonColor.withOpacity(.26),
+                  //             outerStrokeColor: neonColor,
+                  //             onComplete: () async {
+                  //               log(timeTillComplete.toString());
+                  //               log(_controller.getTimeInSeconds().toString());
+                  //               if (timeTillComplete ==
+                  //                   _controller.getTimeInSeconds()) {
+                  //                 log(_controller.getTimeInSeconds().toString());
+                  //                 // await playSoundWithInterval();
+                  //                 int repeatInterval =
+                  //                     controller.repeat.value.toInt();
+                  //                 if (controller.sessionSoundClipIndex.value !=
+                  //                     -1) {
+                  //                   await controller.audioPlayer.play(
+                  //                     AssetSource(soundPaths[controller
+                  //                         .sessionSoundClipIndex.value]),
+                  //                   );
+                  //                   controller.audioPlayer.onPlayerComplete
+                  //                       .listen((event) async {
+                  //                     print(controller.repeat.value
+                  //                         .toInt()
+                  //                         .toString());
+                  //                     repeatInterval--;
+                  //                     if (repeatInterval > 0) {
+                  //                       await controller.audioPlayer.play(
+                  //                         AssetSource(soundPaths[controller
+                  //                             .sessionSoundClipIndex.value]),
+                  //                       );
+                  //                     } else {
+                  //                       return;
+                  //                     }
+                  //                   });
+                  //                 }
+                  //                 if (controller.isUserLoggedIn.value == true) {
+                  //                   var a =
+                  //                       await controller.checkIfUserExistsInDb(
+                  //                           userId: controller.userId.value);
+                  //                   if (a == 404) {
+                  //                     await controller.uploadMeditationToServer(
+                  //                         userId: controller.userId.value,
+                  //                         meditationTime:
+                  //                             meditationDuration.value);
+                  //                     print('a=404');
+                  //                   } else {
+                  //                     await controller.updateMeditations(
+                  //                       docId: controller.userId.value,
+                  //                       meditationTime: meditationDuration.value,
+                  //                     );
+                  //
+                  //                     print('a=200');
+                  //                   }
+                  //
+                  //                   if (controller.sessionSoundClipIndex.value ==
+                  //                           0 &&
+                  //                       controller
+                  //                           .pickedFilePath.value.isNotEmpty) {
+                  //                     await controller.audioPlayer.play(
+                  //                         DeviceFileSource(
+                  //                             controller.pickedFilePath.value));
+                  //                   }
+                  //                 }
+                  //               }
+                  //             }),
+                  //         Obx(() => controller.sessionLoop.value == true
+                  //             ? Positioned.fill(
+                  //                 bottom: 30,
+                  //                 child: Align(
+                  //                   alignment: Alignment.bottomCenter,
+                  //                   child: Image.asset(
+                  //                     'assets/images/loop.png',
+                  //                     height: 20,
+                  //                   ),
+                  //                 ))
+                  //             : const SizedBox())
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
+                ],
               ),
-              Positioned(
-                bottom: Get.height*.03,
-                child: SizedBox(
-                  height: Get.height*.3,
-                  width: Get.width,
-                  child: Image.asset('assets/images/bg_visual_effects.png'),
-                ),
-              ),
-            ],
-          ),
+            ),
+
+          ],
         ),
       ),
     );
