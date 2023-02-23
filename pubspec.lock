@@ -99,6 +99,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
+  circle_list:
+    dependency: "direct main"
+    description:
+      name: circle_list
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.5"
+  circular_motion:
+    dependency: "direct main"
+    description:
+      name: circular_motion
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   cli_util:
     dependency: transitive
     description:
