@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -102,10 +103,10 @@ class _HelpAndMoreState extends State<HelpAndMore> {
                       onTap:()=> Get.back(),
                       child: const Icon(Icons.arrow_back_ios_new,color: black,size:18)),
                   const SizedBox(width: 20,),
-                  const MyText(
+                   MyText(
                     text: 'Help and More',
                     color: black,
-                    size: 18,
+                    size: 20.sp,
                     weight: FontWeight.w500,
                   ),
                 ],
@@ -155,7 +156,7 @@ class _HelpAndMoreState extends State<HelpAndMore> {
             MyText(
               text: text,
               color: black,
-              size: 15,
+              size: 17.sp,
               weight: FontWeight.w400,
             ),
           ],

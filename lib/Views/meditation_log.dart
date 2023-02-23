@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:vipassana/Widgets/my_text.dart';
@@ -57,10 +58,10 @@ class _MeditationLogState extends State<MeditationLog> {
               const SizedBox(
                 height: 15,
               ),
-              const MyText(
+               MyText(
                 text: 'Meditation Log',
                 color: black,
-                size: 18,
+                size: 20.sp,
                 weight: FontWeight.w500,
               ),
               const SizedBox(height: 20),
@@ -141,7 +142,7 @@ class _MeditationLogState extends State<MeditationLog> {
                                                   text:
                                                       '${DateTime.parse(controller.meditations[index]['dateTime']).day} ${DateTime.parse(controller.meditations[index]['dateTime']).month},${DateTime.parse(controller.meditations[index]['dateTime']).year}',
                                                   color: black,
-                                                  size: 20,
+                                                  size: 20.sp,
                                                   weight: FontWeight.w600,
                                                 ),
                                                 Padding(
@@ -152,7 +153,7 @@ class _MeditationLogState extends State<MeditationLog> {
                                                     text:
                                                         '${controller.meditations[index]['meditationTime']}',
                                                     color: black,
-                                                    size: 16,
+                                                    size: 16.sp,
                                                     weight: FontWeight.w400,
                                                   ),
                                                 ),
@@ -197,15 +198,15 @@ class _MeditationLogState extends State<MeditationLog> {
                                     MyText(
                                       text: todayDate,
                                       color: black,
-                                      size: 20,
+                                      size: 20.sp,
                                       weight: FontWeight.w600,
                                     ),
-                                    const Padding(
-                                      padding: EdgeInsets.only(top: 10.0),
+                                     Padding(
+                                      padding: const EdgeInsets.only(top: 10.0),
                                       child: MyText(
                                         text: '00 Hours, 00 Minutes',
                                         color: black,
-                                        size: 16,
+                                        size: 16.sp,
                                         weight: FontWeight.w400,
                                       ),
                                     ),

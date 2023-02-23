@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/constants.dart';
@@ -35,10 +36,10 @@ class _JoinMailingListState extends State<JoinMailingList> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const MyText(
+                   MyText(
                     text:
                         'The mailing list is free to join and will provide you with a way to keep informed about \n\n • Progress about the app \n • Community related announcements \n • Vipassana Meditation news',
-                    size: 16,
+                    size: 17.sp,
                     weight: FontWeight.w400,
                     color: black,
                     maxLines: 10,
@@ -47,9 +48,9 @@ class _JoinMailingListState extends State<JoinMailingList> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const MyText(
+                  MyText(
                     text: 'Your Name',
-                    size: 16,
+                    size: 17.sp,
                     color: black,
                     weight: FontWeight.bold,
                     textAlign: TextAlign.justify,
@@ -75,9 +76,9 @@ class _JoinMailingListState extends State<JoinMailingList> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const MyText(
+                   MyText(
                     text: 'Your Email',
-                    size: 16,
+                    size: 17.sp,
                     color: black,
                     weight: FontWeight.bold,
                     textAlign: TextAlign.justify,
@@ -128,13 +129,13 @@ class _JoinMailingListState extends State<JoinMailingList> {
                       decoration: BoxDecoration(
                           color: selectedBorderColor,
                           borderRadius: BorderRadius.circular(15)),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Center(
                           child: MyText(
                             text: 'Send',
                             color: white,
-                            size: 18,
+                            size: 18.sp,
                           ),
                         ),
                       ),

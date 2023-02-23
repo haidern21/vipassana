@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/constants.dart';
@@ -32,10 +33,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const MyText(
+                   MyText(
                     text: 'Your Feedback Counts',
                     color: black,
-                    size: 20,
+                    size: 20.sp,
                     weight: FontWeight.w500,
                   ),
                   const SizedBox(
@@ -59,10 +60,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  const MyText(
+                   MyText(
                     text: 'Your Email',
                     color: black,
-                    size: 20,
+                    size: 20.sp,
                     weight: FontWeight.w500,
                   ),
                   const SizedBox(
@@ -111,13 +112,13 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       decoration: BoxDecoration(
                           color: selectedBorderColor,
                           borderRadius: BorderRadius.circular(15)),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                      child:  Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Center(
                           child: MyText(
                             text: 'Send',
                             color: white,
-                            size: 18,
+                            size: 18.sp,
                           ),
                         ),
                       ),

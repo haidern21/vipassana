@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:vipassana/Widgets/my_text.dart';
@@ -23,11 +24,11 @@ class Support extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const Center(
+                 Center(
                   child: MyText(
                     text: 'Support',
                     weight: FontWeight.bold,
-                    size: 22,
+                    size: 22.sp,
                     color: black,
                   ),
                 ),
@@ -45,9 +46,9 @@ class Support extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                const MyText(
+                MyText(
                   text: 'Andrea, the App developer',
-                  size: 18,
+                  size: 18.sp,
                   weight: FontWeight.bold,
                   color: black,
                 ),
@@ -57,11 +58,11 @@ class Support extends StatelessWidget {
                 Divider(
                   color: black.withOpacity(0.3),
                 ),
-                const MyText(
+                MyText(
                   text:
                       'Hi there, you might remember me from the initial intro of App. I am the app developer, I take care of maintenance, bug fixes as well as working on the app updates, I am the one to blame for when things gone wrong :-) i alos write the blog, manage the mailing list, meditate as much as I can. \n\nSince the Vipassana Meditation Timer App launch in 2015, our community has grown from a few individual to hundreds of meditators. Seven years have gone by and i want to keep on working on the app as well as continue to keep the App free of charge and free of advertisments, I am therefore asking for a little help. \n\nMeditators wanting to practice giving, can now buy me a cup of coffee directly from the App. If you feel like contributing, I will and we will all very much appreciate. Thank you :-)',
                   color: black,
-                  size: 16,
+                  size: 16.sp,
                   textAlign: TextAlign.justify,
                   maxLines: 20,
                 ),
@@ -95,10 +96,10 @@ class Support extends StatelessWidget {
                         const SizedBox(
                           width: 20,
                         ),
-                        const MyText(
+                        MyText(
                           text: 'Buy me a Coffee',
                           color: black,
-                          size: 18,
+                          size: 18.sp,
                           weight: FontWeight.w500,
                         )
                       ],
