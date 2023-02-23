@@ -24,14 +24,22 @@ class Support extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                 Center(
-                  child: MyText(
-                    text: 'Support',
-                    weight: FontWeight.bold,
-                    size: 22.sp,
-                    color: black,
-                  ),
-                ),
+                 Row(
+                   children: [
+                     GestureDetector(
+                         onTap:()=> Get.back(),
+                         child: const Icon(Icons.arrow_back_ios_new,color: black,size:18)),
+                     SizedBox(width: Get.width*.25,),
+                     Center(
+                       child: MyText(
+                         text: 'Support',
+                         weight: FontWeight.bold,
+                         size: 22.sp,
+                         color: black,
+                       ),
+                     ),
+                   ],
+                 ),
                 const SizedBox(
                   height: 30,
                 ),

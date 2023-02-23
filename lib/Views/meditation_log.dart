@@ -58,12 +58,20 @@ class _MeditationLogState extends State<MeditationLog> {
               const SizedBox(
                 height: 15,
               ),
-               MyText(
-                text: 'Meditation Log',
-                color: black,
-                size: 20.sp,
-                weight: FontWeight.w500,
+               Row(
+                 children: [
+                   GestureDetector(
+                       onTap:()=> Get.back(),
+                       child: const Icon(Icons.arrow_back_ios_new,color: black,size:18)),
+                   const SizedBox(width: 20,),
+                   MyText(
+                    text: 'Meditation Log',
+                    color: black,
+                    size: 20.sp,
+                    weight: FontWeight.w500,
               ),
+                 ],
+               ),
               const SizedBox(height: 20),
               SizedBox(
                 height: Get.height * .5,

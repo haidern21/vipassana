@@ -36,6 +36,10 @@ class _JoinMailingListState extends State<JoinMailingList> {
                   const SizedBox(
                     height: 20,
                   ),
+                  GestureDetector(
+                      onTap:()=> Get.back(),
+                      child: const Icon(Icons.arrow_back_ios_new,color: black,size:18)),
+                  const SizedBox(height: 20,),
                    MyText(
                     text:
                         'The mailing list is free to join and will provide you with a way to keep informed about \n\n • Progress about the app \n • Community related announcements \n • Vipassana Meditation news',

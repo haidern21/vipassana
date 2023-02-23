@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vipassana/Views/feedback.dart';
 import 'package:vipassana/Views/join_mailing_list.dart';
@@ -14,7 +13,6 @@ import 'package:vipassana/controller/general_controller.dart';
 import '../constants.dart';
 import 'package:share_plus/share_plus.dart';
 
-import 'in_app_purchase.dart';
 
 class HelpAndMore extends StatefulWidget {
   const HelpAndMore({Key? key}) : super(key: key);
@@ -157,6 +155,7 @@ class _HelpAndMoreState extends State<HelpAndMore> {
               text: text,
               color: black,
               size: 17.sp,
+              maxLines: 2,
               weight: FontWeight.w400,
             ),
           ],
