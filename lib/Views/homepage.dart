@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
         child: Stack(
           children: [
             Positioned(
-              bottom: Get.height*.05,
+              bottom: Get.height * .17,
               child: SizedBox(
                 // height: Get.height*.3,
                 // width: Get.width,
@@ -128,103 +128,132 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 30,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: PopupMenuButton(
-                          onSelected: (val) {
-                            if (val == 0) {
-                              showModalBottomSheet(
-                                  context: context,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(25.0)),
-                                  ),
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  builder: (context) => sessionsBottomSheet());
-                              log('index 0');
-                            }
-                            if (val == 1) {
-                              showModalBottomSheet(
-                                  context: context,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(25.0)),
-                                  ),
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  builder: (context) =>
-                                      const SoundBottomSheet());
-                              log('index 1');
-                            }
-                            if (val == 2) {
-                              log('index 2');
-                              Get.to(() => const MeditationLog());
-                            }
-                            if (val == 3) {
-                              log('index 3');
-                              Get.to(() => const HelpAndMore());
-                            }
-                          },
-                          child: const SizedBox(
-                            child: Icon(
-                              Icons.more_vert,
-                              color: white,
-                              size: 30,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15.0,),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 15),
+                      decoration: BoxDecoration(
+                         color: neonColor,
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // Padding(
+                            //   padding: const EdgeInsets.all(15.0),
+                            //   child: PopupMenuButton(
+                            //     onSelected: (val) {
+                            //       if (val == 0) {
+                            //         showModalBottomSheet(
+                            //             context: context,
+                            //             shape: const RoundedRectangleBorder(
+                            //               borderRadius: BorderRadius.vertical(
+                            //                   top: Radius.circular(25.0)),
+                            //             ),
+                            //             clipBehavior: Clip.antiAliasWithSaveLayer,
+                            //             builder: (context) => sessionsBottomSheet());
+                            //         log('index 0');
+                            //       }
+                            //       if (val == 1) {
+                            //         showModalBottomSheet(
+                            //             context: context,
+                            //             shape: const RoundedRectangleBorder(
+                            //               borderRadius: BorderRadius.vertical(
+                            //                   top: Radius.circular(25.0)),
+                            //             ),
+                            //             clipBehavior: Clip.antiAliasWithSaveLayer,
+                            //             builder: (context) =>
+                            //                 const SoundBottomSheet());
+                            //         log('index 1');
+                            //       }
+                            //       if (val == 2) {
+                            //         log('index 2');
+                            //         Get.to(() => const MeditationLog());
+                            //       }
+                            //       if (val == 3) {
+                            //         log('index 3');
+                            //         Get.to(() => const HelpAndMore());
+                            //       }
+                            //     },
+                            //     child: const SizedBox(
+                            //       child: Icon(
+                            //         Icons.more_vert,
+                            //         color: white,
+                            //         size: 30,
+                            //       ),
+                            //     ),
+                            //     itemBuilder: (context) {
+                            //       return List.generate(items.length, (index) {
+                            //         return items[index];
+                            //       });
+                            //     },
+                            //   ),
+                            // ),
+                            GestureDetector(
+                              onTap: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(25.0)),
+                                    ),
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    builder: (context) => sessionsBottomSheet());
+                              },
+                              child: popUpMenuItem(
+                                  imagePath: 'assets/images/ico_meditation_session_up.png',
+                                  text: 'Sessions',
+                                  isSvg: false),
                             ),
-                          ),
-                          itemBuilder: (context) {
-                            return List.generate(items.length, (index) {
-                              return items[index];
-                            });
-                          },
+                            GestureDetector(
+                              onTap: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(25.0)),
+                                    ),
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    builder: (context) => const SoundBottomSheet());
+                              },
+                              child: popUpMenuItem(
+                                  imagePath:
+                                      'assets/images/ico_sounds_library.png',
+                                  text: 'Sounds',
+                                  isSvg: false),
+                            ),
+                            GestureDetector(
+                              onTap: () => Get.to(() => const MeditationLog()),
+                              child: popUpMenuItem(
+                                  imagePath:
+                                      'assets/images/ico_simple_log_up.png',
+                                  text: 'Logs',
+                                  isSvg: false),
+                            ),
+                            GestureDetector(
+                              onTap: () => Get.to(() => const HelpAndMore()),
+                              child: popUpMenuItem(
+                                  imagePath:
+                                      'assets/images/ico_hearth.png',
+                                  text: 'More',
+                                  isSvg: false),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Obx(
-                      () => controller.leadingTime.value == 5.0
-                          ? MyText(
-                              text: 'Leading Time: 5: 00"',
-                              color: white,
-                              size: 18.sp,
-                            )
-                          : MyText(
-                              text:
-                                  'Leading Time: ${controller.leadingTime.value.toString().substring(0, 1)}:${controller.leadingTime.value.toString().substring(2, 4)}"',
-                              color: white,
-                              size: 18.sp,
-                            ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Obx(
-                      () => controller.intervalTime.value == 5.0
-                          ? MyText(
-                              text: 'Interval: 5: 00"',
-                              color: white,
-                              size: 18.sp,
-                            )
-                          : MyText(
-                              text:
-                                  'Interval: ${controller.intervalTime.value.toString().substring(0, 1)}:${controller.intervalTime.value.toString().substring(2, 4)}"',
-                              color: white,
-                              size: 18.sp,
-                            ),
                     ),
                   ),
                   SizedBox(
-                    height: Get.height * .15,
+                    height: Get.height * .1,
                   ),
                   SizedBox(
-                    height: Get.height*.65,
+                    height: Get.height * .65,
                     child: CircleList(
-                      origin: const Offset(0,0),
-                      // behavior: HitTestBehavior.opaque,
+                      initialAngle: 5.25,
+                      origin: const Offset(0, 22),
                       centerWidget: NeonCircularTimer(
                           width: 200,
                           duration: 6500,
@@ -249,15 +278,17 @@ class _HomePageState extends State<HomePage> {
                               // await playSoundWithInterval();
                               int repeatInterval =
                                   controller.repeat.value.toInt();
-                              if (controller.sessionSoundClipIndex.value != -1) {
+                              if (controller.sessionSoundClipIndex.value !=
+                                  -1) {
                                 await controller.audioPlayer.play(
                                   AssetSource(soundPaths[
                                       controller.sessionSoundClipIndex.value]),
                                 );
                                 controller.audioPlayer.onPlayerComplete
                                     .listen((event) async {
-                                  print(
-                                      controller.repeat.value.toInt().toString());
+                                  print(controller.repeat.value
+                                      .toInt()
+                                      .toString());
                                   repeatInterval--;
                                   if (repeatInterval > 0) {
                                     await controller.audioPlayer.play(
@@ -286,8 +317,10 @@ class _HomePageState extends State<HomePage> {
                                   print('a=200');
                                 }
 
-                                if (controller.sessionSoundClipIndex.value == 0 &&
-                                    controller.pickedFilePath.value.isNotEmpty) {
+                                if (controller.sessionSoundClipIndex.value ==
+                                        0 &&
+                                    controller
+                                        .pickedFilePath.value.isNotEmpty) {
                                   await controller.audioPlayer.play(
                                       DeviceFileSource(
                                           controller.pickedFilePath.value));
@@ -310,8 +343,10 @@ class _HomePageState extends State<HomePage> {
                                         ((index + 1) * 5) * 60; //60
                                     meditationDuration.value =
                                         ((index + 1) * 5).toString();
-                                    controller.numberOfMinutesIndex.value = index;
-                                    localNotifications.initializeNotifications();
+                                    controller.numberOfMinutesIndex.value =
+                                        index;
+                                    localNotifications
+                                        .initializeNotifications();
                                     print("SHOW NOTIFICATION called");
                                     await localNotifications.showNotification(
                                         controller.totalTimer.value);
@@ -321,8 +356,8 @@ class _HomePageState extends State<HomePage> {
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
-                                        color: controller
-                                                    .numberOfMinutesIndex.value ==
+                                        color: controller.numberOfMinutesIndex
+                                                    .value ==
                                                 index
                                             ? selectedBorderColor
                                             : Colors.transparent,
@@ -353,7 +388,112 @@ class _HomePageState extends State<HomePage> {
                               )),
                     ),
                   ),
-
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: Get.width * .3,
+                          decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              border: Border.all(
+                                  color: Colors.white.withOpacity(0.5)),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Obx(
+                              () => controller.leadingTime.value == 5.0
+                                  ? Column(
+                                      children: [
+                                        MyText(
+                                          text: 'Leading',
+                                          color: white,
+                                          size: 15.sp,
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        MyText(
+                                          text: '5: 00"',
+                                          color: white,
+                                          size: 15.sp,
+                                        ),
+                                      ],
+                                    )
+                                  : Column(
+                                      children: [
+                                        MyText(
+                                          text: 'Leading',
+                                          color: white,
+                                          size: 15.sp,
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        MyText(
+                                          text:
+                                              '${controller.leadingTime.value.toString().substring(0, 1)}:${controller.leadingTime.value.toString().substring(2, 4)}"',
+                                          color: white,
+                                          size: 15.sp,
+                                        ),
+                                      ],
+                                    ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: Get.width * .3,
+                          decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              border: Border.all(
+                                  color: Colors.white.withOpacity(0.5)),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Obx(
+                              () => controller.intervalTime.value == 5.0
+                                  ? Column(
+                                      children: [
+                                        MyText(
+                                          text: 'Interval',
+                                          color: white,
+                                          size: 15.sp,
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        MyText(
+                                          text: '5: 00"',
+                                          color: white,
+                                          size: 15.sp,
+                                        ),
+                                      ],
+                                    )
+                                  : Column(
+                                      children: [
+                                        MyText(
+                                          text: 'Interval',
+                                          color: white,
+                                          size: 15.sp,
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        MyText(
+                                          text:
+                                              '${controller.intervalTime.value.toString().substring(0, 1)}:${controller.intervalTime.value.toString().substring(2, 4)}"',
+                                          color: white,
+                                          size: 15.sp,
+                                        ),
+                                      ],
+                                    ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                   // Align(
                   //   alignment: Alignment.center,
                   //   child: GestureDetector(
@@ -461,7 +601,6 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-
           ],
         ),
       ),
@@ -724,33 +863,19 @@ class _HomePageState extends State<HomePage> {
   Widget popUpMenuItem(
       {required String imagePath, required String text, required bool isSvg}) {
     return SizedBox(
-      height: 30,
-      width: 150,
-      child: Row(
-        children: [
-          isSvg == false
-              ? Image.asset(
-                  imagePath,
-                  color: black,
-                  height: 20,
-                  width: 20,
-                )
-              : SvgPicture.asset(
-                  imagePath,
-                  color: black,
-                  height: 20,
-                  width: 20,
-                ),
-          const SizedBox(
-            width: 10,
-          ),
-          MyText(
-            text: text,
-            size: 18.sp,
-            color: black,
-          )
-        ],
-      ),
+      child: isSvg == false
+          ? Image.asset(
+              imagePath,
+              color: black,
+              height: 40.h,
+              width: 50.w,
+            )
+          : SvgPicture.asset(
+              imagePath,
+              color: black,
+              height: 40.h,
+              width: 50.w,
+            ),
     );
   }
 
