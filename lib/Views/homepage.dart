@@ -1,12 +1,14 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:circle_list/circle_list.dart';
-import 'package:circular_motion/circular_motion.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:neon_circular_timer/neon_circular_timer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vipassana/Views/meditation_log.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/Widgets/sound_bottom_sheet.dart';
@@ -24,16 +26,73 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  AppLifecycleState? _notification;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    setState(() {
+      _notification = state;
+    });
+    if (kDebugMode) {
+      print(state);
+    }
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused) {
+      _controller.pause();
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      var time = DateTime.now().toString();
+      sharedPreferences.setString('inActiveTime', time);
+      sharedPreferences.setInt(
+          'remainingSeconds', _controller.getTimeInSeconds());
+      if (kDebugMode) {
+        print('IN ACTIVE TIME IN STRING IS $time');
+      }
+    }
+    if (state == AppLifecycleState.resumed) {
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      String? inActiveTime = sharedPreferences.getString('inActiveTime') ?? '';
+      int? consumedSeconds = sharedPreferences.getInt('remainingSeconds') ?? 0;
+      DateTime inActiveTimeDateTime = DateTime.parse(inActiveTime);
+      DateTime currentTime = DateTime.now();
+      Duration timeDifference = currentTime.difference(inActiveTimeDateTime);
+
+      if (kDebugMode) {
+        print('CONSUMED SECONDS ARE :$consumedSeconds');
+        print('IN ACTIVE TIME IN STRING IS $inActiveTime ');
+        print('IN ACTIVE TIME IN DATETIME IS $inActiveTimeDateTime ');
+        print('CURRENT TIME IS $currentTime ');
+        print('TIME DIFFERENCE IS  $timeDifference ');
+        print(
+            'TIME DIFFERENCE IN SECONDS IS  ${timeTillComplete - consumedSeconds - timeDifference.inSeconds} ');
+      }
+      // int controllerRestartValue =
+      //     timeTillComplete - consumedSeconds - timeDifference.inSeconds;
+      // // _controller.restart(duration: controllerRestartValue);
+      _controller.restart(duration: remainingScreenTime);
+    }
+  }
+
   final _controller = CountDownController();
+
   final GeneralController controller = Get.find();
   var meditationDuration = ''.obs;
   AudioPlayer audioPlayer = AudioPlayer();
   LocalNotifications localNotifications = LocalNotifications();
   var timeTillComplete = 0;
+  int remainingScreenTime = 0;
 
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     localNotifications.initializeNotifications();
     super.initState();
   }
@@ -130,15 +189,16 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 15.0,),
+                      vertical: 15.0,
+                    ),
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 15),
                       decoration: BoxDecoration(
-                         color: neonColor,
-                        borderRadius: BorderRadius.circular(10)
-                      ),
+                          color: neonColor,
+                          borderRadius: BorderRadius.circular(10)),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 10),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -201,10 +261,12 @@ class _HomePageState extends State<HomePage> {
                                           top: Radius.circular(25.0)),
                                     ),
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    builder: (context) => sessionsBottomSheet());
+                                    builder: (context) =>
+                                        sessionsBottomSheet());
                               },
                               child: popUpMenuItem(
-                                  imagePath: 'assets/images/ico_meditation_session_up.png',
+                                  imagePath:
+                                      'assets/images/ico_meditation_session_up.png',
                                   text: 'Sessions',
                                   isSvg: false),
                             ),
@@ -217,7 +279,8 @@ class _HomePageState extends State<HomePage> {
                                           top: Radius.circular(25.0)),
                                     ),
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    builder: (context) => const SoundBottomSheet());
+                                    builder: (context) =>
+                                        const SoundBottomSheet());
                               },
                               child: popUpMenuItem(
                                   imagePath:
@@ -236,8 +299,7 @@ class _HomePageState extends State<HomePage> {
                             GestureDetector(
                               onTap: () => Get.to(() => const HelpAndMore()),
                               child: popUpMenuItem(
-                                  imagePath:
-                                      'assets/images/ico_hearth.png',
+                                  imagePath: 'assets/images/ico_hearth.png',
                                   text: 'More',
                                   isSvg: false),
                             ),
@@ -256,11 +318,12 @@ class _HomePageState extends State<HomePage> {
                       origin: const Offset(0, 22),
                       centerWidget: NeonCircularTimer(
                           width: 200,
-                          duration: 6500,
+                          duration: timeTillComplete??0,
                           controller: _controller,
                           strokeWidth: 15,
                           backgroudColor: Colors.transparent,
                           isTimerTextShown: true,
+                          isReverse: true,
                           textStyle: TextStyle(fontSize: 35.sp),
                           neumorphicEffect: true,
                           autoStart: false,
@@ -341,6 +404,14 @@ class _HomePageState extends State<HomePage> {
                                         ((index + 1) * 5) * 60; //60
                                     timeTillComplete =
                                         ((index + 1) * 5) * 60; //60
+                                    remainingScreenTime = timeTillComplete;
+                                    Timer timer = Timer.periodic(
+                                        const Duration(seconds: 1), (timer) {
+                                      setState(() {
+                                        remainingScreenTime--;
+                                      });
+
+                                    });
                                     meditationDuration.value =
                                         ((index + 1) * 5).toString();
                                     controller.numberOfMinutesIndex.value =
@@ -441,6 +512,33 @@ class _HomePageState extends State<HomePage> {
                                     ),
                             ),
                           ),
+                        ),
+                        Container(
+                          width: Get.width * .3,
+                          decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              border: Border.all(
+                                  color: Colors.white.withOpacity(0.5)),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Column(
+                                children: [
+                                  MyText(
+                                    text: 'Remaining',
+                                    color: white,
+                                    size: 15.sp,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  MyText(
+                                    text: remainingScreenTime.toString(),
+                                    color: white,
+                                    size: 15.sp,
+                                  ),
+                                ],
+                              )),
                         ),
                         Container(
                           width: Get.width * .3,
