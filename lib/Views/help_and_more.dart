@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,7 +15,6 @@ import 'package:vipassana/controller/general_controller.dart';
 import '../constants.dart';
 import 'package:share_plus/share_plus.dart';
 
-
 class HelpAndMore extends StatefulWidget {
   const HelpAndMore({Key? key}) : super(key: key);
 
@@ -25,21 +26,30 @@ class _HelpAndMoreState extends State<HelpAndMore> {
   GeneralController controller = Get.find();
   List<HelpTileModel> helpTiles = [
     HelpTileModel(
-        imagePath: 'assets/svg_assets/feedback.svg', text: 'Your feedback counts'),
-    HelpTileModel(imagePath: 'assets/svg_assets/icons8-star.svg', text: 'Rate the app'),
+        imagePath: 'assets/svg_assets/feedback.svg',
+        text: 'Your feedback counts'),
+    HelpTileModel(
+        imagePath: 'assets/svg_assets/icons8-star.svg', text: 'Rate the app'),
     HelpTileModel(imagePath: 'assets/svg_assets/support.svg', text: 'Support'),
     HelpTileModel(
-        imagePath: 'assets/svg_assets/Icon feather-share-2.svg', text: 'Share with friends'),
+        imagePath: 'assets/svg_assets/Icon feather-share-2.svg',
+        text: 'Share with friends'),
     HelpTileModel(
-        imagePath: 'assets/svg_assets/Icon feather-mail.svg', text: 'Join the mailing list'),
+        imagePath: 'assets/svg_assets/Icon feather-mail.svg',
+        text: 'Join the mailing list'),
     HelpTileModel(
-        imagePath: 'assets/svg_assets/Icon feather-facebook.svg', text: 'Facebook page'),
+        imagePath: 'assets/svg_assets/Icon feather-facebook.svg',
+        text: 'Facebook page'),
     HelpTileModel(
-        imagePath: 'assets/svg_assets/learn more.svg', text: 'Learn more about us'),
+        imagePath: 'assets/svg_assets/learn more.svg',
+        text: 'Learn more about us'),
     HelpTileModel(
-        imagePath: 'assets/svg_assets/Icon feather-lock.svg', text: 'Advance Features'),
+        imagePath: 'assets/svg_assets/Icon feather-lock.svg',
+        text: 'Advance Features'),
     HelpTileModel(imagePath: 'assets/svg_assets/faq.svg', text: 'FAQs'),
-    HelpTileModel(imagePath: 'assets/svg_assets/icons8-regular-document.svg', text: 'Blog'),
+    HelpTileModel(
+        imagePath: 'assets/svg_assets/icons8-regular-document.svg',
+        text: 'Blog'),
     HelpTileModel(
         imagePath: 'assets/svg_assets/privacy.svg',
         text: 'Privacy and Terms of service'),
@@ -93,15 +103,19 @@ class _HelpAndMoreState extends State<HelpAndMore> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-             Padding(
-              padding:const EdgeInsets.symmetric(vertical: 20.0,horizontal: 15),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15),
               child: Row(
                 children: [
                   GestureDetector(
-                      onTap:()=> Get.back(),
-                      child: const Icon(Icons.arrow_back_ios_new,color: black,size:18)),
-                  const SizedBox(width: 20,),
-                   MyText(
+                      onTap: () => Get.back(),
+                      child: const Icon(Icons.arrow_back_ios_new,
+                          color: black, size: 18)),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  MyText(
                     text: 'Help and More',
                     color: black,
                     size: 20.sp,
@@ -173,8 +187,12 @@ class _HelpAndMoreState extends State<HelpAndMore> {
         'https://play.google.com/store/apps/details?id=com.losthut.android.apps.simplemeditationtimer');
   }
 
-  void support() {
-    Get.to(()=> const Support());
+  void support() async {
+    if (Platform.isAndroid) {
+      Get.to(() => const Support());
+    } else if (Platform.isIOS) {
+      await _launchURL('https://vpassana.com/support/');
+    }
   }
 
   void shareWithFriends() async {
@@ -198,8 +216,7 @@ class _HelpAndMoreState extends State<HelpAndMore> {
     showModalBottomSheet(
         context: context,
         shape: const RoundedRectangleBorder(
-          borderRadius:
-          BorderRadius.vertical(top: Radius.circular(25.0)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
         ),
         builder: (context) {
           return GoogleSignInSheet();
@@ -215,7 +232,7 @@ class _HelpAndMoreState extends State<HelpAndMore> {
   }
 
   void privacyAnTermOfService() {
-    Get.to(()=> const PrivacyPolicy());
+    Get.to(() => const PrivacyPolicy());
   }
 
   _launchURL(String url) async {
