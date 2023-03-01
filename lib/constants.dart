@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 const Color white = Colors.white;
 const Color black = Colors.black;
-const Color gradientColor1 = Color(0xff4DC4F7);
-const Color gradientColor2 = Color(0xff7691C7);
-const Color neonColor = Color(0xff5887AE);
+const Color gradientColor1 = Color(0xff003b77);
+const Color gradientColor2 = Color(0xff0073d6);
+const Color neonColor = Color(0xff023e7c);
 const Color innerBorderColor = Color(0xffFE6C00);
 const Color selectedBorderColor = Color(0xff4BC1F4);
 const Color greyColor = Color(0xffF2F2F2);

@@ -24,33 +24,41 @@ class Support extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                 Row(
-                   children: [
-                     GestureDetector(
-                         onTap:()=> Get.back(),
-                         child: const Icon(Icons.arrow_back_ios_new,color: black,size:18)),
-                     SizedBox(width: Get.width*.25,),
-                     Center(
-                       child: MyText(
-                         text: 'Support',
-                         weight: FontWeight.bold,
-                         size: 22.sp,
-                         color: black,
-                       ),
-                     ),
-                   ],
-                 ),
+                Row(
+                  children: [
+                    GestureDetector(
+                        onTap: () => Get.back(),
+                        child: const Icon(Icons.arrow_back_ios_new,
+                            color: black, size: 18)),
+                    SizedBox(
+                      width: Get.width * .25,
+                    ),
+                    Center(
+                      child: MyText(
+                        text: 'Support',
+                        weight: FontWeight.bold,
+                        size: 22.sp,
+                        color: black,
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(
                   height: 30,
                 ),
-                Container(
-                  height: Get.height * .30,
-                  width: Get.width * .6,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/me.jpg'))),
-                ),
+                // Container(
+                //   height:Get.width * .6,
+                //   width: Get.width * .6,
+                //   decoration: const BoxDecoration(
+                //       shape: BoxShape.circle,
+                //       image: DecorationImage(
+                //           image: AssetImage('assets/images/me.jpg',))),
+                // ),
+                CircleAvatar(
+                    radius: Get.width * .35,
+                    backgroundImage: const AssetImage(
+                      'assets/images/me.jpg',
+                    )),
                 const SizedBox(
                   height: 20,
                 ),
@@ -68,26 +76,23 @@ class Support extends StatelessWidget {
                 ),
                 MyText(
                   text:
-                      'Hi there, you might remember me from the initial intro of App. I am the app developer, I take care of maintenance, bug fixes as well as working on the app updates, I am the one to blame for when things gone wrong :-) i alos write the blog, manage the mailing list, meditate as much as I can. \n\nSince the Vipassana Meditation Timer App launch in 2015, our community has grown from a few individual to hundreds of meditators. Seven years have gone by and i want to keep on working on the app as well as continue to keep the App free of charge and free of advertisments, I am therefore asking for a little help. \n\nMeditators wanting to practice giving, can now buy me a cup of coffee directly from the App. If you feel like contributing, I will and we will all very much appreciate. Thank you :-)',
+                      'Dear Meditator,\n\nI am writing to request a donation for our free app. Our app has been developed to provide valuable meditation services to users around the world, free of charge. We are dedicated to making a positive impact on society and believe that our meditation app can make a difference in people\'s lives.\n\nHowever, maintaining and improving our app requires significant resources. As a non-profit project, we rely on the generosity of donors like you to continue offering our services to the public. Your donation would help us cover the costs of hosting, development, and maintenance, and ensure that our app remains free and accessible to all.\n\nWe would be grateful for any amount you can contribute, and we promise to use it wisely to continue delivering quality services to our users. Thank you in advance for your support.\n\nBlessings,\n\n~ Derek',
                   color: black,
                   size: 16.sp,
                   textAlign: TextAlign.justify,
-                  maxLines: 20,
+                  maxLines: 30,
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: 70.h,
                 ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     showCupertinoModalBottomSheet(
                         expand: false,
                         context: context,
                         backgroundColor: Colors.transparent,
                         builder: (context) =>
-                            SizedBox(
-                                height: Get.height * .3,
-                                child: inApp())
-                    );
+                            SizedBox(height: Get.height * .3, child: inApp()));
                   },
                   child: Container(
                     height: 60,
@@ -100,7 +105,12 @@ class Support extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image.asset('assets/images/support.png',fit: BoxFit.cover,height: 20,width: 20,),
+                        Image.asset(
+                          'assets/images/support.png',
+                          fit: BoxFit.cover,
+                          height: 20,
+                          width: 20,
+                        ),
                         const SizedBox(
                           width: 20,
                         ),
@@ -112,10 +122,11 @@ class Support extends StatelessWidget {
                         )
                       ],
                     ),
-
                   ),
                 ),
-                const SizedBox(height: 50,),
+                const SizedBox(
+                  height: 50,
+                ),
               ],
             ),
           ),
