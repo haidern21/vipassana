@@ -23,7 +23,7 @@ class _MeditationLogState extends State<MeditationLog> {
   @override
   void initState() {
     todayDate =
-        '${DateTime.parse(today).day} ${DateTime.parse(today).month},${DateTime.parse(today).year}';
+        '${DateTime.parse(today).month} ${DateTime.parse(today).day},${DateTime.parse(today).year}';
     initFunction();
     super.initState();
   }
@@ -78,7 +78,7 @@ class _MeditationLogState extends State<MeditationLog> {
                 child: SfCalendar(
                   onTap: (calender) async {
                     todayDate =
-                        '${calender.date?.day.toString()} ${calender.date?.month.toString()} ${calender.date?.year.toString()}';
+                        '${calender.date?.month.toString()} ${calender.date?.day.toString()} ${calender.date?.year.toString()}';
                     List dateInMed = [];
                     showLoader.value = true;
                     await controller.getUserMeditations(
@@ -148,7 +148,7 @@ class _MeditationLogState extends State<MeditationLog> {
                                               children: [
                                                 MyText(
                                                   text:
-                                                      '${DateTime.parse(controller.meditations[index]['dateTime']).day} ${DateTime.parse(controller.meditations[index]['dateTime']).month},${DateTime.parse(controller.meditations[index]['dateTime']).year}',
+                                                      '${DateTime.parse(controller.meditations[index]['dateTime']).month} ${DateTime.parse(controller.meditations[index]['dateTime']).day},${DateTime.parse(controller.meditations[index]['dateTime']).year}',
                                                   color: black,
                                                   size: 20.sp,
                                                   weight: FontWeight.w600,

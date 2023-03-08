@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:open_store/open_store.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vipassana/Views/feedback.dart';
 import 'package:vipassana/Views/join_mailing_list.dart';
@@ -183,8 +184,17 @@ class _HelpAndMoreState extends State<HelpAndMore> {
   }
 
   void rateTheApp() async {
-    await _launchURL(
-        'https://play.google.com/store/apps/details?id=com.losthut.android.apps.simplemeditationtimer');
+    if(Platform.isAndroid){
+      OpenStore.instance.open(
+        appStoreId: '2212184815942', // AppStore id of your app for iOS
+        androidAppBundleId: 'com.losthut.android.apps.simplemeditationtimer', // Android app bundle package name
+      );
+    }
+    if(Platform.isIOS){
+      await _launchURL(
+          'https://play.google.com/store/apps/details?id=com.losthut.android.apps.simplemeditationtimer');
+    }
+
   }
 
   void support() async {

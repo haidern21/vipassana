@@ -52,6 +52,12 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     // // if (timeTillComplete == _controller.getTimeInSeconds()) {
     //   log(_controller.getTimeInSeconds().toString());
       // await playSoundWithInterval();
+
+    if (controller.sessionSoundClipIndex.value == 0 &&
+        controller.pickedFilePath.value.isNotEmpty) {
+      await controller.audioPlayer
+          .play(DeviceFileSource(controller.pickedFilePath.value));
+    }
       int repeatInterval = controller.repeat.value.toInt();
       if (controller.sessionSoundClipIndex.value != -1) {
         await controller.audioPlayer.play(
@@ -85,12 +91,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           );
 
           print('a=200');
-        }
-
-        if (controller.sessionSoundClipIndex.value == 0 &&
-            controller.pickedFilePath.value.isNotEmpty) {
-          await controller.audioPlayer
-              .play(DeviceFileSource(controller.pickedFilePath.value));
         }
       }
 
