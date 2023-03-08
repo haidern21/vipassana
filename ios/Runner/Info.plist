@@ -45,6 +45,9 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+    <key>NSAppleMusicUsageDescription</key>
+    <string>We need access to your internal audio files to play audio at the end of meditation</string>
+
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
