@@ -109,11 +109,12 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     setState(() {
       _notification = state;
     });
-    if (kDebugMode) {
-      print(state);
-    }
-    if (state == AppLifecycleState.inactive ||
-        state == AppLifecycleState.paused) {
+    // if (kDebugMode) {
+      print("State: $state");
+      print("didChangeAppLifecycleState CALLED");
+    // }
+
+    if (state == AppLifecycleState.paused) {
       // _controller.pause();
       if(timer!=null){
         timer?.cancel();
@@ -130,9 +131,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       sharedPreferences.setInt('totalTime', timeTillComplete);
       sharedPreferences.setInt(
           'remainingSeconds', (timeTillComplete-remainingScreenTime));
-      if (kDebugMode) {
+      // if (kDebugMode) {
         print('IN ACTIVE TIME IN STRING IS $time');
-      }
+      // }
     }
     if (state == AppLifecycleState.resumed) {
       SharedPreferences sharedPreferences =
@@ -154,7 +155,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         startTimerAgain();
       }
 
-      if (kDebugMode) {
+      // if (kDebugMode) {
         print('CONSUMED SECONDS ARE :$remainingSeconds');
         print('IN ACTIVE TIME IN STRING IS $inActiveTime ');
         print('IN ACTIVE TIME IN DATETIME IS $inActiveTimeDateTime ');
@@ -162,7 +163,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         print('TIME DIFFERENCE IS  $timeDifference ');
         print(
             'TIME DIFFERENCE IN SECONDS IS  ${timeTillComplete - remainingSeconds - timeDifference.inSeconds} ');
-      }
+      // }
       // int controllerRestartValue =
       //     timeTillComplete - consumedSeconds - timeDifference.inSeconds;
       // // _controller.restart(duration: controllerRestartValue);

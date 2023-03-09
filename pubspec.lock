@@ -471,13 +471,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
-  neon_circular_timer:
+  open_store:
     dependency: "direct main"
     description:
-      name: neon_circular_timer
+      name: open_store
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.7"
+    version: "0.5.0"
   path:
     dependency: transitive
     description:

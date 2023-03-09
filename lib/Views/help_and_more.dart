@@ -184,16 +184,16 @@ class _HelpAndMoreState extends State<HelpAndMore> {
   }
 
   void rateTheApp() async {
-    if(Platform.isAndroid){
+    // if(Platform.isAndroid){
       OpenStore.instance.open(
         appStoreId: '2212184815942', // AppStore id of your app for iOS
         androidAppBundleId: 'com.losthut.android.apps.simplemeditationtimer', // Android app bundle package name
       );
-    }
-    if(Platform.isIOS){
-      await _launchURL(
-          'https://play.google.com/store/apps/details?id=com.losthut.android.apps.simplemeditationtimer');
-    }
+    // }
+    // if(Platform.isIOS){
+    //   await _launchURL(
+    //       'https://play.google.com/store/apps/details?id=com.losthut.android.apps.simplemeditationtimer');
+    // }
 
   }
 
