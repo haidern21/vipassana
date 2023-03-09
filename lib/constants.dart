@@ -26,10 +26,10 @@ List<String> soundPaths = [
   '',
   'bells/bells.mp3',
   'bells/rings.wav',
-  'bells/gong.ogg',
-  'bells/bowl.ogg',
+  'bells/gong.mp3',
+  'bells/bowl.mp3',
   'bells/bing.wav',
-  'bells/bell.ogg',
+  'bells/bell.mp3',
   'bells/bicycle.mp3',
 ];
 List<String> quotes=[
