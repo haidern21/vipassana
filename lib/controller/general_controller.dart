@@ -90,10 +90,10 @@ class GeneralController extends GetxController{
             "meditationTime": "$meditationTime minutes"
           }
         };
-        print(json.encode(body));
+        print('body is from upload meditation to server${json.encode(body)}');
         var response = await http.post(url,headers: {"Content-Type": "application/json"},body: json.encode(body));
         print('Response status: ${response.statusCode}');
-        print('Response body: ${response.body}');
+        print('Response body from upload server: ${response.body}');
       }
 
     }
@@ -115,12 +115,12 @@ class GeneralController extends GetxController{
             "meditationTime": "${meditationTime} minutes"
           }
         };
-        print(json.encode(body));
+        print('body is from update meditation${json.encode(body)}');
         var response = await http.post(
             url, headers: {"Content-Type": "application/json"},
             body: json.encode(body));
         print('Response status: ${response.statusCode}');
-        print('Response body: ${response.body}');
+        print('Response body from upload: ${response.body}');
       }
       catch (e) {
         print("ERROR OCCURED : ${e.toString()}");
@@ -267,7 +267,7 @@ class GeneralController extends GetxController{
         // print('Response status: ${response.statusCode}');
         // print('Response body: ${response.body}');
         var jsonDecoded = jsonDecode(response.body);
-        print('Response body: ${jsonDecoded}');
+        print('Response body from get user meditation: ${jsonDecoded}');
         meditations.value = jsonDecoded['meditations'];
       }
     }

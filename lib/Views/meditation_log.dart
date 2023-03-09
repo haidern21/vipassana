@@ -23,7 +23,7 @@ class _MeditationLogState extends State<MeditationLog> {
   @override
   void initState() {
     todayDate =
-        '${DateTime.parse(today).month} ${DateTime.parse(today).day},${DateTime.parse(today).year}';
+        '${getMonth(DateTime.parse(today).month)} ${DateTime.parse(today).day},${DateTime.parse(today).year}';
     initFunction();
     super.initState();
   }
@@ -43,6 +43,7 @@ class _MeditationLogState extends State<MeditationLog> {
       }
     }
     controller.meditations.value = dateInMed;
+    print('meditations are : ${controller.meditations}');
   }
 
   @override
@@ -58,27 +59,30 @@ class _MeditationLogState extends State<MeditationLog> {
               const SizedBox(
                 height: 15,
               ),
-               Row(
-                 children: [
-                   GestureDetector(
-                       onTap:()=> Get.back(),
-                       child: const Icon(Icons.arrow_back_ios_new,color: black,size:18)),
-                   const SizedBox(width: 20,),
-                   MyText(
+              Row(
+                children: [
+                  GestureDetector(
+                      onTap: () => Get.back(),
+                      child: const Icon(Icons.arrow_back_ios_new,
+                          color: black, size: 18)),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  MyText(
                     text: 'Meditation Log',
                     color: black,
                     size: 20.sp,
                     weight: FontWeight.w500,
+                  ),
+                ],
               ),
-                 ],
-               ),
               const SizedBox(height: 20),
               SizedBox(
                 height: Get.height * .5,
                 child: SfCalendar(
                   onTap: (calender) async {
                     todayDate =
-                        '${calender.date?.month.toString()} ${calender.date?.day.toString()} ${calender.date?.year.toString()}';
+                        '${getMonth(calender.date?.month ?? 3)} ${calender.date?.day.toString()} ${calender.date?.year.toString()}';
                     List dateInMed = [];
                     showLoader.value = true;
                     await controller.getUserMeditations(
@@ -148,7 +152,7 @@ class _MeditationLogState extends State<MeditationLog> {
                                               children: [
                                                 MyText(
                                                   text:
-                                                      '${DateTime.parse(controller.meditations[index]['dateTime']).month} ${DateTime.parse(controller.meditations[index]['dateTime']).day},${DateTime.parse(controller.meditations[index]['dateTime']).year}',
+                                                      '${getMonth(DateTime.parse(controller.meditations[index]['dateTime']).month)} ${DateTime.parse(controller.meditations[index]['dateTime']).day},${DateTime.parse(controller.meditations[index]['dateTime']).year}',
                                                   color: black,
                                                   size: 20.sp,
                                                   weight: FontWeight.w600,
@@ -209,7 +213,7 @@ class _MeditationLogState extends State<MeditationLog> {
                                       size: 20.sp,
                                       weight: FontWeight.w600,
                                     ),
-                                     Padding(
+                                    Padding(
                                       padding: const EdgeInsets.only(top: 10.0),
                                       child: MyText(
                                         text: '00 Hours, 00 Minutes',
@@ -247,5 +251,36 @@ class _MeditationLogState extends State<MeditationLog> {
         ),
       ),
     );
+  }
+
+  String getMonth(int month) {
+    switch (month) {
+      case 1:
+        return 'January';
+      case 2:
+        return 'February';
+      case 3:
+        return 'March';
+      case 4:
+        return 'April';
+      case 5:
+        return 'May';
+      case 6:
+        return 'June';
+      case 7:
+        return 'July';
+      case 8:
+        return 'August';
+      case 9:
+        return 'September';
+      case 10:
+        return 'October';
+      case 11:
+        return 'November';
+      case 12:
+        return 'December';
+      default:
+        return '';
+    }
   }
 }

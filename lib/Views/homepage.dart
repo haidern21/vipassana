@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:circle_list/circle_list.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -37,8 +38,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       setState(() {
         print("start timer  calling");
         if (temp == 0||temp<0) {
+          timer.cancel();
           onTimerComplete();
-              timer.cancel();
         } else {
           temp--;
         }
@@ -47,8 +48,26 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     });
   }
 
+
   onTimerComplete()async{
     log(timeTillComplete.toString());
+    if (controller.isUserLoggedIn.value == true) {
+      var a = await controller.checkIfUserExistsInDb(
+          userId: controller.userId.value);
+      if (a == 404) {
+        await controller.uploadMeditationToServer(
+            userId: FirebaseAuth.instance.currentUser!.uid.toString(),
+            meditationTime: meditationDuration.value);
+        print('a=404');
+      } else {
+        await controller.updateMeditations(
+          docId: FirebaseAuth.instance.currentUser!.uid.toString(),
+          meditationTime: meditationDuration.value,
+        );
+
+        print('a=200');
+      }
+    }
     // log(_controller.getTimeInSeconds().toString());
     // // if (timeTillComplete == _controller.getTimeInSeconds()) {
     //   log(_controller.getTimeInSeconds().toString());
@@ -60,7 +79,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           .play(DeviceFileSource(controller.pickedFilePath.value));
     }
       int repeatInterval = controller.repeat.value.toInt();
-      if (controller.sessionSoundClipIndex.value != -1) {
+      if (controller.sessionSoundClipIndex.value != -1||controller.sessionSoundClipIndex.value != 0) {
         await controller.audioPlayer.play(
           AssetSource(soundPaths[controller.sessionSoundClipIndex.value]),
         );
@@ -72,27 +91,11 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               AssetSource(
                   soundPaths[controller.sessionSoundClipIndex.value]),
             );
-          } else {
-            return;
           }
+          // else {
+          //   return;
+          // }
         });
-      }
-      if (controller.isUserLoggedIn.value == true) {
-        var a = await controller.checkIfUserExistsInDb(
-            userId: controller.userId.value);
-        if (a == 404) {
-          await controller.uploadMeditationToServer(
-              userId: controller.userId.value,
-              meditationTime: meditationDuration.value);
-          print('a=404');
-        } else {
-          await controller.updateMeditations(
-            docId: controller.userId.value,
-            meditationTime: meditationDuration.value,
-          );
-
-          print('a=200');
-        }
       }
 
   }
@@ -100,6 +103,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    audioPlayer.dispose();
     super.dispose();
   }
 
@@ -176,7 +180,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       setState(() {
         print("start timer agaian calling");
         if (remainingScreenTime == 0||remainingScreenTime<0) {
-          timer.cancel();
+          timer1?.cancel();
           onTimerComplete();
 
         } else {
@@ -685,9 +689,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                               timer?.cancel();
                             }
                             controller.totalTimer.value =
-                                ((index ) * 5) ; //60
+                                ((index ) * 5) *60; //60
                             timeTillComplete =
-                                ((index ) * 5) ; //60
+                                ((index ) * 5) *60; //60
                             remainingScreenTime = timeTillComplete;
 
                             meditationDuration.value =
@@ -986,6 +990,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
   String formatTime(int seconds) {
     Duration d = Duration(seconds: seconds);
+    print('durartion: $d');
     return d.toString().split('.').first.padLeft(4, "0");
     // return '${d.inMinutes.toInt().toString()}:${d.inSeconds.toInt().toString()}';
   }
