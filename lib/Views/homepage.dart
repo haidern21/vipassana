@@ -180,7 +180,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       setState(() {
         print("start timer agaian calling");
         if (remainingScreenTime == 0||remainingScreenTime<0) {
-          timer.cancel();
+          timer1?.cancel();
           onTimerComplete();
 
         } else {
@@ -990,6 +990,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
   String formatTime(int seconds) {
     Duration d = Duration(seconds: seconds);
+    print('durartion: $d');
     return d.toString().split('.').first.padLeft(4, "0");
     // return '${d.inMinutes.toInt().toString()}:${d.inSeconds.toInt().toString()}';
   }
