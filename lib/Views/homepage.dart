@@ -4,6 +4,7 @@ import 'package:circle_list/circle_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -369,7 +370,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 //   ],
                 // ),
                 child: CircleList(
-                  initialAngle: 5.25,
+                  initialAngle: 4.70,
                   origin: const Offset(0, 10),
                   // centerWidget: NeonCircularTimer(
                   //     width: 200,
@@ -622,90 +623,149 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     // ),
                   ),
                   children: List.generate(
-                      12,
-                      (index) => GestureDetector(
-                        onTap: () async {
-                          // await controller.audioPlayer.play(
-                          //   AssetSource(soundPaths[controller
-                          //       .sessionSoundClipIndex.value]),
-                          // );
-                          if(timer!=null){
-                            timer?.cancel();
-                          }
-                          controller.totalTimer.value =
-                              ((index + 1) * 5)*60 ; //60
-                          timeTillComplete =
-                              ((index + 1) * 5)*60 ; //60
-                          remainingScreenTime = timeTillComplete;
+                      13,
+                      (index) {
+                        if(index==0){
+                          return Obx(
+                                () => GestureDetector(
+                              onTap: () async {
+                                // await controller.audioPlayer.play(
+                                //   AssetSource(soundPaths[controller
+                                //       .sessionSoundClipIndex.value]),
+                                // );
+                                if(timer!=null){
+                                  timer?.cancel();
+                                }
+                                controller.totalTimer.value =
+                                    ((index ) * 5)*60 ; //60
+                                timeTillComplete =
+                                    ((index ) * 5)*60 ; //60
+                                remainingScreenTime = timeTillComplete;
 
-                          meditationDuration.value =
-                              ((index + 1) * 5).toString();
-                          controller.numberOfMinutesIndex.value =
-                              index;
-                          localNotifications
-                              .initializeNotifications();
-                          print("SHOW NOTIFICATION called");
-                          await localNotifications.showNotification(
-                              controller.totalTimer.value);
-                          startTimer();
-                          // _controller.restart(
-                          //     // duration: ((index + 1) ) * 60);
-                          //     duration: ((index + 1) * 5) * 60); //*60
-                        },
-                        child: Obx(
-                              () => GestureDetector(
-                                // onTap: () async {
-                                //   // await controller.audioPlayer.play(
-                                //   //   AssetSource(soundPaths[controller
-                                //   //       .sessionSoundClipIndex.value]),
-                                //   // );
-                                //   if(timer!=null){
-                                //     timer?.cancel();
-                                //   }
-                                //   controller.totalTimer.value =
-                                //       ((index + 1) * 5)*60 ; //60
-                                //   timeTillComplete =
-                                //       ((index + 1) * 5)*60 ; //60
-                                //   remainingScreenTime = timeTillComplete;
-                                //
-                                //   meditationDuration.value =
-                                //       ((index + 1) * 5).toString();
-                                //   controller.numberOfMinutesIndex.value =
-                                //       index;
-                                //   localNotifications
-                                //       .initializeNotifications();
-                                //   print("SHOW NOTIFICATION called");
-                                //   await localNotifications.showNotification(
-                                //       controller.totalTimer.value);
-                                //   startTimer();
-                                //   // _controller.restart(
-                                //   //     // duration: ((index + 1) ) * 60);
-                                //   //     duration: ((index + 1) * 5) * 60); //*60
-                                // },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    height: 65,
-                                    width: 65,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: controller.numberOfMinutesIndex
-                                            .value >=
-                                            index?innerBorderColor:black,
-                                       ),
-                                    child: Center(
-                                      child: MyText(
-                                        text: ((index + 1) * 5).toString(),
-                                        // text: ((index + 1) ).toString(),
-                                        color: white,
-                                        size: 18.sp,
-                                      ),
+                                meditationDuration.value =
+                                    ((index ) * 5).toString();
+                                controller.numberOfMinutesIndex.value =
+                                    index;
+                                startTimer();
+                                // _controller.restart(
+                                //     // duration: ((index + 1) ) * 60);
+                                //     duration: ((index + 1) * 5) * 60); //*60
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 65,
+                                  width: 65,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: controller.numberOfMinutesIndex
+                                        .value >=
+                                        index?innerBorderColor:black,
+                                  ),
+                                  child: Center(
+                                    child: MyText(
+                                      text: ((index ) * 5).toString(),
+                                      // text: ((index + 1) ).toString(),
+                                      color: white,
+                                      size: 18.sp,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                      )),
+                          );
+                        }
+                        return GestureDetector(
+                          onTap: () async {
+                            // await controller.audioPlayer.play(
+                            //   AssetSource(soundPaths[controller
+                            //       .sessionSoundClipIndex.value]),
+                            // );
+                            if(timer!=null){
+                              timer?.cancel();
+                            }
+                            controller.totalTimer.value =
+                                ((index ) * 5) ; //60
+                            timeTillComplete =
+                                ((index ) * 5) ; //60
+                            remainingScreenTime = timeTillComplete;
+
+                            meditationDuration.value =
+                                ((index ) * 5).toString();
+                            controller.numberOfMinutesIndex.value =
+                                index;
+                            localNotifications
+                                .initializeNotifications();
+                            print("SHOW NOTIFICATION called");
+                            final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+                            FlutterLocalNotificationsPlugin();
+                            final List<PendingNotificationRequest> pendingNotificationRequests =
+                            await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+                            for (var _pendingRequest in pendingNotificationRequests) {
+                              flutterLocalNotificationsPlugin.cancel(_pendingRequest.id);
+                            }
+                            await localNotifications.showNotification(
+                                controller.totalTimer.value);
+                            startTimer();
+                            // _controller.restart(
+                            //     // duration: ((index + 1) ) * 60);
+                            //     duration: ((index + 1) * 5) * 60); //*60
+                          },
+                          child: Obx(
+                                () => GestureDetector(
+                              // onTap: () async {
+                              //   // await controller.audioPlayer.play(
+                              //   //   AssetSource(soundPaths[controller
+                              //   //       .sessionSoundClipIndex.value]),
+                              //   // );
+                              //   if(timer!=null){
+                              //     timer?.cancel();
+                              //   }
+                              //   controller.totalTimer.value =
+                              //       ((index + 1) * 5)*60 ; //60
+                              //   timeTillComplete =
+                              //       ((index + 1) * 5)*60 ; //60
+                              //   remainingScreenTime = timeTillComplete;
+                              //
+                              //   meditationDuration.value =
+                              //       ((index + 1) * 5).toString();
+                              //   controller.numberOfMinutesIndex.value =
+                              //       index;
+                              //   localNotifications
+                              //       .initializeNotifications();
+                              //   print("SHOW NOTIFICATION called");
+                              //   await localNotifications.showNotification(
+                              //       controller.totalTimer.value);
+                              //   startTimer();
+                              //   // _controller.restart(
+                              //   //     // duration: ((index + 1) ) * 60);
+                              //   //     duration: ((index + 1) * 5) * 60); //*60
+                              // },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 65,
+                                  width: 65,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: controller.numberOfMinutesIndex
+                                        .value >=
+                                        index?innerBorderColor:black,
+                                  ),
+                                  child: Center(
+                                    child: MyText(
+                                      text: ((index ) * 5).toString(),
+                                      // text: ((index + 1) ).toString(),
+                                      color: white,
+                                      size: 18.sp,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
                 ),
               ),
               Padding(
