@@ -22,6 +22,8 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
   String file = '';
   String volume = '';
   String interval = '';
+
+
   SharedPrefs sharedPrefs = SharedPrefs();
   @override
   void dispose() {
