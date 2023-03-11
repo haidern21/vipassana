@@ -103,7 +103,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    audioPlayer.dispose();
     super.dispose();
   }
 
