@@ -23,6 +23,12 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
   String volume = '';
   String interval = '';
   SharedPrefs sharedPrefs = SharedPrefs();
+  @override
+  void dispose() {
+    controller.audioPlayer.stop();
+    controller.audioPlayer.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +76,14 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                                       file = temp;
                                     });
                                     controller.pickedFilePath.value = file;
+                                    if (controller.sessionSoundClipIndex.value == 0 &&
+                                        controller.pickedFilePath.value.isNotEmpty) {
+                                        await controller.audioPlayer.stop();
+
+
+                                      await controller.audioPlayer
+                                          .play(DeviceFileSource(controller.pickedFilePath.value));
+                                    }
                                   }
                                 : () {
                               showModalBottomSheet(
