@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:circle_list/circle_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,26 +29,28 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   Timer? timer;
   Timer? timer1;
+  bool isTimerRunning = false;
 
   startTimer() async {
-    int temp=0;
-    temp=remainingScreenTime;
-    timer= Timer.periodic(const Duration(seconds: 1), (timer) {
+    int temp = 0;
+    temp = remainingScreenTime;
+    isTimerRunning = true;
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         print("start timer  calling");
-        if (temp == 0||temp<0) {
+        if (temp == 0 || temp < 0) {
           timer.cancel();
           onTimerComplete();
+          isTimerRunning = false;
         } else {
           temp--;
         }
-        remainingScreenTime=temp;
+        remainingScreenTime = temp;
       });
     });
   }
 
-
-  onTimerComplete()async{
+  onTimerComplete() async {
     log(timeTillComplete.toString());
     if (controller.isUserLoggedIn.value == true) {
       var a = await controller.checkIfUserExistsInDb(
@@ -71,39 +72,37 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     // log(_controller.getTimeInSeconds().toString());
     // // if (timeTillComplete == _controller.getTimeInSeconds()) {
     //   log(_controller.getTimeInSeconds().toString());
-      // await playSoundWithInterval();
+    // await playSoundWithInterval();
 
     if (controller.sessionSoundClipIndex.value == 0 &&
         controller.pickedFilePath.value.isNotEmpty) {
       await controller.audioPlayer
           .play(DeviceFileSource(controller.pickedFilePath.value));
     }
-      int repeatInterval = controller.repeat.value.toInt();
-      if (controller.sessionSoundClipIndex.value != -1||controller.sessionSoundClipIndex.value != 0) {
-        await controller.audioPlayer.play(
-          AssetSource(soundPaths[controller.sessionSoundClipIndex.value]),
-        );
-        controller.audioPlayer.onPlayerComplete.listen((event) async {
-          print(controller.repeat.value.toInt().toString());
-          repeatInterval--;
-          if (repeatInterval > 0) {
-            await controller.audioPlayer.play(
-              AssetSource(
-                  soundPaths[controller.sessionSoundClipIndex.value]),
-            );
-          }
-          // else {
-          //   return;
-          // }
-        });
-      }
-
+    int repeatInterval = controller.repeat.value.toInt();
+    if (controller.sessionSoundClipIndex.value != -1 ||
+        controller.sessionSoundClipIndex.value != 0) {
+      await controller.audioPlayer.play(
+        AssetSource(soundPaths[controller.sessionSoundClipIndex.value]),
+      );
+      controller.audioPlayer.onPlayerComplete.listen((event) async {
+        print(controller.repeat.value.toInt().toString());
+        repeatInterval--;
+        if (repeatInterval > 0) {
+          await controller.audioPlayer.play(
+            AssetSource(soundPaths[controller.sessionSoundClipIndex.value]),
+          );
+        }
+        // else {
+        //   return;
+        // }
+      });
+    }
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    audioPlayer.dispose();
     super.dispose();
   }
 
@@ -114,53 +113,56 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     setState(() {
       _notification = state;
     });
-    // if (kDebugMode) {
-      print("State: $state");
-      print("didChangeAppLifecycleState CALLED");
-    // }
 
     if (state == AppLifecycleState.paused) {
       // _controller.pause();
-      if(timer!=null){
+      if (timer != null) {
         timer?.cancel();
       }
       timer?.cancel();
-      if(timer1!=null){
+      if (timer1 != null) {
         timer1?.cancel();
       }
       timer1?.cancel();
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       var time = DateTime.now().toString();
-      sharedPreferences.setString('inActiveTime', time);
-      sharedPreferences.setInt('totalTime', timeTillComplete);
-      sharedPreferences.setInt(
-          'remainingSeconds', (timeTillComplete-remainingScreenTime));
-      // if (kDebugMode) {
-        print('IN ACTIVE TIME IN STRING IS $time');
-      // }
+      if (isTimerRunning == true) {
+        sharedPreferences.setBool('isTimerRunning', isTimerRunning);
+        sharedPreferences.setString('inActiveTime', time);
+        sharedPreferences.setInt('totalTime', timeTillComplete);
+        sharedPreferences.setInt(
+            'remainingSeconds', (timeTillComplete - remainingScreenTime));
+      }
     }
     if (state == AppLifecycleState.resumed) {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
-      String? inActiveTime = sharedPreferences.getString('inActiveTime') ?? '';
-      int? remainingSeconds = sharedPreferences.getInt('remainingSeconds') ?? 0;
-      int? totalTime= sharedPreferences.getInt('totalTime')??0;
-      DateTime inActiveTimeDateTime = DateTime.parse(inActiveTime);
-      DateTime currentTime = DateTime.now();
-      Duration timeDifference = currentTime.difference(inActiveTimeDateTime);
-      sharedPreferences.remove('inActiveTime');
-      sharedPreferences.remove('remainingSeconds');
-      sharedPreferences.remove('totalTime');
-      if(totalTime!=0){
-        setState(() {
-          remainingScreenTime=(totalTime-remainingSeconds)-timeDifference.inSeconds;
-          timeTillComplete=totalTime;
-        });
-        startTimerAgain();
-      }
+      bool? timerRunning = sharedPreferences.getBool('isTimerRunning') ?? false;
+      if (timerRunning == true) {
+        String? inActiveTime =
+            sharedPreferences.getString('inActiveTime') ?? DateTime.now().toString();
+        int? remainingSeconds =
+            sharedPreferences.getInt('remainingSeconds') ?? 0;
+        int? totalTime = sharedPreferences.getInt('totalTime') ?? 0;
+        DateTime inActiveTimeDateTime = DateTime.parse(inActiveTime);
+        DateTime currentTime = DateTime.now();
+        Duration timeDifference = currentTime.difference(inActiveTimeDateTime);
+        sharedPreferences.remove('inActiveTime');
+        sharedPreferences.remove('remainingSeconds');
+        sharedPreferences.remove('totalTime');
+        sharedPreferences.remove('isTimerRunning');
 
-      // if (kDebugMode) {
+        if (totalTime != 0) {
+          setState(() {
+            remainingScreenTime =
+                (totalTime - remainingSeconds) - timeDifference.inSeconds;
+            timeTillComplete = totalTime;
+          });
+          startTimerAgain();
+        }
+
+        // if (kDebugMode) {
         print('CONSUMED SECONDS ARE :$remainingSeconds');
         print('IN ACTIVE TIME IN STRING IS $inActiveTime ');
         print('IN ACTIVE TIME IN DATETIME IS $inActiveTimeDateTime ');
@@ -168,21 +170,24 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         print('TIME DIFFERENCE IS  $timeDifference ');
         print(
             'TIME DIFFERENCE IN SECONDS IS  ${timeTillComplete - remainingSeconds - timeDifference.inSeconds} ');
-      // }
-      // int controllerRestartValue =
-      //     timeTillComplete - consumedSeconds - timeDifference.inSeconds;
-      // // _controller.restart(duration: controllerRestartValue);
-      // _controller.restart(duration: remainingScreenTime);
+        // }
+        // int controllerRestartValue =
+        //     timeTillComplete - consumedSeconds - timeDifference.inSeconds;
+        // // _controller.restart(duration: controllerRestartValue);
+        // _controller.restart(duration: remainingScreenTime);
+      }
     }
   }
-  startTimerAgain(){
-    timer1=Timer.periodic(const Duration(seconds: 1), (timer) {
+
+  startTimerAgain() {
+    isTimerRunning = true;
+    timer1 = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         print("start timer agaian calling");
-        if (remainingScreenTime == 0||remainingScreenTime<0) {
+        if (remainingScreenTime == 0 || remainingScreenTime < 0) {
           timer1?.cancel();
           onTimerComplete();
-
+          isTimerRunning = false;
         } else {
           remainingScreenTime--;
         }
@@ -300,8 +305,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                       top: Radius.circular(25.0)),
                                 ),
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                                builder: (context) =>
-                                    sessionsBottomSheet());
+                                builder: (context) => sessionsBottomSheet());
                           },
                           child: popUpMenuItem(
                               imagePath:
@@ -318,20 +322,17 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                       top: Radius.circular(25.0)),
                                 ),
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                                builder: (context) =>
-                                    const SoundBottomSheet());
+                                builder: (context) => const SoundBottomSheet());
                           },
                           child: popUpMenuItem(
-                              imagePath:
-                                  'assets/images/ico_sounds_library.png',
+                              imagePath: 'assets/images/ico_sounds_library.png',
                               text: 'Sounds',
                               isSvg: false),
                         ),
                         GestureDetector(
                           onTap: () => Get.to(() => const MeditationLog()),
                           child: popUpMenuItem(
-                              imagePath:
-                                  'assets/images/ico_simple_log_up.png',
+                              imagePath: 'assets/images/ico_simple_log_up.png',
                               text: 'Logs',
                               isSvg: false),
                         ),
@@ -465,8 +466,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                       timeTillComplete == 0
                                   ? 60 / 60
                                   : remainingScreenTime / timeTillComplete,
-                              valueColor: const AlwaysStoppedAnimation(
-                                  neonColor),
+                              valueColor:
+                                  const AlwaysStoppedAnimation(neonColor),
                               backgroundColor: innerBorderColor,
                             ),
                           ),
@@ -475,7 +476,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           child: MyText(
                             text: formatTime(remainingScreenTime).substring(2),
                             color: Colors.white,
-                            size: 50.sp,
+                            size: 35.sp,
                           ),
                         )
                       ],
@@ -626,150 +627,147 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     //           )),
                     // ),
                   ),
-                  children: List.generate(
-                      13,
-                      (index) {
-                        if(index==0){
-                          return Obx(
-                                () => GestureDetector(
-                              onTap: () async {
-                                // await controller.audioPlayer.play(
-                                //   AssetSource(soundPaths[controller
-                                //       .sessionSoundClipIndex.value]),
-                                // );
-                                if(timer!=null){
-                                  timer?.cancel();
-                                }
-                                controller.totalTimer.value =
-                                    ((index ) * 5)*60 ; //60
-                                timeTillComplete =
-                                    ((index ) * 5)*60 ; //60
-                                remainingScreenTime = timeTillComplete;
-
-                                meditationDuration.value =
-                                    ((index ) * 5).toString();
-                                controller.numberOfMinutesIndex.value =
-                                    index;
-                                startTimer();
-                                // _controller.restart(
-                                //     // duration: ((index + 1) ) * 60);
-                                //     duration: ((index + 1) * 5) * 60); //*60
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 65,
-                                  width: 65,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: controller.numberOfMinutesIndex
-                                        .value >=
-                                        index?innerBorderColor:black,
-                                  ),
-                                  child: Center(
-                                    child: MyText(
-                                      text: ((index ) * 5).toString(),
-                                      // text: ((index + 1) ).toString(),
-                                      color: white,
-                                      size: 18.sp,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-                        return GestureDetector(
+                  children: List.generate(13, (index) {
+                    if (index == 0) {
+                      return Obx(
+                        () => GestureDetector(
                           onTap: () async {
                             // await controller.audioPlayer.play(
                             //   AssetSource(soundPaths[controller
                             //       .sessionSoundClipIndex.value]),
                             // );
-                            if(timer!=null){
+                            if (timer != null) {
                               timer?.cancel();
                             }
                             controller.totalTimer.value =
-                                ((index ) * 5) *60; //60
-                            timeTillComplete =
-                                ((index ) * 5) *60; //60
+                                ((index) * 5) * 60; //60
+                            timeTillComplete = ((index) * 5) * 60; //60
                             remainingScreenTime = timeTillComplete;
 
-                            meditationDuration.value =
-                                ((index ) * 5).toString();
-                            controller.numberOfMinutesIndex.value =
-                                index;
-                            localNotifications
-                                .initializeNotifications();
-                            print("SHOW NOTIFICATION called");
-                            final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-                            FlutterLocalNotificationsPlugin();
-                            final List<PendingNotificationRequest> pendingNotificationRequests =
-                            await flutterLocalNotificationsPlugin.pendingNotificationRequests();
-                            for (var _pendingRequest in pendingNotificationRequests) {
-                              flutterLocalNotificationsPlugin.cancel(_pendingRequest.id);
-                            }
-                            await localNotifications.showNotification(
-                                controller.totalTimer.value);
+                            meditationDuration.value = ((index) * 5).toString();
+                            controller.numberOfMinutesIndex.value = index;
                             startTimer();
                             // _controller.restart(
                             //     // duration: ((index + 1) ) * 60);
                             //     duration: ((index + 1) * 5) * 60); //*60
                           },
-                          child: Obx(
-                                () => GestureDetector(
-                              // onTap: () async {
-                              //   // await controller.audioPlayer.play(
-                              //   //   AssetSource(soundPaths[controller
-                              //   //       .sessionSoundClipIndex.value]),
-                              //   // );
-                              //   if(timer!=null){
-                              //     timer?.cancel();
-                              //   }
-                              //   controller.totalTimer.value =
-                              //       ((index + 1) * 5)*60 ; //60
-                              //   timeTillComplete =
-                              //       ((index + 1) * 5)*60 ; //60
-                              //   remainingScreenTime = timeTillComplete;
-                              //
-                              //   meditationDuration.value =
-                              //       ((index + 1) * 5).toString();
-                              //   controller.numberOfMinutesIndex.value =
-                              //       index;
-                              //   localNotifications
-                              //       .initializeNotifications();
-                              //   print("SHOW NOTIFICATION called");
-                              //   await localNotifications.showNotification(
-                              //       controller.totalTimer.value);
-                              //   startTimer();
-                              //   // _controller.restart(
-                              //   //     // duration: ((index + 1) ) * 60);
-                              //   //     duration: ((index + 1) * 5) * 60); //*60
-                              // },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 65,
-                                  width: 65,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: controller.numberOfMinutesIndex
-                                        .value >=
-                                        index?innerBorderColor:black,
-                                  ),
-                                  child: Center(
-                                    child: MyText(
-                                      text: ((index ) * 5).toString(),
-                                      // text: ((index + 1) ).toString(),
-                                      color: white,
-                                      size: 18.sp,
-                                    ),
-                                  ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 65,
+                              width: 65,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: controller.numberOfMinutesIndex.value >=
+                                        index
+                                    ? innerBorderColor
+                                    : black,
+                              ),
+                              child: Center(
+                                child: MyText(
+                                  text: ((index) * 5).toString(),
+                                  // text: ((index + 1) ).toString(),
+                                  color: white,
+                                  size: 18.sp,
                                 ),
                               ),
                             ),
                           ),
-                        );
-                      }),
+                        ),
+                      );
+                    }
+                    return GestureDetector(
+                      onTap: () async {
+                        // await controller.audioPlayer.play(
+                        //   AssetSource(soundPaths[controller
+                        //       .sessionSoundClipIndex.value]),
+                        // );
+                        if (timer != null) {
+                          timer?.cancel();
+                        }
+                        controller.totalTimer.value = ((index) * 5) * 60; //60
+                        timeTillComplete = ((index) * 5) * 60; //60
+                        remainingScreenTime = timeTillComplete;
+
+                        meditationDuration.value = ((index) * 5).toString();
+                        controller.numberOfMinutesIndex.value = index;
+                        localNotifications.initializeNotifications();
+                        print("SHOW NOTIFICATION called");
+                        final FlutterLocalNotificationsPlugin
+                            flutterLocalNotificationsPlugin =
+                            FlutterLocalNotificationsPlugin();
+                        final List<PendingNotificationRequest>
+                            pendingNotificationRequests =
+                            await flutterLocalNotificationsPlugin
+                                .pendingNotificationRequests();
+                        for (var _pendingRequest
+                            in pendingNotificationRequests) {
+                          flutterLocalNotificationsPlugin
+                              .cancel(_pendingRequest.id);
+                        }
+                        await localNotifications
+                            .showNotification(controller.totalTimer.value);
+                        startTimer();
+                        // _controller.restart(
+                        //     // duration: ((index + 1) ) * 60);
+                        //     duration: ((index + 1) * 5) * 60); //*60
+                      },
+                      child: Obx(
+                        () => GestureDetector(
+                          // onTap: () async {
+                          //   // await controller.audioPlayer.play(
+                          //   //   AssetSource(soundPaths[controller
+                          //   //       .sessionSoundClipIndex.value]),
+                          //   // );
+                          //   if(timer!=null){
+                          //     timer?.cancel();
+                          //   }
+                          //   controller.totalTimer.value =
+                          //       ((index + 1) * 5)*60 ; //60
+                          //   timeTillComplete =
+                          //       ((index + 1) * 5)*60 ; //60
+                          //   remainingScreenTime = timeTillComplete;
+                          //
+                          //   meditationDuration.value =
+                          //       ((index + 1) * 5).toString();
+                          //   controller.numberOfMinutesIndex.value =
+                          //       index;
+                          //   localNotifications
+                          //       .initializeNotifications();
+                          //   print("SHOW NOTIFICATION called");
+                          //   await localNotifications.showNotification(
+                          //       controller.totalTimer.value);
+                          //   startTimer();
+                          //   // _controller.restart(
+                          //   //     // duration: ((index + 1) ) * 60);
+                          //   //     duration: ((index + 1) * 5) * 60); //*60
+                          // },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 65,
+                              width: 65,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: controller.numberOfMinutesIndex.value >=
+                                        index
+                                    ? innerBorderColor
+                                    : black,
+                              ),
+                              child: Center(
+                                child: MyText(
+                                  text: ((index) * 5).toString(),
+                                  // text: ((index + 1) ).toString(),
+                                  color: white,
+                                  size: 18.sp,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
                 ),
               ),
               Padding(
@@ -781,8 +779,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       width: Get.width * .3,
                       decoration: BoxDecoration(
                           color: Colors.transparent,
-                          border: Border.all(
-                              color: Colors.white.withOpacity(0.5)),
+                          border:
+                              Border.all(color: Colors.white.withOpacity(0.5)),
                           borderRadius: BorderRadius.circular(5)),
                       child: Padding(
                         padding: const EdgeInsets.all(8),
@@ -830,8 +828,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       width: Get.width * .3,
                       decoration: BoxDecoration(
                           color: Colors.transparent,
-                          border: Border.all(
-                              color: Colors.white.withOpacity(0.5)),
+                          border:
+                              Border.all(color: Colors.white.withOpacity(0.5)),
                           borderRadius: BorderRadius.circular(5)),
                       child: Padding(
                         padding: const EdgeInsets.all(8),
@@ -988,6 +986,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       ),
     );
   }
+
   String formatTime(int seconds) {
     Duration d = Duration(seconds: seconds);
     print('durartion: $d');
