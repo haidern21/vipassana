@@ -23,8 +23,8 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
   String volume = '';
   String interval = '';
 
-
   SharedPrefs sharedPrefs = SharedPrefs();
+
   @override
   void dispose() {
     controller.audioPlayer.stop();
@@ -47,7 +47,7 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-               Padding(
+              Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 10),
                 child: MyText(
                   text: 'End of session sound clip.',
@@ -78,24 +78,29 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                                       file = temp;
                                     });
                                     controller.pickedFilePath.value = file;
-                                    if (controller.sessionSoundClipIndex.value == 0 &&
-                                        controller.pickedFilePath.value.isNotEmpty) {
-                                        await controller.audioPlayer.stop();
+                                    if (controller
+                                                .sessionSoundClipIndex.value ==
+                                            0 &&
+                                        controller
+                                            .pickedFilePath.value.isNotEmpty) {
+                                      await controller.audioPlayer.stop();
 
-
-                                      await controller.audioPlayer
-                                          .play(DeviceFileSource(controller.pickedFilePath.value));
+                                      await controller.audioPlayer.play(
+                                          DeviceFileSource(
+                                              controller.pickedFilePath.value));
                                     }
                                   }
                                 : () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.vertical(top: Radius.circular(25.0)),
-                                  ),
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  builder: (context) => GoogleSignInSheet());
+                                    showModalBottomSheet(
+                                        context: context,
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(25.0)),
+                                        ),
+                                        clipBehavior:
+                                            Clip.antiAliasWithSaveLayer,
+                                        builder: (context) =>
+                                            GoogleSignInSheet());
                                   },
                             child: Container(
                               decoration: BoxDecoration(
@@ -120,12 +125,11 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                                                     index
                                                 ? innerBorderColor
                                                 : selectedBorderColor,
-                                      size: 16.sp,
+                                            size: 16.sp,
                                           )
                                         : Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               MyText(
                                                 text: 'Add you own sound',
@@ -156,8 +160,8 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                           onTap: () async {
                             controller.sessionSoundClipIndex.value = index;
                             await controller.audioPlayer.play(
-                              AssetSource(soundPaths[controller
-                                  .sessionSoundClipIndex.value]),
+                              AssetSource(soundPaths[
+                                  controller.sessionSoundClipIndex.value]),
                             );
                             sharedPrefs.saveSessionSoundClipIndex(index);
                           },
@@ -165,8 +169,8 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
                                 border: Border.all(
-                                    color: controller.sessionSoundClipIndex
-                                                .value ==
+                                    color: controller
+                                                .sessionSoundClipIndex.value ==
                                             index
                                         ? innerBorderColor
                                         : black)),
@@ -177,8 +181,8 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                                 child: Obx(
                                   () => MyText(
                                     text: sounds[index],
-                                    color: controller.sessionSoundClipIndex
-                                                .value ==
+                                    color: controller
+                                                .sessionSoundClipIndex.value ==
                                             index
                                         ? innerBorderColor
                                         : selectedBorderColor,
@@ -197,7 +201,7 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                     itemCount: sounds.length),
               ),
               const SizedBox(height: 15),
-               Padding(
+              Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 10),
                 child: MyText(
                   text: 'Volume',
@@ -229,7 +233,7 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                   ),
                 ),
               ),
-               Padding(
+              Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 5),
                 child: MyText(
                   text: 'Repeat',
@@ -238,7 +242,7 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                   weight: FontWeight.bold,
                 ),
               ),
-               Padding(
+              Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: MyText(
                   text: 'Time the sound clip should play',
@@ -272,7 +276,7 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
               ),
               // const Spacer(),
               Padding(
-                padding: const EdgeInsets.only(bottom: 15.0,top: 15),
+                padding: const EdgeInsets.only(bottom: 15.0, top: 15),
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: GestureDetector(
@@ -282,7 +286,7 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
                       decoration: BoxDecoration(
                           color: selectedBorderColor,
                           borderRadius: BorderRadius.circular(15)),
-                      child:  Padding(
+                      child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Center(
                           child: MyText(
@@ -304,7 +308,8 @@ class _SoundBottomSheetState extends State<SoundBottomSheet> {
   }
 
   Future<String> openFile() async {
-    final result = await FilePicker.platform.pickFiles(type: FileType.audio);
+    final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom, allowedExtensions: ["mp3", "wav", "m4r", "ogg"]);
     if (result == null) return '';
     setState(() {
       file = result.files.first.path.toString();

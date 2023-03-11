@@ -213,6 +213,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Container(
         height: Get.height,

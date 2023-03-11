@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>235449122260-t4so837p7chejjhat2t4i14sbivn49pr.apps.googleusercontent.com</string>
+	<string>817295780155-4v48lclka2gtgf95tk373jpq9h9bsenq.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.235449122260-t4so837p7chejjhat2t4i14sbivn49pr</string>
+	<string>com.googleusercontent.apps.817295780155-4v48lclka2gtgf95tk373jpq9h9bsenq</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>235449122260-u7nch4q1lsf06m160an4bh0iuufloutc.apps.googleusercontent.com</string>
+	<string>817295780155-t6sg1c4ct9fft2diucob57r0rludoku2.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDtAj5clh1aByGGX_qNG6DsrS2KAUjMxkU</string>
+	<string>AIzaSyDO23kwT2mw88WqawedtYe3YTuEK33u9QM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>235449122260</string>
+	<string>817295780155</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.losthut.apps.simplemeditationtimer</string>
 	<key>PROJECT_ID</key>
-	<string>vipassana-968b0</string>
+	<string>vpas-29d15</string>
 	<key>STORAGE_BUCKET</key>
-	<string>vipassana-968b0.appspot.com</string>
+	<string>vpas-29d15.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:235449122260:ios:d1f020947b826fada9ea41</string>
+	<string>1:817295780155:ios:13a39c49ad59bbb05a6f1e</string>
 </dict>
 </plist>
