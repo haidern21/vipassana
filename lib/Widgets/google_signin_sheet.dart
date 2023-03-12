@@ -165,6 +165,9 @@ class GoogleSignInSheet extends StatelessWidget {
 
                       await controller.handleSignIn();
                     }
+                    else{
+                      Get.snackbar('Already Logged in', "Ypu are already logged in!!!");
+                    }
                    // await controller.checkIfSignedIn();
                   },
                   child: Container(
