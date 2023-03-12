@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   onTimerComplete() async {
     log(timeTillComplete.toString());
+    controller.numberOfMinutesIndex.value=-1;
     if (controller.isUserLoggedIn.value == true) {
       var a = await controller.checkIfUserExistsInDb(
           userId: controller.userId.value);
@@ -82,7 +83,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     int repeatInterval = controller.repeat.value.toInt();
     if (controller.sessionSoundClipIndex.value != -1 ||
         controller.sessionSoundClipIndex.value != 0) {
-      await controller.audioPlayer.play(
+        await controller.audioPlayer.play(
         AssetSource(soundPaths[controller.sessionSoundClipIndex.value]),
       );
       controller.audioPlayer.onPlayerComplete.listen((event) async {
@@ -180,18 +181,31 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   startTimerAgain() {
+    int temp = 0;
+    temp = remainingScreenTime;
     isTimerRunning = true;
     timer1 = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        print("start timer agaian calling");
-        if (remainingScreenTime == 0 || remainingScreenTime < 0) {
+        print("start timer  calling");
+        if (temp == 0 || temp < 0) {
           timer1?.cancel();
           onTimerComplete();
           isTimerRunning = false;
         } else {
-          remainingScreenTime--;
+          temp--;
         }
+        remainingScreenTime = temp;
       });
+      // setState(() {
+      //   print("start timer agaian calling");
+      //   if (remainingScreenTime == 0 || remainingScreenTime < 0) {
+      //     timer1?.cancel();
+      //     onTimerComplete();
+      //     isTimerRunning = false;
+      //   } else {
+      //     remainingScreenTime--;
+      //   }
+      // });
     });
   }
 
@@ -646,6 +660,18 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
                             meditationDuration.value = ((index) * 5).toString();
                             controller.numberOfMinutesIndex.value = index;
+                            final FlutterLocalNotificationsPlugin
+                            flutterLocalNotificationsPlugin =
+                            FlutterLocalNotificationsPlugin();
+                            final List<PendingNotificationRequest>
+                            pendingNotificationRequests =
+                            await flutterLocalNotificationsPlugin
+                                .pendingNotificationRequests();
+                            for (var _pendingRequest
+                            in pendingNotificationRequests) {
+                              flutterLocalNotificationsPlugin
+                                  .cancel(_pendingRequest.id);
+                            }
                             startTimer();
                             // _controller.restart(
                             //     // duration: ((index + 1) ) * 60);
@@ -685,8 +711,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                         if (timer != null) {
                           timer?.cancel();
                         }
-                        controller.totalTimer.value = ((index) * 5) * 60; //60
-                        timeTillComplete = ((index) * 5) * 60; //60
+                        controller.totalTimer.value = ((index) * 5) ; //60
+                        timeTillComplete = ((index) * 5) ; //60
                         remainingScreenTime = timeTillComplete;
 
                         meditationDuration.value = ((index) * 5).toString();
@@ -988,6 +1014,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   String formatTime(int seconds) {
+    if(seconds<0){
+      seconds= 0;
+    }
     Duration d = Duration(seconds: seconds);
     print('durartion: $d');
     return d.toString().split('.').first.padLeft(4, "0");

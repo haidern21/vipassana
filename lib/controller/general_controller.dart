@@ -204,6 +204,7 @@ class GeneralController extends GetxController{
         await FirebaseAuth.instance.signInWithCredential(credential);
         if(FirebaseAuth.instance.currentUser!=null){
           isUserLoggedIn.value=true;
+          Get.snackbar('Login Completed', 'You have successfully logged in your Google account.');
         }
     } catch (error) {
       Get.snackbar('Error', 'Some error occurred while signing in, please try again later !!!',snackPosition: SnackPosition.BOTTOM,colorText: Colors.red);
