@@ -182,6 +182,7 @@ class GoogleSignInSheet extends StatelessWidget {
                           width: 20,
                         ),
                          MyText(
+                         // MyText(
                           text: 'Sign in with Google',
                           color: selectedBorderColor,
                           size: 16.sp,

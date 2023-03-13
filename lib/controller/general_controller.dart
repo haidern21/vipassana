@@ -24,6 +24,7 @@ class GeneralController extends GetxController{
   RxInt totalTimer=0.obs;
   var meditations=[].obs;
   RxBool isUserLoggedIn= false.obs;
+  // RxBool isUserLoggedIn= false.obs;
 // signUpWithGoogleFromApiCall() async {
 //
 //   var url = Uri.http('${api}/auth/google');
