@@ -710,6 +710,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                         // );
                         if (timer != null) {
                           timer?.cancel();
+                          // timer?.cancel();
                         }
                         controller.totalTimer.value = ((index) * 5)* 60 ; //60
                         timeTillComplete = ((index) * 5) *60 ; //60
