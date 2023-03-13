@@ -115,8 +115,8 @@ class _MeditationLogState extends State<MeditationLog> {
               const SizedBox(height: 20),
               Obx(
                 () => controller.meditations.isNotEmpty
-                    ? SizedBox(
-                        height: Get.height * .33,
+                    ? Expanded(
+                        // height: Get.height * .33,
                         child: Obx(() => showLoader.value == false
                             ? ListView.builder(
                                 itemCount: controller.meditations.length,
