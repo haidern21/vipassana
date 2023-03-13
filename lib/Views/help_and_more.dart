@@ -93,6 +93,21 @@ class _HelpAndMoreState extends State<HelpAndMore> {
       /// index 11
       () => privacyAnTermOfService(),
     ];
+    if(controller.isUserLoggedIn.value==true){
+     setState(() {
+       onTaps.removeAt(7);
+       helpTiles.removeAt(7);
+     });
+    }
+    
+    controller.isUserLoggedIn.listen((val) {
+      if(val==true){
+        setState(() {
+          onTaps.removeAt(7);
+          helpTiles.removeAt(7);
+        });
+      }
+    });
     super.initState();
   }
 
@@ -145,6 +160,12 @@ class _HelpAndMoreState extends State<HelpAndMore> {
             )
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+            controller.isUserLoggedIn.value=true;
+
+        },
       ),
     );
   }
