@@ -11,7 +11,7 @@ import 'package:vipassana/constants.dart';
 import 'package:vipassana/shared_pref.dart';
 class GeneralController extends GetxController{
   RxInt numberOfMinutesIndex=(-1).obs;
-  RxInt sessionSoundClipIndex=(-1).obs;
+  RxInt sessionSoundClipIndex=1.obs;
   RxDouble intervalTime=5.0.obs;
   RxDouble leadingTime=5.0.obs;
   RxDouble volume=5.00000.obs;
