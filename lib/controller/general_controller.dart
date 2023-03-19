@@ -14,7 +14,7 @@ class GeneralController extends GetxController{
   RxInt sessionSoundClipIndex=1.obs;
   RxDouble intervalTime=5.0.obs;
   RxDouble leadingTime=5.0.obs;
-  RxDouble volume=5.00000.obs;
+  RxDouble volume=10.00000.obs;
   RxDouble repeat=1.00000.obs;
   RxBool sessionLoop= false.obs;
   GoogleSignInAccount? _currentUser;
@@ -284,7 +284,7 @@ class GeneralController extends GetxController{
       isUserLoggedIn.value=true;
     }
     audioPlayer= AudioPlayer();
-    audioPlayer.setVolume(0.5);
+    audioPlayer.setVolume(1);
     getInitialData();
     super.onInit();
   }
