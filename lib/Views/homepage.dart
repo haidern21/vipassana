@@ -800,108 +800,113 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: Get.width * .3,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          border:
-                              Border.all(color: Colors.white.withOpacity(0.5)),
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Obx(
-                          () => controller.leadingTime.value == 5.0
-                              ? Column(
-                                  children: [
-                                    MyText(
-                                      text: 'Leading',
-                                      color: white,
-                                      size: 15.sp,
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    MyText(
-                                      text: '5: 00"',
-                                      color: white,
-                                      size: 15.sp,
-                                    ),
-                                  ],
-                                )
-                              : Column(
-                                  children: [
-                                    MyText(
-                                      text: 'Leading',
-                                      color: white,
-                                      size: 15.sp,
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    MyText(
-                                      text:
-                                          '${controller.leadingTime.value.toString().substring(0, 1)}:${controller.leadingTime.value.toString().substring(2, 4)}"',
-                                      color: white,
-                                      size: 15.sp,
-                                    ),
-                                  ],
-                                ),
+                child: SizedBox(
+                  height: Get.height*.065,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: Get.width * .3,
+                        height: Get.height*.065,
+                        decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border:
+                                Border.all(color: Colors.white.withOpacity(0.5)),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Obx(
+                            () => controller.leadingTime.value == 5.0
+                                ? Column(
+                                    children: [
+                                      MyText(
+                                        text: 'Leading',
+                                        color: white,
+                                        size: 15.sp,
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      MyText(
+                                        text: '5: 00"',
+                                        color: white,
+                                        size: 15.sp,
+                                      ),
+                                    ],
+                                  )
+                                : Column(
+                                    children: [
+                                      MyText(
+                                        text: 'Leading',
+                                        color: white,
+                                        size: 15.sp,
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      MyText(
+                                        text:
+                                            '${controller.leadingTime.value.toString().substring(0, 1)}:${controller.leadingTime.value.toString().substring(2, 4)}"',
+                                        color: white,
+                                        size: 15.sp,
+                                      ),
+                                    ],
+                                  ),
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      width: Get.width * .3,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          border:
-                              Border.all(color: Colors.white.withOpacity(0.5)),
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Obx(
-                          () => controller.intervalTime.value == 5.0
-                              ? Column(
-                                  children: [
-                                    MyText(
-                                      text: 'Interval',
-                                      color: white,
-                                      size: 15.sp,
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    MyText(
-                                      text: '5: 00"',
-                                      color: white,
-                                      size: 15.sp,
-                                    ),
-                                  ],
-                                )
-                              : Column(
-                                  children: [
-                                    MyText(
-                                      text: 'Interval',
-                                      color: white,
-                                      size: 15.sp,
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    MyText(
-                                      text:
-                                          '${controller.intervalTime.value.toString().substring(0, 1)}:${controller.intervalTime.value.toString().substring(2, 4)}"',
-                                      color: white,
-                                      size: 15.sp,
-                                    ),
-                                  ],
-                                ),
+                      Container(
+                        width: Get.width * .3,
+                        height: Get.height*.065,
+                        decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border:
+                                Border.all(color: Colors.white.withOpacity(0.5)),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Obx(
+                            () => controller.intervalTime.value == 5.0
+                                ? Column(
+                                    children: [
+                                      MyText(
+                                        text: 'Interval',
+                                        color: white,
+                                        size: 15.sp,
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      MyText(
+                                        text: '5: 00"',
+                                        color: white,
+                                        size: 15.sp,
+                                      ),
+                                    ],
+                                  )
+                                : Column(
+                                    children: [
+                                      MyText(
+                                        text: 'Interval',
+                                        color: white,
+                                        size: 15.sp,
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      MyText(
+                                        text:
+                                            '${controller.intervalTime.value.toString().substring(0, 1)}:${controller.intervalTime.value.toString().substring(2, 4)}"',
+                                        color: white,
+                                        size: 15.sp,
+                                      ),
+                                    ],
+                                  ),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               )
               // Align(

@@ -182,53 +182,70 @@ class _MeditationLogState extends State<MeditationLog> {
                                   color: gradientColor1,
                                 ),
                               )))
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Container(
-                          height: 100,
-                          decoration: BoxDecoration(
-                              color: selectedBorderColor,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                height: 90,
-                                child: Image.asset(
-                                  'assets/images/meditation_outline_image.png',
-                                  color: black,
+                    : Obx(
+                    ()=> controller.isUserLoggedIn.value? Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                                color: selectedBorderColor,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  height: 90,
+                                  child: Image.asset(
+                                    'assets/images/meditation_outline_image.png',
+                                    color: black,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              SizedBox(
-                                height: 90,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    MyText(
-                                      text: todayDate,
-                                      color: black,
-                                      size: 20.sp,
-                                      weight: FontWeight.w600,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 10.0),
-                                      child: MyText(
-                                        text: '00 Hours, 00 Minutes',
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                SizedBox(
+                                  height: 90,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      MyText(
+                                        text: todayDate,
                                         color: black,
-                                        size: 16.sp,
-                                        weight: FontWeight.w400,
+                                        size: 20.sp,
+                                        weight: FontWeight.w600,
                                       ),
-                                    ),
-                                  ],
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 10.0),
+                                        child: MyText(
+                                          text: '00 Hours, 00 Minutes',
+                                          color: black,
+                                          size: 16.sp,
+                                          weight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
+                        ):Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                            color: selectedBorderColor,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                           MyText(text: 'Please login first to track meditation sessions.',color: black,size: 14.sp,),
+                          ],
                         ),
                       ),
+                    ),
+                    ),
               )
               //
               //  else if(controller.meditations.isEmpty){
