@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   onTimerComplete() async {
     log(timeTillComplete.toString());
-    controller.numberOfMinutesIndex.value=-1;
+    controller.numberOfMinutesIndex.value = -1;
     if (controller.isUserLoggedIn.value == true) {
       var a = await controller.checkIfUserExistsInDb(
           userId: controller.userId.value);
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     int repeatInterval = controller.repeat.value.toInt();
     if (controller.sessionSoundClipIndex.value != -1 ||
         controller.sessionSoundClipIndex.value != 0) {
-        await controller.audioPlayer.play(
+      await controller.audioPlayer.play(
         AssetSource(soundPaths[controller.sessionSoundClipIndex.value]),
       );
       controller.audioPlayer.onPlayerComplete.listen((event) async {
@@ -141,8 +141,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           await SharedPreferences.getInstance();
       bool? timerRunning = sharedPreferences.getBool('isTimerRunning') ?? false;
       if (timerRunning == true) {
-        String? inActiveTime =
-            sharedPreferences.getString('inActiveTime') ?? DateTime.now().toString();
+        String? inActiveTime = sharedPreferences.getString('inActiveTime') ??
+            DateTime.now().toString();
         int? remainingSeconds =
             sharedPreferences.getInt('remainingSeconds') ?? 0;
         int? totalTime = sharedPreferences.getInt('totalTime') ?? 0;
@@ -227,7 +227,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Container(
         height: Get.height,
@@ -662,14 +661,14 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                             meditationDuration.value = ((index) * 5).toString();
                             controller.numberOfMinutesIndex.value = index;
                             final FlutterLocalNotificationsPlugin
-                            flutterLocalNotificationsPlugin =
-                            FlutterLocalNotificationsPlugin();
+                                flutterLocalNotificationsPlugin =
+                                FlutterLocalNotificationsPlugin();
                             final List<PendingNotificationRequest>
-                            pendingNotificationRequests =
-                            await flutterLocalNotificationsPlugin
-                                .pendingNotificationRequests();
+                                pendingNotificationRequests =
+                                await flutterLocalNotificationsPlugin
+                                    .pendingNotificationRequests();
                             for (var _pendingRequest
-                            in pendingNotificationRequests) {
+                                in pendingNotificationRequests) {
                               flutterLocalNotificationsPlugin
                                   .cancel(_pendingRequest.id);
                             }
@@ -713,8 +712,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           timer?.cancel();
                           // timer?.cancel();
                         }
-                        controller.totalTimer.value = ((index) * 5)* 60 ; //60
-                        timeTillComplete = ((index) * 5) *60 ; //60
+                        controller.totalTimer.value = ((index) * 5) * 60; //60
+                        timeTillComplete = ((index) * 5) * 60; //60
                         remainingScreenTime = timeTillComplete;
 
                         meditationDuration.value = ((index) * 5).toString();
@@ -801,23 +800,26 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: SizedBox(
-                  height: Get.height*.065,
+                  height: Get.height * .075,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        width: Get.width * .3,
-                        height: Get.height*.065,
+                        width: Get.width * .35,
+                        height: Get.height * .075,
                         decoration: BoxDecoration(
                             color: Colors.transparent,
-                            border:
-                                Border.all(color: Colors.white.withOpacity(0.5)),
+                            border: Border.all(
+                                color: Colors.white.withOpacity(0.5)),
                             borderRadius: BorderRadius.circular(5)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Obx(
-                            () => controller.leadingTime.value == 5.0
-                                ? Column(
+                        child: Obx(
+                          () => controller.leadingTime.value == 5.0
+                              ? Center(
+                                  child: Column(
+
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+
                                     children: [
                                       MyText(
                                         text: 'Leading',
@@ -833,8 +835,14 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                         size: 15.sp,
                                       ),
                                     ],
-                                  )
-                                : Column(
+                                  ),
+                                )
+                              : Center(
+                                  child: Column(
+
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+
                                     children: [
                                       MyText(
                                         text: 'Leading',
@@ -852,22 +860,24 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                       ),
                                     ],
                                   ),
-                          ),
+                                ),
                         ),
                       ),
                       Container(
-                        width: Get.width * .3,
-                        height: Get.height*.065,
+                        width: Get.width * .35,
+                        height: Get.height * .075,
                         decoration: BoxDecoration(
                             color: Colors.transparent,
-                            border:
-                                Border.all(color: Colors.white.withOpacity(0.5)),
+                            border: Border.all(
+                                color: Colors.white.withOpacity(0.5)),
                             borderRadius: BorderRadius.circular(5)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Obx(
-                            () => controller.intervalTime.value == 5.0
-                                ? Column(
+                        child: Obx(
+                          () => controller.intervalTime.value == 5.0
+                              ? Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+
                                     children: [
                                       MyText(
                                         text: 'Interval',
@@ -883,8 +893,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                         size: 15.sp,
                                       ),
                                     ],
-                                  )
-                                : Column(
+                                  ),
+                                )
+                              : Center(
+                                  child: Column(
+
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       MyText(
                                         text: 'Interval',
@@ -902,7 +917,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                       ),
                                     ],
                                   ),
-                          ),
+                                ),
+
                         ),
                       ),
                     ],
@@ -1021,8 +1037,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   String formatTime(int seconds) {
-    if(seconds<0){
-      seconds= 0;
+    if (seconds < 0) {
+      seconds = 0;
     }
     Duration d = Duration(seconds: seconds);
     print('durartion: $d');
