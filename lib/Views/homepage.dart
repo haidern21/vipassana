@@ -819,6 +819,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.center,
+
                                     children: [
                                       MyText(
                                         text: 'Leading',
@@ -841,6 +842,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.center,
+
                                     children: [
                                       MyText(
                                         text: 'Leading',
@@ -875,6 +877,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.center,
+
                                     children: [
                                       MyText(
                                         text: 'Interval',
@@ -915,6 +918,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                     ],
                                   ),
                                 ),
+
                         ),
                       ),
                     ],
