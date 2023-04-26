@@ -32,6 +32,9 @@ class LocalNotifications {
   //         priority: Priority.high, importance: Importance.high);
 
   showNotification(int seconds) async {
+    if(seconds==0){
+      return ;
+    }
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
         'Meditation completed',

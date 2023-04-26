@@ -12,8 +12,8 @@ import 'package:vipassana/shared_pref.dart';
 class GeneralController extends GetxController{
   RxInt numberOfMinutesIndex=(-1).obs;
   RxInt sessionSoundClipIndex=1.obs;
-  RxDouble intervalTime=5.0.obs;
-  RxDouble leadingTime=5.0.obs;
+  RxDouble intervalTime=0.0.obs;
+  RxDouble leadingTime=0.0.obs;
   RxDouble volume=10.00000.obs;
   RxDouble repeat=1.00000.obs;
   RxBool sessionLoop= false.obs;
@@ -291,11 +291,23 @@ class GeneralController extends GetxController{
   getInitialData()async{
     int? sessionValue= await sharedPrefs.getSaveSessionSoundClipIndex();
     int? rept= await sharedPrefs.getIntervalValue();
+    double? lead=await sharedPrefs.getLeadingDuration();
+    double? intr=await  sharedPrefs.getIntervalDuration();
+    bool? session= await sharedPrefs.getSessionLoop();
     if(sessionValue!=null){
       sessionSoundClipIndex.value=sessionValue;
     }
     if(rept!=null){
       repeat.value=rept.toDouble();
+    }
+    if(lead!=null){
+      leadingTime.value=lead;
+    }
+    if(intr!=null){
+      intervalTime.value=intr;
+    }
+    if(session!=null){
+      sessionLoop.value=session;
     }
   }
 }

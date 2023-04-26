@@ -1,42 +1,57 @@
 {
   "project_info": {
-    "project_number": "817295780155",
-    "project_id": "vpas-29d15",
-    "storage_bucket": "vpas-29d15.appspot.com"
+    "project_number": "235449122260",
+    "project_id": "vipassana-968b0",
+    "storage_bucket": "vipassana-968b0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:817295780155:android:ac51e31ad8d4a2745a6f1e",
+        "mobilesdk_app_id": "1:235449122260:android:41a49a3e3af3d81ea9ea41",
         "android_client_info": {
           "package_name": "com.losthut.android.apps.simplemeditationtimer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "817295780155-t6sg1c4ct9fft2diucob57r0rludoku2.apps.googleusercontent.com",
+          "client_id": "235449122260-o55d7khgjfp3qhthkcfeqac77fjj5fvg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.losthut.android.apps.simplemeditationtimer",
-            "certificate_hash": "c4441176b84a90a9517fa6d3407b8c7ccc933326"
+            "certificate_hash": "b28c83d0709b5a026b2c4d16eb0a7aace54aa9d2"
           }
         },
         {
-          "client_id": "817295780155-lmb02met1n9bqqv4d18ro3gu25t6jek2.apps.googleusercontent.com",
+          "client_id": "235449122260-u7nch4q1lsf06m160an4bh0iuufloutc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.losthut.android.apps.simplemeditationtimer",
+            "certificate_hash": "65af2a28bbac726ba9a97c9151b4d4d990f7f4e4"
+          }
+        },
+        {
+          "client_id": "235449122260-g2o3aj1mv461vs6rs72sfueccvhbae4p.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD4xla_qcpQagZLpfp5TB_EUGb8y4qC-7c"
+          "current_key": "AIzaSyClMeXoG4WCXZfMTrF-e_Co5WuD3wRu3iA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "817295780155-lmb02met1n9bqqv4d18ro3gu25t6jek2.apps.googleusercontent.com",
+              "client_id": "235449122260-g2o3aj1mv461vs6rs72sfueccvhbae4p.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "235449122260-1hku5m3falmhk1hs6r2kg1oi5ai7v908.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.losthut.android.apps.simplemeditationtimer"
+              }
             }
           ]
         }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:vipassana/Widgets/my_text.dart';
 import 'package:vipassana/constants.dart';
 
@@ -87,12 +86,18 @@ class Support extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    showCupertinoModalBottomSheet(
-                        expand: false,
+                    showModalBottomSheet(
                         context: context,
-                        backgroundColor: Colors.transparent,
-                        builder: (context) =>
-                            SizedBox(height: Get.height * .3, child: inApp()));
+                        builder: (context) => SizedBox(
+                              height: Get.height * .3,
+                              child: inApp(),
+                            ));
+                    // showCupertinoModalBottomSheet(
+                    //     expand: false,
+                    //     context: context,
+                    //     backgroundColor: Colors.transparent,
+                    //     builder: (context) =>
+                    //         SizedBox(height: Get.height * .3, child: inApp()));
                   },
                   child: Container(
                     height: 60,
